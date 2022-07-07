@@ -5,16 +5,48 @@
         <title>Gazetteer</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.css">
         <link rel="stylesheet" href="./libraries/leaflet/leaflet.css">
         <link rel="stylesheet" href="./libraries/css/stylesheet.css">
             
     </head>
     
     <body>
-        <h1>Hello, world!</h1>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <h1>Gazetteer</h1>                
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Country</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>                      
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>                            
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Country Info</button>                
+            </div>
+        </nav>
+        
         <main>
-            <div id="map"></div>
+            <div id="map">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalLabel">Country: </h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Capital City:</p>
+                                <p>Population:</p>
+                                <p>Head of State:</p>
+                                <p>Wikipedia:</p>
+                                <p>Currency:</p>
+                                <p>Current Exchange Rate: </p>
+                                <p>Current Weather</p>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer>
             <p>Created by Ed Hampton, July 2022</p>
@@ -22,6 +54,6 @@
         
         <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./libraries/leaflet/leaflet.min.js"></script>
-        <script src="./libraries/js/map.js"></script>
+        <script src="./libraries/js/map.js"></script>        
     </body>
 </html>
