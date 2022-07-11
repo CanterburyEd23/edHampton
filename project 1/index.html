@@ -14,13 +14,10 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <h1>Gazetteer</h1>                
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Country</a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Action</a></li>                      
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>                            
+                <h1>Gazetteer</h1>
+                <select id="country_list">
+                    <option value="">Select Country</option>
+                </select>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Country Info</button>                
             </div>
         </nav>
@@ -50,10 +47,14 @@
         </main>
         <footer>
             <p>Created by Ed Hampton, July 2022</p>
-        </footer>      
+        </footer>
+
+        <div id="preloader"></div>
         
+        <script src="./libraries/js/jquery.min.js"></script>
         <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./libraries/leaflet/leaflet.min.js"></script>
-        <script src="./libraries/js/map.js"></script>        
+        <script src="./libraries/js/map.js"></script>
+        <script src="./libraries/js/script.js"></script>
     </body>
 </html>
