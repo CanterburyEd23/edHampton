@@ -41,11 +41,7 @@
                                     <tr>
                                         <th>Population</th>
                                         <td id="countryPopulation"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Head of State</th>
-                                        <td id="countryHeadOfState"></td>
-                                    </tr>
+                                    </tr>                                    
                                     <tr>
                                         <th>Currency</th>
                                         <td id="countryCurrency"></td>
@@ -61,7 +57,7 @@
                                     <tr>
                                         <th>Weather</th>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weatherModal">and now, the weather...</button>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weatherModal">Weather</button>
                                         </td>                                       
                                     </tr>
                                 </table> 
@@ -71,15 +67,36 @@
                 </div>
                 <div class="modal fade" id="weatherModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">5-Day Forecast</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                              <h3 class="modal-title" id="exampleModalLabel">Current Weather</h3>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table>
+                                    <tr>
+                                        <th>Outlook</th>
+                                        <td id="weatherMain"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Conditions</th>
+                                        <td id="weatherDetail"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Current Temp. (Fahrenheit)</th>
+                                        <td id="weatherTemp"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Humidity</th>
+                                        <td id="weatherHumidity"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Windspeed (mph)</th>
+                                        <td id="weatherWind"></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                          ...
-                        </div>                        
-                      </div>
                     </div>
                   </div>
             </div>
