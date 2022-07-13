@@ -1,6 +1,8 @@
 // Step 4: Task - Primary script file
 
+//Api Keys
 const apiKey = '05b5574976782477ccf8ab24bedc1f41';  //openWeather API
+const apiKey2 = '7868d543588241e4a13c9b7845e65aa2';  //openExchangeRates API
 
 //preloader function
 $(window).on('load', function () {
@@ -11,9 +13,25 @@ $(window).on('load', function () {
     }
 });
 
+
 $(document).ready(function() {
 
-    //State
+    //Initiating the Map
+    let map = L.map('map').setView([50, 0], 3);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+      
+    
+    //State    
+    //Device Location info
+    let deviceLat;
+    let deviceLon;
+    let deviceCountryCode;
+    let deviceCountryName;
+    
+    //Country Info Modal
     let countryCode;
     let countryName;    
     let countryCapital;
@@ -22,17 +40,25 @@ $(document).ready(function() {
     let countryExchangeRate;    
     let countryWiki;
     
+    //Capital Location for Weather API Call
     let capitalLat;
     let capitalLon;
     
+    //Weather Info Modal
     let weatherMain;
     let weatherDetail;
     let weatherTemp;
     let weatherHumidity;
     let weatherWind;
 
-    
+    //Country Outline Overlay
+    let countryOutline = new L.geoJson().addTo(map);
 
+    get_country_codes();
+    getLocation();
+
+
+    //Modal Updating Functions
     //Update Infobox Function
     function updateInfo() {
         document.getElementById("countryName").innerText = countryName;
@@ -52,12 +78,60 @@ $(document).ready(function() {
         document.getElementById("weatherWind").innerText = weatherWind;
     };
 
-    //currently sets all the values to undefined on page load
-    updateInfo();
-    updateWeather();
 
+    //Device Location Functions
+    //Get current position function
+    function getLocation() {
+        if (navigator.geolocation) {  //if HTML5 Geolocation is supported...
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    };
+    
+    //get coordinates of current position function
+    function showPosition(position) {  //Saves the device's coordinates
+        deviceLat = position.coords.latitude;
+        deviceLon = position.coords.longitude;        
+        getDeviceCountry(deviceLat, deviceLon);
+    };  
 
-    //Function that provides the country list and codes to the "Select Country" dropdown menu
+    //get country code for position of current coordinates function
+    function getDeviceCountry(lat, lon) {
+        $.ajax({
+            url: "libraries/php/getDeviceCountry.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                Lat: lat,
+                Lon: lon
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    deviceCountryCode = result['data']['countryCode'];
+                    deviceCountryName = result['data']['countryName'];
+                    getCountryOutline();
+                    getCountryInfo();
+                }
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+    
+    //The Select Country Box
+    //Dropdown menu selection - Event Listener
+    document.getElementById("country_list").addEventListener('change', function(){
+        countryCode = this.value;  //Sets the countryCode from the user's selection
+        console.log("You selected: ", countryCode);
+        getCountryInfo(countryCode);
+        getCountryOutline(countryCode);
+    });
+
+    //Function that provides the country list and ISO codes to the dropdown menu
     function get_country_codes() {
         $.ajax({
             url: "libraries/php/getCountryCodes.php?",
@@ -74,33 +148,44 @@ $(document).ready(function() {
         });
     };
 
-    get_country_codes();
-    
-    //Dropdown menu selection - Event Listener
-    document.getElementById("country_list").addEventListener('change', function(){
-        countryCode = this.value;  //Sets the countryCode from the user's selection
-        console.log("You selected: ", countryCode);
-        getCountryInfo(countryCode);  //Uses the code in subsequent api calls... 
-    });
-
+    //Various AJAX functions
+    //Get coordinates from the json file to create the country highlight overlay on the map
+    function getCountryOutline(iso2 = deviceCountryCode) {
+        $.ajax({
+            url: "libraries/php/getCountryOutline.php?",            
+            type: "GET",            
+            data: {
+                Country: iso2
+            },
+            success: function (json) {
+                // console.log(json)                
+                data = JSON.parse(json);
+                countryOutline.clearLayers();
+                countryOutline.addData(data);
+                const border = countryOutline.getBounds();
+                map.fitBounds(border);;
+            },               
+        });
+    };
 
     //get Country Info function
-    function getCountryInfo(iso2) {
-        $.ajax({  //Constructing the api call...
+    function getCountryInfo(iso2 = deviceCountryCode) {
+        $.ajax({
             url: "libraries/php/getCountryInfo.php",
             type: "POST",
             dataType: "json",
-            data: { //loading the required parameters into the api call...
+            data: {
                 ISO2Code: iso2
             },
             success: function(result) {
-                // console.log(JSON.stringify(result));  //Log the response to console
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     countryName = result['data'][0]['countryName'];
                     countryCapital = result['data'][0]['capital'];
                     countryPopulation = result['data'][0]['population'];
                     countryCurrency = result['data'][0]['currencyCode'];
-                    getLatLon(countryCapital, apiKey);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city
+                    getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city
+                    getExchangeRates();
                     updateInfo();  //Updates the Country Info box with all the new information
                 }
             },
@@ -112,7 +197,7 @@ $(document).ready(function() {
     };    
 
     //get Capital City Coordinates function
-    function getLatLon(city, apiKey) {
+    function getLatLon(city = countryCapital) {
         $.ajax({
             url: "libraries/php/getLatLon.php",
             type: "POST",
@@ -137,7 +222,7 @@ $(document).ready(function() {
     };
 
     //get Weather in Capital City function
-    function getWeather(lat, lon, apiKey) {
+    function getWeather(lat = deviceLat, lon = deviceLon) {
         $.ajax({
             url: "libraries/php/getWeather.php",
             type: "POST",
@@ -165,6 +250,26 @@ $(document).ready(function() {
         });
     };
 
-
-
+    //get Exchange Rates Function
+    function getExchangeRates() {
+        $.ajax({
+            url: "libraries/php/getExchangeRate.php",
+            type: "POST",
+            dataType: "json",
+            data: {                
+                APIKey: apiKey2
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {  
+                    countryExchangeRate = result['data']['rates'][countryCurrency];
+                    updateInfo();
+                }
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
 });

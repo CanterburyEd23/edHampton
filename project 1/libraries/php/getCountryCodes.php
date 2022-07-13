@@ -1,7 +1,7 @@
 <?php
     //Fetch and prepare the data from the countryBorders file
 	$dataFetch = file_get_contents("../json/countryBorders.geo.json");
-		$data = json_decode($dataFetch);
+	$data = json_decode($dataFetch);
 	$features = $data->features;
 
 	//Create and populate the all_countries array from the features array.
