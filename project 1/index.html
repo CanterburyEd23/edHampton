@@ -13,19 +13,19 @@
     </head>
     
     <body>
-        <nav class="navbar navbar-expand-lg bg-light">
+        <nav id='navbar' class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
                 <h1>Gazetteer</h1>
                 <select id="country_list" name="country_list">
                     <option value="">Select Country</option>
                 </select>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Country Info</button>                
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal">Country Info</button>                
             </div>
         </nav>
         
         <main>
             <div id="map">
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -33,7 +33,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">                                
-                                <table>                                    
+                                <table class="modal-table">                                    
                                     <tr>
                                         <th>Capital City</th>
                                         <td id="countryCapital"></td>
@@ -44,22 +44,18 @@
                                     </tr>                                    
                                     <tr>
                                         <th>Currency</th>
-                                        <td id="countryCurrency"></td>
+                                        <td id="countryCurrencyName"></td>
                                     </tr>
                                     <tr>
                                         <th>Exchange Rate (USD)</th>
                                         <td id="countryExchangeRate"></td>
                                     </tr>
                                     <tr>
-                                        <th>Wikipedia</th>
-                                        <td id="countryWiki"></td>                                        
-                                    </tr>
-                                    <tr>
-                                        <th>Weather</th>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weatherModal">Weather</button>
+                                            <a id="countryWiki" type="button" class="btn btn-warning">Wikipedia</a>
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#weatherModal">Weather</button>
                                         </td>                                       
-                                    </tr>
+                                    </tr>                                    
                                 </table> 
                             </div>                        
                         </div>
@@ -69,11 +65,11 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                              <h3 class="modal-title" id="exampleModalLabel">Current Weather</h3>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h2 class="modal-title" id="modal-title">Current Weather (in capital)</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <table>
+                                <table class="modal-table">
                                     <tr>
                                         <th>Outlook</th>
                                         <td id="weatherMain"></td>
@@ -98,11 +94,33 @@
                             </div>
                         </div>
                     </div>
-                  </div>
+                </div>
+                <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="modal-title">About this App</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This app was made by Ed Hampton in 2022 as one of two final projects of an IT Career Switch computer-coding course.</p>
+                                <p>This was built using HTML, CSS, Bootstrap, Javascript, JQuery, Leaflet, and PHP.</p>
+                                <p>The third party APIs used are:</p>
+                                <ul>
+                                    <li><a href="http://www.geonames.org/">GeoNames</a></li>
+                                    <li><a href="https://openweathermap.org/">Open Weather</a></li>
+                                    <li><a href="https://openexchangerates.org/">Open Exchange Rates</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
+
         <footer>
             <p>Created by Ed Hampton, July 2022</p>
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#aboutModal">About</button>
         </footer>
 
         <div id="preloader"></div>
@@ -111,5 +129,6 @@
         <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./libraries/leaflet/leaflet.min.js"></script>        
         <script src="./libraries/js/script.js"></script>
+
     </body>
 </html>

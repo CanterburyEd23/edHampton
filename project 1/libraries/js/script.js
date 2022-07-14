@@ -37,8 +37,9 @@ $(document).ready(function() {
     let countryCapital;
     let countryPopulation;
     let countryCurrency;
+    let countryCurrencyName;
     let countryExchangeRate;    
-    let countryWiki;
+    let countryWiki = 'https://en.wikipedia.org/wiki/';
     
     //Capital Location for Weather API Call
     let capitalLat;
@@ -64,9 +65,10 @@ $(document).ready(function() {
         document.getElementById("countryName").innerText = countryName;
         document.getElementById("countryCapital").innerText = countryCapital;
         document.getElementById("countryPopulation").innerText = countryPopulation;       
-        document.getElementById("countryCurrency").innerText = countryCurrency;
+        document.getElementById("countryCurrencyName").innerText = countryCurrencyName;
         document.getElementById("countryExchangeRate").innerText = countryExchangeRate;        
-        document.getElementById("countryWiki").innerText = countryWiki;
+        let a = document.getElementById("countryWiki");
+        a.href = countryWiki;        
     };    
 
     //Update Weatherbox Function
@@ -112,7 +114,7 @@ $(document).ready(function() {
                     deviceCountryCode = result['data']['countryCode'];
                     deviceCountryName = result['data']['countryName'];
                     getCountryOutline();
-                    getCountryInfo();
+                    getCountryInfo();                                       
                 }
             },
             error: function(jqXHR, exception) {
@@ -163,7 +165,7 @@ $(document).ready(function() {
                 countryOutline.clearLayers();
                 countryOutline.addData(data);
                 const border = countryOutline.getBounds();
-                map.fitBounds(border);;
+                map.fitBounds(border);                
             },               
         });
     };
@@ -186,6 +188,8 @@ $(document).ready(function() {
                     countryCurrency = result['data'][0]['currencyCode'];
                     getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city
                     getExchangeRates();
+                    getCurrencyName();
+                    countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
                     updateInfo();  //Updates the Country Info box with all the new information
                 }
             },
@@ -211,7 +215,7 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {  
                     capitalLat = result['data'][0]['lat'];
                     capitalLon = result['data'][0]['lon']; 
-                    getWeather(capitalLat, capitalLon, apiKey);  //Uses the acquired coordinates to fetch the weather forecast for the capital
+                    getWeather(capitalLat, capitalLon, apiKey);  //Uses the acquired coordinates to fetch the weather forecast for the capital                    
                 }
             },
             error: function(jqXHR, exception) {
@@ -221,8 +225,8 @@ $(document).ready(function() {
         });
     };
 
-    //get Weather in Capital City function
-    function getWeather(lat = deviceLat, lon = deviceLon) {
+    //get weather in capital city function
+    function getWeather(lat = capitalLat, lon = capitalLon) {
         $.ajax({
             url: "libraries/php/getWeather.php",
             type: "POST",
@@ -250,7 +254,7 @@ $(document).ready(function() {
         });
     };
 
-    //get Exchange Rates Function
+    //get exchange rates function
     function getExchangeRates() {
         $.ajax({
             url: "libraries/php/getExchangeRate.php",
@@ -272,4 +276,28 @@ $(document).ready(function() {
             }
         });
     };
+
+    //get name of currency from currency code function
+    function getCurrencyName() {
+        $.ajax({
+            url: "libraries/php/getCurrencyName.php",
+            type: "POST",
+            dataType: "json",
+            data: {                
+                APIKey: apiKey2
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {  
+                    countryCurrencyName = result['data'][countryCurrency];
+                    updateInfo();
+                }
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
 });
