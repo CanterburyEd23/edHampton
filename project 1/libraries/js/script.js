@@ -38,7 +38,8 @@ $(document).ready(function() {
     let countryPopulation;
     let countryCurrency;
     let countryCurrencyName;
-    let countryExchangeRate;    
+    let countryExchangeRate;
+    let countryFlag;  
     let countryWiki = 'https://en.wikipedia.org/wiki/';
     
     //Capital Location for Weather API Call
@@ -55,6 +56,11 @@ $(document).ready(function() {
     //Country Outline Overlay
     let countryOutline = new L.geoJson().addTo(map);
 
+    //Map Markers
+    let youAreHere;
+    let capitalMarker;
+    
+
     get_country_codes();
     getLocation();
 
@@ -66,7 +72,9 @@ $(document).ready(function() {
         document.getElementById("countryCapital").innerText = countryCapital;
         document.getElementById("countryPopulation").innerText = countryPopulation;       
         document.getElementById("countryCurrencyName").innerText = countryCurrencyName;
-        document.getElementById("countryExchangeRate").innerText = countryExchangeRate;        
+        document.getElementById("countryExchangeRate").innerText = countryExchangeRate;
+        let flag = document.getElementById("countryFlag");
+        flag.src = countryFlag;       
         let a = document.getElementById("countryWiki");
         a.href = countryWiki;        
     };    
@@ -94,7 +102,9 @@ $(document).ready(function() {
     //get coordinates of current position function
     function showPosition(position) {  //Saves the device's coordinates
         deviceLat = position.coords.latitude;
-        deviceLon = position.coords.longitude;        
+        deviceLon = position.coords.longitude;
+        youAreHere = L.marker([deviceLat, deviceLon]).addTo(map); //Adds the "you are here" marker to the map
+        youAreHere.bindPopup("You are here").openPopup();
         getDeviceCountry(deviceLat, deviceLon);
     };  
 
@@ -127,8 +137,7 @@ $(document).ready(function() {
     //The Select Country Box
     //Dropdown menu selection - Event Listener
     document.getElementById("country_list").addEventListener('change', function(){
-        countryCode = this.value;  //Sets the countryCode from the user's selection
-        console.log("You selected: ", countryCode);
+        countryCode = this.value;  //Sets the countryCode from the user's selection        
         getCountryInfo(countryCode);
         getCountryOutline(countryCode);
     });
@@ -164,10 +173,22 @@ $(document).ready(function() {
                 data = JSON.parse(json);
                 countryOutline.clearLayers();
                 countryOutline.addData(data);
+                countryOutline.setStyle(polystyle());
                 const border = countryOutline.getBounds();
                 map.fitBounds(border);                
             },               
         });
+    };
+
+    //Style setting for the JS polystyle function
+    function polystyle() {
+        return {
+            fillColor: "RGB(50,140,70)",
+            weight: 1,
+            opacity: 0.0,
+            color: "white", //Outline color
+            fillOpacity: 0.5,
+        };
     };
 
     //get Country Info function
@@ -186,6 +207,7 @@ $(document).ready(function() {
                     countryCapital = result['data'][0]['capital'];
                     countryPopulation = result['data'][0]['population'];
                     countryCurrency = result['data'][0]['currencyCode'];
+                    countryFlag = 'https://countryflagsapi.com/png/' + iso2;
                     getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city
                     getExchangeRates();
                     getCurrencyName();
@@ -214,7 +236,9 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {  
                     capitalLat = result['data'][0]['lat'];
-                    capitalLon = result['data'][0]['lon']; 
+                    capitalLon = result['data'][0]['lon'];
+                    capitalMarker = L.marker([capitalLat, capitalLon]).addTo(map); //Adds the capital city marker to the map
+                    capitalMarker.bindPopup(`${countryName} capital: ${city}`);
                     getWeather(capitalLat, capitalLon, apiKey);  //Uses the acquired coordinates to fetch the weather forecast for the capital                    
                 }
             },

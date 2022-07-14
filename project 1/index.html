@@ -29,10 +29,10 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title" id="countryName"></h2>
+                                <h2 class="modal-title" id="countryName"></h2>                                
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">                                
+                            <div class="modal-body" id="infoModalBody">                                                                
                                 <table class="modal-table">                                    
                                     <tr>
                                         <th>Capital City</th>
@@ -49,12 +49,17 @@
                                     <tr>
                                         <th>Exchange Rate (USD)</th>
                                         <td id="countryExchangeRate"></td>
-                                    </tr>
+                                    </tr>                                    
                                     <tr>
                                         <td>
                                             <a id="countryWiki" type="button" class="btn btn-warning">Wikipedia</a>
+                                        </td>
+                                        <td>
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#weatherModal">Weather</button>
-                                        </td>                                       
+                                        </td>
+                                        <td>
+                                            <img id='countryFlag' alt="country flag"/>
+                                        </td>                                      
                                     </tr>                                    
                                 </table> 
                             </div>                        
@@ -110,6 +115,7 @@
                                     <li><a href="http://www.geonames.org/">GeoNames</a></li>
                                     <li><a href="https://openweathermap.org/">Open Weather</a></li>
                                     <li><a href="https://openexchangerates.org/">Open Exchange Rates</a></li>
+                                    <li><a href='https://countryflagsapi.com/'>CountryFlagsAPI</a></li>
                                 </ul>
                             </div>
                         </div>

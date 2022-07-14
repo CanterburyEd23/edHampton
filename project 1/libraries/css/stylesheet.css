@@ -10,7 +10,7 @@ body {
 }
 
 #map {
-    height: 580px;
+    height: 520px;
     margin: 1rem;
     border-radius: 1rem;
 }
@@ -30,6 +30,10 @@ body {
 
 #modal-title, #countryName {
     color: rgb(0, 50, 0)
+}
+
+#countryFlag {
+    max-width: 100%;    
 }
 
 .modal-table tr:nth-child(odd) {
