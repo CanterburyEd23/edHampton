@@ -1,5 +1,5 @@
 <?php
-    //Fetch and prepare the data from the countryBorders file
+    //Fetch and prepare the data from the countryBorders.geo.json file
 	$dataFetch = file_get_contents("../json/countryBorders.geo.json");
 	$data = json_decode($dataFetch);
 	$features = $data->features;

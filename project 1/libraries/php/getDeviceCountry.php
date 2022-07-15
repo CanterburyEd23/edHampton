@@ -2,14 +2,13 @@
     //URL construction
 	$url='api.geonames.org/countryCode?lat=' . $_REQUEST['Lat'] . '&lng=' . $_REQUEST['Lon'] . '&type=JSON&username=canterburyed23';
 
+	//cURL object creation, execution, and cleanup
 	$ch = curl_init();
-	//cURL object creation
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,$url);
-	//cURL execution
     $result=curl_exec($ch);
-	curl_close($ch);  //cURL cleanup
+	curl_close($ch);
 
 	//Conversion of results into an associative array
     $decode = json_decode($result,true);

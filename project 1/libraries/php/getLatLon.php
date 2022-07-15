@@ -2,14 +2,13 @@
     //URL construction
 	$url='http://api.openweathermap.org/geo/1.0/direct?q=' . $_REQUEST['CityName'] . '&limit=1&appid=' . $_REQUEST['APIKey'];
 
+	//cURL object creation, execution, and cleanup
 	$ch = curl_init();
-	//cURL object creation
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,$url);
-	//cURL execution
     $result=curl_exec($ch);
-	curl_close($ch);  //cURL cleanup
+	curl_close($ch);
 
 	//Conversion of results into an associative array
     $decode = json_decode($result,true);	

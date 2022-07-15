@@ -1,4 +1,4 @@
-// Step 4: Task - Primary script file
+// Gazetter App - Primary script file
 
 //Api Keys
 const apiKey = '05b5574976782477ccf8ab24bedc1f41';  //openWeather API
@@ -13,7 +13,7 @@ $(window).on('load', function () {
     }
 });
 
-
+//On document ready...
 $(document).ready(function() {
 
     //Initiating the Map
@@ -22,14 +22,12 @@ $(document).ready(function() {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
     }).addTo(map);
-      
-    
+        
     //State    
     //Device Location info
     let deviceLat;
     let deviceLon;
     let deviceCountryCode;
-    let deviceCountryName;
     
     //Country Info Modal
     let countryCode;
@@ -122,7 +120,6 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     deviceCountryCode = result['data']['countryCode'];
-                    deviceCountryName = result['data']['countryName'];
                     getCountryOutline();
                     getCountryInfo();                                       
                 }
@@ -133,8 +130,9 @@ $(document).ready(function() {
             }
         });
     };
+
     
-    //The Select Country Box
+    //The "Select Country" dropdown menu
     //Dropdown menu selection - Event Listener
     document.getElementById("country_list").addEventListener('change', function(){
         countryCode = this.value;  //Sets the countryCode from the user's selection        
@@ -159,6 +157,7 @@ $(document).ready(function() {
         });
     };
 
+
     //Various AJAX functions
     //Get coordinates from the json file to create the country highlight overlay on the map
     function getCountryOutline(iso2 = deviceCountryCode) {
@@ -178,18 +177,7 @@ $(document).ready(function() {
                 map.fitBounds(border);                
             },               
         });
-    };
-
-    //Style setting for the JS polystyle function
-    function polystyle() {
-        return {
-            fillColor: "RGB(50,140,70)",
-            weight: 1,
-            opacity: 0.0,
-            color: "white", //Outline color
-            fillOpacity: 0.5,
-        };
-    };
+    };    
 
     //get Country Info function
     function getCountryInfo(iso2 = deviceCountryCode) {
@@ -264,10 +252,10 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {  
                     weatherMain = result['data']['weather'][0]['main'];
-                    weatherDetail = result['data']['weather'][0]['description'];
-                    weatherTemp = result['data']['main']['temp'];
+                    weatherDetail = result['data']['weather'][0]['description'];                   
                     weatherHumidity = result['data']['main']['humidity'];
                     weatherWind = result['data']['wind']['speed'];
+                    toCelsius(result['data']['main']['temp'])
                     updateWeather();  //Sets all the weather data in state, then with this function, updates the weatherinfo box
                 }
             },
@@ -322,6 +310,25 @@ $(document).ready(function() {
                 console.log(msg);
             }
         });
+    };
+
+    
+    //Other Miscellaneous Functions
+    //Style setting for the JS polystyle function
+    function polystyle() {
+        return {
+            fillColor: "RGB(50,140,70)",
+            weight: 1,
+            opacity: 0.0,
+            color: "white", //Outline color
+            fillOpacity: 0.5,
+        };
+    };
+
+    //Fahrenheit to Celsius temperature convertor function
+    function toCelsius(temp) {
+        let celsius = (temp - 32) * (5/9);
+        weatherTemp = celsius.toFixed(1);
     };
 
 });
