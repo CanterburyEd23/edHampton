@@ -22,6 +22,9 @@ $(document).ready(function() {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
     }).addTo(myMap);
+
+    wikiLinkMarkers = new L.FeatureGroup();
+    myMap.addLayer(wikiLinkMarkers);
         
     //State    
     //Device Location info
@@ -72,9 +75,7 @@ $(document).ready(function() {
         document.getElementById("countryCurrencyName").innerText = countryCurrencyName;
         document.getElementById("countryExchangeRate").innerText = countryExchangeRate;
         let flag = document.getElementById("countryFlag");
-        flag.src = countryFlag;       
-        let a = document.getElementById("countryWiki");
-        a.href = countryWiki;        
+        flag.src = countryFlag;
     };    
 
     //Update Weatherbox Function
@@ -174,7 +175,13 @@ $(document).ready(function() {
                 countryOutline.addData(data);
                 countryOutline.setStyle(polystyle());
                 const border = countryOutline.getBounds();
-                myMap.fitBounds(border);                
+                myMap.fitBounds(border);
+                //TEST
+                const north = border.getNorth();
+                const east = border.getEast();
+                const south = border.getSouth();
+                const west = border.getWest();
+                get_nearby_wikipedia(east, west, north, south);               
             },               
         });
     };    
@@ -312,6 +319,39 @@ $(document).ready(function() {
         });
     };
 
+    //get random bunch of wiki links function
+    function get_nearby_wikipedia(east, west, north, south) {
+        wikiLinkMarkers.clearLayers();        
+        $.ajax({
+            url: "libraries/php/getNearbyWiki.php",
+            type: "GET",
+            data: {
+                North: north,
+                East: east,
+                South: south,
+                West: west
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    let wikiLinks = result['data']['geonames'];
+                    const wiki_icon = L.ExtraMarkers.icon({
+                        icon: "fa-info",
+                        markerColor: "green-light",
+                        shape: "circle",
+                        prefix: "fa",
+                    });
+                    for (let i = 0; i < wikiLinks.length; i++) {
+                        const marker = L.marker([wikiLinks[i].lat, wikiLinks[i].lng], {
+                            icon: wiki_icon,
+                        }).bindPopup("<b>" + wikiLinks[i].title + "</b><br><a href='https://" + wikiLinks[i].wikipediaUrl + "'>Wikipedia Link</a>");
+                        wikiLinkMarkers.addLayer(marker);
+                    };
+                };
+            },
+        });
+    };
+
     
     //Other Miscellaneous Functions
     //Style setting for the JS polystyle function
@@ -332,16 +372,35 @@ $(document).ready(function() {
     };
 
 
-    //New Bollocks
-    var helloPopup = L.popup().setContent('Hello World!');
-    
-    L.easyButton('fa-globe', function(btn, map){
-        alert("Boo");
-        helloPopup.setLatLng(map.getCenter()).openOn(map);
-    }).addTo( myMap );
+    //easyButtons
+    //Country Info
+    L.easyButton('fa-info-circle', function() {
+        $('#infoModal').modal('show');
+    }).addTo(myMap);
+    //Currency Info
+    L.easyButton('fa-gbp', function(){
+        $('#currencyModal').modal('show');
+    }).addTo(myMap);
+    //Weather Info
+    L.easyButton('fa-cloud-sun', function(){
+        $('#weatherModal').modal('show');
+    }).addTo(myMap);
+    //Wiki Link
+    L.easyButton('fa-wikipedia-w', function(){
+        if (window.confirm(`This will leave this site and take you to ${countryName}'s Wikipedia page.  Are you sure?`)) {
+            window.location.href=countryWiki;
+        };
+    }).addTo(myMap);
+    //About
+    L.easyButton('fa-question', function(){
+        $('#aboutModal').modal('show');
+    }).addTo(myMap);
 
-    L.easyButton('<img src="/path/to/img/of/penguin.png">', function(btn, map){
-        var antarctica = [-77,70];
-        map.setView(antarctica);
-    }).addTo( myMap );
+
+
+    
+
+
+    
+
 });

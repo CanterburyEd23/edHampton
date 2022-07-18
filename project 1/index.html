@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.css">
         <link rel="stylesheet" href="./libraries/leaflet/leaflet.css">
         <link rel="stylesheet" href="./libraries/leaflet/easyButton.css">
+        <link rel="stylesheet" href="./libraries/extraMarkers/css/extraMarkers.min.css">
         <link rel="stylesheet" href="./libraries/css/stylesheet.css">
             
     </head>
@@ -19,16 +20,19 @@
                 <h1>Gazetteer</h1>
                 <select id="country_list" name="country_list">
                     <option value="">Select Country</option>
-                </select>
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#aboutModal">About</button>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal">Country Info</button>                
+                </select>                
             </div>
         </nav>
         
         <main>
             <div id="map">
-                <div id="htmlstar"></div>
-                <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <span type="button" class="fas fa-info-circle"></span>
+                <span class="fa fa-gbp"></span>
+                <span class="fa fa-cloud-sun"></span>  
+                <span class="fa fa-wikipedia-w"></span>
+                <span class="fas fa-question"></span>
+
+                <div class="modal fade" id="infoModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -44,22 +48,8 @@
                                     <tr>
                                         <th>Population</th>
                                         <td id="countryPopulation"></td>
-                                    </tr>                                    
-                                    <tr>
-                                        <th>Currency</th>
-                                        <td id="countryCurrencyName"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Exchange Rate (USD)</th>
-                                        <td id="countryExchangeRate"></td>
-                                    </tr>                                    
-                                    <tr>
-                                        <td>
-                                            <a id="countryWiki" type="button" class="btn btn-warning">Wikipedia</a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#weatherModal">Weather</button>
-                                        </td>
+                                    </tr>               
+                                    <tr>                                                                             
                                         <td>
                                             <img id='countryFlag' alt="country flag"/>
                                         </td>                                      
@@ -69,7 +59,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="weatherModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="currencyModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title">Currency</h2>                                
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="currencyModalBody">                                                                
+                                <table class="modal-table">                      
+                                    <tr>
+                                        <th>Currency</th>
+                                        <td id="countryCurrencyName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Exchange Rate (USD)</th>
+                                        <td id="countryExchangeRate"></td>
+                                    </tr>                               
+                                </table> 
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="weatherModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -103,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="aboutModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -120,6 +132,7 @@
                                     <li><a href="https://openexchangerates.org/">Open Exchange Rates</a></li>
                                     <li><a href='https://countryflagsapi.com/'>CountryFlagsAPI</a></li>
                                 </ul>
+                                <p>Icons are from <a href="https://fontawesome.com/">www.fontawesome.com</a></p>
                             </div>
                         </div>
                     </div>
@@ -137,6 +150,8 @@
         <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./libraries/leaflet/leaflet.min.js"></script>
         <script src="./libraries/leaflet/easyButton.js"></script>
+        <script src="https://kit.fontawesome.com/907b109d4a.js" crossorigin="anonymous"></script>
+        <script src="./libraries/extraMarkers/js/extraMarkers.min.js"></script>
         <script src="./libraries/js/script.js"></script>
 
     </body>
