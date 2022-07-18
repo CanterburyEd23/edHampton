@@ -1,6 +1,6 @@
 <?php
     //URL construction
-	$url='api.geonames.org/countryCode?lat=' . $_REQUEST['Lat'] . '&lng=' . $_REQUEST['Lon'] . '&type=JSON&username=canterburyed23';
+	$url='api.geonames.org/countryCode?lat=' . $_GET['Lat'] . '&lng=' . $_GET['Lon'] . '&type=JSON&username=canterburyed23';
 
 	//cURL object creation, execution, and cleanup
 	$ch = curl_init();

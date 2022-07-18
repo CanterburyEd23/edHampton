@@ -1,6 +1,6 @@
 <?php
     //URL construction
-	$url='https://openexchangerates.org/api/latest.json?app_id=' . $_REQUEST['APIKey'];
+	$url='https://openexchangerates.org/api/latest.json?app_id=' . $_GET['APIKey'];
 
 	//cURL object creation, execution, and cleanup
 	$ch = curl_init();

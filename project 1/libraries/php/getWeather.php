@@ -1,6 +1,6 @@
 <?php
     //URL construction
-	$url='https://api.openweathermap.org/data/2.5/weather?lat=' . $_REQUEST['Lat'] . '&lon=' . $_REQUEST['Lon'] . '&appid=' . $_REQUEST['APIKey'] . '&units=imperial';
+	$url='https://api.openweathermap.org/data/2.5/weather?lat=' . $_GET['Lat'] . '&lon=' . $_GET['Lon'] . '&appid=' . $_GET['APIKey'] . '&units=imperial';
 
 	//cURL object creation, execution, and cleanup
 	$ch = curl_init();

@@ -1,6 +1,6 @@
 <?php
     //URL construction
-	$url='http://api.openweathermap.org/geo/1.0/direct?q=' . $_REQUEST['CityName'] . '&limit=1&appid=' . $_REQUEST['APIKey'];
+	$url='http://api.openweathermap.org/geo/1.0/direct?q=' . $_GET['CityName'] . '&limit=1&appid=' . $_GET['APIKey'];
 
 	//cURL object creation, execution, and cleanup
 	$ch = curl_init();

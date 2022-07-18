@@ -1,6 +1,6 @@
 <?php
     //URL construction
-	$url='api.geonames.org/countryInfoJSON?formatted=true&' . 'country=' . $_REQUEST['ISO2Code'] . '&username=canterburyed23&style=full';
+	$url='api.geonames.org/countryInfoJSON?formatted=true&' . 'country=' . $_GET['ISO2Code'] . '&username=canterburyed23&style=full';
 
 	
 	//cURL object creation, execution, and cleanup

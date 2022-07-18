@@ -102,7 +102,13 @@ $(document).ready(function() {
     function showPosition(position) {  //Saves the device's coordinates
         deviceLat = position.coords.latitude;
         deviceLon = position.coords.longitude;
-        youAreHere = L.marker([deviceLat, deviceLon]).addTo(myMap); //Adds the "you are here" marker to the map
+        let customMarker = L.ExtraMarkers.icon({
+            icon: "fa-person",
+            markerColor: "red",
+            shape: "star",
+            prefix: "fa",
+        });
+        youAreHere = L.marker([deviceLat, deviceLon], { icon: customMarker }).addTo(myMap); //Adds the "you are here" marker to the map
         youAreHere.bindPopup("You are here").openPopup();
         getDeviceCountry(deviceLat, deviceLon);
     };  
@@ -111,8 +117,7 @@ $(document).ready(function() {
     function getDeviceCountry(lat, lon) {
         $.ajax({
             url: "libraries/php/getDeviceCountry.php",
-            type: "POST",
-            dataType: "json",
+            type: "GET",
             data: {
                 Lat: lat,
                 Lon: lon
@@ -190,8 +195,7 @@ $(document).ready(function() {
     function getCountryInfo(iso2 = deviceCountryCode) {
         $.ajax({
             url: "libraries/php/getCountryInfo.php",
-            type: "POST",
-            dataType: "json",
+            type: "GET",            
             data: {
                 ISO2Code: iso2
             },
@@ -221,8 +225,7 @@ $(document).ready(function() {
     function getLatLon(city = countryCapital) {
         $.ajax({
             url: "libraries/php/getLatLon.php",
-            type: "POST",
-            dataType: "json",
+            type: "GET",            
             data: {
                 CityName: city,
                 APIKey: apiKey
@@ -232,7 +235,13 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {  
                     capitalLat = result['data'][0]['lat'];
                     capitalLon = result['data'][0]['lon'];
-                    capitalMarker = L.marker([capitalLat, capitalLon]).addTo(myMap); //Adds the capital city marker to the map
+                    let customMarker = L.ExtraMarkers.icon({
+                        icon: "fa-star",
+                        markerColor: "green-dark",
+                        shape: "circle",
+                        prefix: "fa",
+                    });
+                    capitalMarker = L.marker([capitalLat, capitalLon], { icon: customMarker }).addTo(myMap); //Adds the capital city marker to the map                    
                     capitalMarker.bindPopup(`${countryName} capital: ${city}`);
                     getWeather(capitalLat, capitalLon, apiKey);  //Uses the acquired coordinates to fetch the weather forecast for the capital                    
                 }
@@ -248,8 +257,7 @@ $(document).ready(function() {
     function getWeather(lat = capitalLat, lon = capitalLon) {
         $.ajax({
             url: "libraries/php/getWeather.php",
-            type: "POST",
-            dataType: "json",
+            type: "GET",
             data: {
                 Lat: lat,
                 Lon: lon,
@@ -277,8 +285,7 @@ $(document).ready(function() {
     function getExchangeRates() {
         $.ajax({
             url: "libraries/php/getExchangeRate.php",
-            type: "POST",
-            dataType: "json",
+            type: "GET",
             data: {                
                 APIKey: apiKey2
             },
@@ -300,8 +307,7 @@ $(document).ready(function() {
     function getCurrencyName() {
         $.ajax({
             url: "libraries/php/getCurrencyName.php",
-            type: "POST",
-            dataType: "json",
+            type: "GET",
             data: {                
                 APIKey: apiKey2
             },
@@ -341,11 +347,11 @@ $(document).ready(function() {
                         shape: "circle",
                         prefix: "fa",
                     });
-                    for (let i = 0; i < wikiLinks.length; i++) {
+                    for (let i = 0; i < wikiLinks.length; i++) {  //for each wiki entry in the array, create a custom marker...                            
                         const marker = L.marker([wikiLinks[i].lat, wikiLinks[i].lng], {
                             icon: wiki_icon,
                         }).bindPopup("<b>" + wikiLinks[i].title + "</b><br><a href='https://" + wikiLinks[i].wikipediaUrl + "'>Wikipedia Link</a>");
-                        wikiLinkMarkers.addLayer(marker);
+                        wikiLinkMarkers.addLayer(marker);                                                
                     };
                 };
             },
@@ -395,12 +401,5 @@ $(document).ready(function() {
     L.easyButton('fa-question', function(){
         $('#aboutModal').modal('show');
     }).addTo(myMap);
-
-
-
-    
-
-
-    
 
 });
