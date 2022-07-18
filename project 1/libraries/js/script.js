@@ -17,11 +17,11 @@ $(window).on('load', function () {
 $(document).ready(function() {
 
     //Initiating the Map
-    let map = L.map('map').setView([50, 0], 3);
+    let myMap = L.map('map').setView([50, 0], 3);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
-    }).addTo(map);
+    }).addTo(myMap);
         
     //State    
     //Device Location info
@@ -52,7 +52,7 @@ $(document).ready(function() {
     let weatherWind;
 
     //Country Outline Overlay
-    let countryOutline = new L.geoJson().addTo(map);
+    let countryOutline = new L.geoJson().addTo(myMap);
 
     //Map Markers
     let youAreHere;
@@ -101,7 +101,7 @@ $(document).ready(function() {
     function showPosition(position) {  //Saves the device's coordinates
         deviceLat = position.coords.latitude;
         deviceLon = position.coords.longitude;
-        youAreHere = L.marker([deviceLat, deviceLon]).addTo(map); //Adds the "you are here" marker to the map
+        youAreHere = L.marker([deviceLat, deviceLon]).addTo(myMap); //Adds the "you are here" marker to the map
         youAreHere.bindPopup("You are here").openPopup();
         getDeviceCountry(deviceLat, deviceLon);
     };  
@@ -174,7 +174,7 @@ $(document).ready(function() {
                 countryOutline.addData(data);
                 countryOutline.setStyle(polystyle());
                 const border = countryOutline.getBounds();
-                map.fitBounds(border);                
+                myMap.fitBounds(border);                
             },               
         });
     };    
@@ -225,7 +225,7 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {  
                     capitalLat = result['data'][0]['lat'];
                     capitalLon = result['data'][0]['lon'];
-                    capitalMarker = L.marker([capitalLat, capitalLon]).addTo(map); //Adds the capital city marker to the map
+                    capitalMarker = L.marker([capitalLat, capitalLon]).addTo(myMap); //Adds the capital city marker to the map
                     capitalMarker.bindPopup(`${countryName} capital: ${city}`);
                     getWeather(capitalLat, capitalLon, apiKey);  //Uses the acquired coordinates to fetch the weather forecast for the capital                    
                 }
@@ -331,4 +331,17 @@ $(document).ready(function() {
         weatherTemp = celsius.toFixed(1);
     };
 
+
+    //New Bollocks
+    var helloPopup = L.popup().setContent('Hello World!');
+    
+    L.easyButton('fa-globe', function(btn, map){
+        alert("Boo");
+        helloPopup.setLatLng(map.getCenter()).openOn(map);
+    }).addTo( myMap );
+
+    L.easyButton('<img src="/path/to/img/of/penguin.png">', function(btn, map){
+        var antarctica = [-77,70];
+        map.setView(antarctica);
+    }).addTo( myMap );
 });

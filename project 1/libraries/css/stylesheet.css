@@ -60,7 +60,7 @@ body {
 }
 
 #map {
-    height: 1000px;    
+    height: 1280px;    
 }
 
 #navbar {
@@ -94,7 +94,8 @@ body {
     font-size: 16px;
 }
 
-footer {
+footer {    
+    width: 100%;
     padding: 0.5rem;
     color: antiquewhite;
     display: flex;
@@ -112,4 +113,16 @@ a:hover {
 
 a:active {
     color: black;
+}
+
+@media only screen and (max-height: 1050px) {
+    #map {
+        height: 900px;    
+    }
+}
+
+@media only screen and (max-height: 700px) {
+    #map {
+        height: 580px;    
+    }
 }

@@ -8,6 +8,7 @@
         <link rel="icon" href="./faviconGreen.png">
         <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.css">
         <link rel="stylesheet" href="./libraries/leaflet/leaflet.css">
+        <link rel="stylesheet" href="./libraries/leaflet/easyButton.css">
         <link rel="stylesheet" href="./libraries/css/stylesheet.css">
             
     </head>
@@ -19,12 +20,14 @@
                 <select id="country_list" name="country_list">
                     <option value="">Select Country</option>
                 </select>
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#aboutModal">About</button>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#infoModal">Country Info</button>                
             </div>
         </nav>
         
         <main>
             <div id="map">
+                <div id="htmlstar"></div>
                 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -125,15 +128,15 @@
         </main>
 
         <footer>
-            <p>Created by Ed Hampton, July 2022</p>
-            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#aboutModal">About</button>
+            <p>Created by Ed Hampton, July 2022</p>           
         </footer>
 
         <div id="preloader"></div>
         
         <script src="./libraries/js/jquery.min.js"></script>
         <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
-        <script src="./libraries/leaflet/leaflet.min.js"></script>        
+        <script src="./libraries/leaflet/leaflet.min.js"></script>
+        <script src="./libraries/leaflet/easyButton.js"></script>
         <script src="./libraries/js/script.js"></script>
 
     </body>
