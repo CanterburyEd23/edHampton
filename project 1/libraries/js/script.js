@@ -1,9 +1,5 @@
 // Gazetter App - Primary script file
 
-//Api Keys
-const apiKey = '05b5574976782477ccf8ab24bedc1f41';  //openWeather API
-const apiKey2 = '7868d543588241e4a13c9b7845e65aa2';  //openExchangeRates API
-
 //preloader function
 $(window).on('load', function () {
     if ($('#preloader').length) {
@@ -12,6 +8,7 @@ $(window).on('load', function () {
         });
     }
 });
+
 
 //On document ready...
 $(document).ready(function() {
@@ -34,30 +31,25 @@ $(document).ready(function() {
     
     //Country Info Modal
     let countryCode;
-    let countryName;    
+    let countryName;
+    let countryContinent;   
     let countryCapital;
-    let countryPopulation;
+    let countryPopulation;    
+    let countryFlag;    
+
+    //Currency Modal
     let countryCurrency;
     let countryCurrencyName;
     let countryExchangeRate;
-    let countryFlag;  
-    let countryWiki = 'https://en.wikipedia.org/wiki/';
-    
-    //Capital Location for Weather API Call
-    let capitalLat;
-    let capitalLon;
+    let currencyText;
     
     //Weather Info Modal
-    let weatherMain;
-    let weatherDetail;
-    let weatherTemp;
-    let weatherHumidity;
-    let weatherWind;
+    let capitalLat;
+    let capitalLon;
 
-    //Country Outline Overlay
+    //Wiki link, country outline, and markers
     let countryOutline = new L.geoJson().addTo(myMap);
-
-    //Map Markers
+    let countryWiki = 'https://en.wikipedia.org/wiki/';
     let youAreHere;
     let capitalMarker;
     
@@ -71,20 +63,13 @@ $(document).ready(function() {
     function updateInfo() {
         document.getElementById("countryName").innerText = countryName;
         document.getElementById("countryCapital").innerText = countryCapital;
+        document.getElementById("countryContinent").innerText = countryContinent;
         document.getElementById("countryPopulation").innerText = countryPopulation;       
         document.getElementById("countryCurrencyName").innerText = countryCurrencyName;
         document.getElementById("countryExchangeRate").innerText = countryExchangeRate;
+        document.getElementById("currencyText").innerHTML = currencyText;
         let flag = document.getElementById("countryFlag");
         flag.src = countryFlag;
-    };    
-
-    //Update Weatherbox Function
-    function updateWeather() {
-        document.getElementById("weatherMain").innerText = weatherMain;
-        document.getElementById("weatherDetail").innerText = weatherDetail;
-        document.getElementById("weatherTemp").innerText = weatherTemp;
-        document.getElementById("weatherHumidity").innerText = weatherHumidity;
-        document.getElementById("weatherWind").innerText = weatherWind;
     };
 
 
@@ -204,12 +189,12 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {
                     countryName = result['data'][0]['countryName'];
                     countryCapital = result['data'][0]['capital'];
+                    countryContinent = result['data'][0]['continentName'];
                     countryPopulation = result['data'][0]['population'];
                     countryCurrency = result['data'][0]['currencyCode'];
                     countryFlag = 'https://countryflagsapi.com/png/' + iso2;
-                    getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city
-                    getExchangeRates();
-                    getCurrencyName();
+                    getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city                    
+                    getExchangeRates();                    
                     countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
                     updateInfo();  //Updates the Country Info box with all the new information
                 }
@@ -227,8 +212,7 @@ $(document).ready(function() {
             url: "libraries/php/getLatLon.php",
             type: "GET",            
             data: {
-                CityName: city,
-                APIKey: apiKey
+                CityName: city
             },
             success: function(result) {
                 // console.log(JSON.stringify(result));
@@ -238,12 +222,12 @@ $(document).ready(function() {
                     let customMarker = L.ExtraMarkers.icon({
                         icon: "fa-star",
                         markerColor: "green-dark",
-                        shape: "circle",
+                        shape: "square",
                         prefix: "fa",
                     });
                     capitalMarker = L.marker([capitalLat, capitalLon], { icon: customMarker }).addTo(myMap); //Adds the capital city marker to the map                    
                     capitalMarker.bindPopup(`${countryName} capital: ${city}`);
-                    getWeather(capitalLat, capitalLon, apiKey);  //Uses the acquired coordinates to fetch the weather forecast for the capital                    
+                    getWeather(capitalLat, capitalLon);  //Uses the acquired coordinates to fetch the weather forecast for the capital                    
                 }
             },
             error: function(jqXHR, exception) {
@@ -260,18 +244,24 @@ $(document).ready(function() {
             type: "GET",
             data: {
                 Lat: lat,
-                Lon: lon,
-                APIKey: apiKey
+                Lon: lon
             },
             success: function(result) {
                 // console.log(JSON.stringify(result));
-                if (result.status.name == "ok") {  
-                    weatherMain = result['data']['weather'][0]['main'];
-                    weatherDetail = result['data']['weather'][0]['description'];                   
-                    weatherHumidity = result['data']['main']['humidity'];
-                    weatherWind = result['data']['wind']['speed'];
-                    toCelsius(result['data']['main']['temp'])
-                    updateWeather();  //Sets all the weather data in state, then with this function, updates the weatherinfo box
+                if (result.status.name == "ok") {                    
+                    for(let i = 0; i < 5; i++) {
+                        let data = [{
+                            weatherDate: timestampToDate(result['data']['daily'][i]['dt']),
+                            weatherOutlook: result['data']['daily'][i]['weather']['0']['main'],
+                            weatherHigh: toCelsius(result['data']['daily'][i]['temp']['max']),
+                            weatherLow: toCelsius(result['data']['daily'][i]['temp']['min']),
+                            weatherHumidity: result['data']['daily'][i]['humidity'],
+                            weatherWindspeed: result['data']['daily'][i]['wind_speed']
+                        }];       
+                        let table = 'weatherTable';
+                        populateTable(table, data);
+                    };
+                    // toCelsius(result['data']['current']['temp'])
                 }
             },
             error: function(jqXHR, exception) {
@@ -279,21 +269,18 @@ $(document).ready(function() {
                 console.log(msg);
             }
         });
-    };
+    };    
 
     //get exchange rates function
     function getExchangeRates() {
         $.ajax({
             url: "libraries/php/getExchangeRate.php",
             type: "GET",
-            data: {                
-                APIKey: apiKey2
-            },
             success: function(result) {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {  
-                    countryExchangeRate = result['data']['rates'][countryCurrency];
-                    updateInfo();
+                    countryExchangeRate = result['data']['rates'][countryCurrency].toFixed(2);
+                    getCurrencyName();
                 }
             },
             error: function(jqXHR, exception) {
@@ -307,14 +294,12 @@ $(document).ready(function() {
     function getCurrencyName() {
         $.ajax({
             url: "libraries/php/getCurrencyName.php",
-            type: "GET",
-            data: {                
-                APIKey: apiKey2
-            },
+            type: "GET",            
             success: function(result) {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {  
                     countryCurrencyName = result['data'][countryCurrency];
+                    currencyText = `1 U.S. Dollar is worth ${countryExchangeRate} ${countryCurrencyName}.`
                     updateInfo();
                 }
             },
@@ -359,7 +344,7 @@ $(document).ready(function() {
     };
 
     
-    //Other Miscellaneous Functions
+    //Other Misc. Functions
     //Style setting for the JS polystyle function
     function polystyle() {
         return {
@@ -375,6 +360,36 @@ $(document).ready(function() {
     function toCelsius(temp) {
         let celsius = (temp - 32) * (5/9);
         weatherTemp = celsius.toFixed(1);
+        return weatherTemp;
+    };
+
+    //Populate the weather table function
+    function populateTable(table, items) {
+        let HTMLtable = document.getElementById(table);
+        let row = HTMLtable.insertRow();
+        items.forEach( item => {          
+            let date = row.insertCell(0);
+            date.innerHTML = item.weatherDate;
+            let outlook = row.insertCell(1);
+            outlook.innerHTML = item.weatherOutlook;
+            let high = row.insertCell(2);
+            high.innerHTML = item.weatherHigh;
+            let low = row.insertCell(3);
+            low.innerHTML = item.weatherLow;
+            let humidity = row.insertCell(4);
+            humidity.innerHTML = item.weatherHumidity + "%";
+            let wind = row.insertCell(5);
+            wind.innerHTML = item.weatherWindspeed + "mph";
+        });
+    };
+
+    //Timestamp handling function
+    function timestampToDate(timestamp) {
+        const UNIXtimestamp = timestamp;
+        const milliseconds = UNIXtimestamp * 1000;
+        const dateObject = new Date(milliseconds);
+        const readableDate = dateObject.toLocaleString("en-UK", {weekday: "short", day: "numeric", month: "short"});
+        return readableDate;
     };
 
 

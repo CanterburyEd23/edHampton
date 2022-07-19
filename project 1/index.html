@@ -48,7 +48,11 @@
                                     <tr>
                                         <th>Population</th>
                                         <td id="countryPopulation"></td>
-                                    </tr>               
+                                    </tr>
+                                    <tr>
+                                        <th>Continent</th>
+                                        <td id="countryContinent"></td>
+                                    </tr>             
                                     <tr>                                                                             
                                         <td>
                                             <img id='countryFlag' alt="country flag"/>
@@ -75,6 +79,9 @@
                                     <tr>
                                         <th>Exchange Rate (USD)</th>
                                         <td id="countryExchangeRate"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="currencyText"></td>
                                     </tr>                               
                                 </table> 
                             </div>                        
@@ -85,31 +92,23 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title" id="modal-title">Current Weather (in capital)</h2>
+                                <h2 class="modal-title" id="modal-title">5-Day forecast</h2>
+                                <p><i>Based on predicted weather in the country's capital.</i></p>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <table class="modal-table">
-                                    <tr>
-                                        <th>Outlook</th>
-                                        <td id="weatherMain"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Conditions</th>
-                                        <td id="weatherDetail"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Current Temp. (Celsius)</th>
-                                        <td id="weatherTemp"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Humidity</th>
-                                        <td id="weatherHumidity"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Windspeed (mph)</th>
-                                        <td id="weatherWind"></td>
-                                    </tr>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Outlook</th>
+                                            <th>High (deg. C.)</th>
+                                            <th>Low (deg. C.)</th>
+                                            <th>Humidity</th>
+                                            <th>Wind</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="weatherTable"></tbody>
                                 </table>
                             </div>
                         </div>
