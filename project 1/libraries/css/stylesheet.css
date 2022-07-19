@@ -84,13 +84,16 @@ body {
     max-width: 100%;    
 }
 
+.modal-table {
+    width: 100%;
+}
+
 .modal-table tr:nth-child(odd) {
     background: rgb(215, 250, 218)
 }
 
 .modal-table tr th, td {
-    padding: 1rem;
-    margin: 1rem;
+    padding: 0.4rem;    
     font-size: 16px;
 }
 
