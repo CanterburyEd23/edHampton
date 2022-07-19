@@ -19,8 +19,8 @@ $(document).ready(function() {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
     }).addTo(myMap);
-
-    wikiLinkMarkers = new L.FeatureGroup();
+        
+    let wikiLinkMarkers = L.markerClusterGroup();    
     myMap.addLayer(wikiLinkMarkers);
         
     //State    
@@ -248,7 +248,8 @@ $(document).ready(function() {
             },
             success: function(result) {
                 // console.log(JSON.stringify(result));
-                if (result.status.name == "ok") {                    
+                if (result.status.name == "ok") { 
+                    clearTable('weatherTable');                   
                     for(let i = 0; i < 5; i++) {
                         let data = [{
                             weatherDate: timestampToDate(result['data']['daily'][i]['dt']),
@@ -365,7 +366,7 @@ $(document).ready(function() {
 
     //Populate the weather table function
     function populateTable(table, items) {
-        let HTMLtable = document.getElementById(table);
+        let HTMLtable = document.getElementById(table);        
         let row = HTMLtable.insertRow();
         items.forEach( item => {          
             let date = row.insertCell(0);
@@ -381,6 +382,14 @@ $(document).ready(function() {
             let wind = row.insertCell(5);
             wind.innerHTML = item.weatherWindspeed + "mph";
         });
+    };
+
+    //Clear weatherTable prior to repopulating it function
+    function clearTable(tableId) {
+        const tableToClear = document.getElementById(tableId);
+        while(tableToClear.rows.length > 0) {
+            tableToClear.deleteRow(0);
+        };
     };
 
     //Timestamp handling function
