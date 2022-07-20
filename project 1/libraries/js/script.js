@@ -47,9 +47,14 @@ $(document).ready(function() {
     let capitalLat;
     let capitalLon;
 
-    //Wiki link, country outline, and markers
+    //Wiki Modal
+    let wikiTitle;
+    let wikiSummary;
+    let wikiThumbnail;
+    let wikiLink;
+
+    //Country outline, and markers
     let countryOutline = new L.geoJson().addTo(myMap);
-    let countryWiki = 'https://en.wikipedia.org/wiki/';
     let youAreHere;
     let capitalMarker;
     
@@ -70,6 +75,13 @@ $(document).ready(function() {
         document.getElementById("currencyText").innerHTML = currencyText;
         let flag = document.getElementById("countryFlag");
         flag.src = countryFlag;
+    };
+
+    function updateWikiModal() {
+        document.getElementById("wikiTitle").innerText = wikiTitle;
+        document.getElementById("wikiSummary").innerText = wikiSummary;
+        document.getElementById("wikiThumbnail").src = wikiThumbnail;
+        document.getElementById("wikiLink").href = wikiLink;
     };
 
 
@@ -171,7 +183,7 @@ $(document).ready(function() {
                 const east = border.getEast();
                 const south = border.getSouth();
                 const west = border.getWest();
-                get_nearby_wikipedia(east, west, north, south);               
+                getNearbyWikis(east, west, north, south);               
             },               
         });
     };    
@@ -190,11 +202,12 @@ $(document).ready(function() {
                     countryName = result['data'][0]['countryName'];
                     countryCapital = result['data'][0]['capital'];
                     countryContinent = result['data'][0]['continentName'];
-                    countryPopulation = result['data'][0]['population'];
+                    countryPopulation = numberWithCommas(result['data'][0]['population']);
                     countryCurrency = result['data'][0]['currencyCode'];
                     countryFlag = 'https://countryflagsapi.com/png/' + iso2;
                     getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city                    
-                    getExchangeRates();                    
+                    getExchangeRates();
+                    getCountryWiki(countryName);                   
                     countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
                     updateInfo();  //Updates the Country Info box with all the new information
                 }
@@ -312,7 +325,7 @@ $(document).ready(function() {
     };
 
     //get random bunch of wiki links function
-    function get_nearby_wikipedia(east, west, north, south) {
+    function getNearbyWikis(east, west, north, south) {
         wikiLinkMarkers.clearLayers();        
         $.ajax({
             url: "libraries/php/getNearbyWiki.php",
@@ -344,7 +357,28 @@ $(document).ready(function() {
         });
     };
 
-    
+    //get wiki link and description for selected country function
+    function getCountryWiki(name) {               
+        $.ajax({
+            url: "libraries/php/getCountryWiki.php",
+            type: "GET",
+            data: {
+                Name: name.toLowerCase()
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    wikiTitle = result['data']['geonames'][0]['title'];
+                    wikiSummary = result['data']['geonames'][0]['summary'];
+                    wikiThumbnail = result['data']['geonames'][0]['thumbnailImg'];
+                    wikiLink = 'https://' + result['data']['geonames'][0]['wikipediaUrl'];
+                    updateWikiModal();
+                };                
+            },
+        });
+    };
+
+        
     //Other Misc. Functions
     //Style setting for the JS polystyle function
     function polystyle() {
@@ -401,6 +435,11 @@ $(document).ready(function() {
         return readableDate;
     };
 
+    //Regex function to handle population number
+    function numberWithCommas(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
 
     //easyButtons
     //Country Info
@@ -417,9 +456,7 @@ $(document).ready(function() {
     }).addTo(myMap);
     //Wiki Link
     L.easyButton('fa-wikipedia-w', function(){
-        if (window.confirm(`This will leave this site and take you to ${countryName}'s Wikipedia page.  Are you sure?`)) {
-            window.location.href=countryWiki;
-        };
+        $('#wikiModal').modal('show');        
     }).addTo(myMap);
     //About
     L.easyButton('fa-question', function(){
