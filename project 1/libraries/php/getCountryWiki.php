@@ -1,6 +1,8 @@
 <?php
-    //URL construction
-	$url='http://api.geonames.org/wikipediaBoundingBoxJSON?north=' . $_GET['North'] . '&south=' . $_GET['South'] . '&east=' . $_GET['East'] . '&west=' . $_GET['West'] . '&username=canterburyed23';
+    //URL construction & Paramater Prep
+    $param = $_GET['Name'];
+    $Name = rawurlencode(utf8_encode($param));
+	$url='api.geonames.org/wikipediaSearchJSON?q=' . $Name . '&maxRows=1&username=canterburyed23';
 
 	//cURL object creation, execution, and cleanup
 	$ch = curl_init();
