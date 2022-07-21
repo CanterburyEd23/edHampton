@@ -183,7 +183,6 @@ $(document).ready(function() {
                 countryOutline.setStyle(polystyle());
                 const border = countryOutline.getBounds();
                 myMap.fitBounds(border);
-                //TEST
                 const north = border.getNorth();
                 const east = border.getEast();
                 const south = border.getSouth();
@@ -213,7 +212,7 @@ $(document).ready(function() {
                     weatherTitle = countryCapital;
                     $("#weatherTitle").html(weatherTitle);
                     getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city                    
-                    // getExchangeRates();
+                    getExchangeRates();
                     getCountryWiki(countryName);                   
                     countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
                     updateInfo();  //Updates the Country Info box with all the new information
