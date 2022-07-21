@@ -78,10 +78,6 @@ html, body, main {
     width: 100%;
 }
 
-.modal-title, #countryName {
-    color: rgb(0, 50, 0)
-}
-
 #countryFlag {
     max-width: 50%;
     padding-left: 0.5rem;  
@@ -95,6 +91,10 @@ html, body, main {
     margin-bottom: 1rem;
 }
 
+.modal-content {
+    background-image: linear-gradient(to bottom right, rgb(215, 250, 218), antiquewhite);
+}
+
 .modal-body {
     font-size: 18px;
 }
@@ -103,8 +103,8 @@ html, body, main {
     width: 100%;
 }
 
-.modal-table tr:nth-child(odd) {
-    background: rgb(215, 250, 218)
+.modal-table tr {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .modal-table tr th, td {
