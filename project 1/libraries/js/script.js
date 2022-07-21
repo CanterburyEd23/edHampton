@@ -46,6 +46,7 @@ $(document).ready(function() {
     //Weather Info Modal
     let capitalLat;
     let capitalLon;
+    let weatherTitle;
 
     //Wiki Modal
     let wikiTitle;
@@ -55,7 +56,6 @@ $(document).ready(function() {
 
     //Country outline, and markers
     let countryOutline = new L.geoJson().addTo(myMap);
-    let youAreHere;
     let capitalMarker;
     
 
@@ -66,22 +66,22 @@ $(document).ready(function() {
     //Modal Updating Functions
     //Update Infobox Function
     function updateInfo() {
-        document.getElementById("countryName").innerText = countryName;
-        document.getElementById("countryCapital").innerText = countryCapital;
-        document.getElementById("countryContinent").innerText = countryContinent;
-        document.getElementById("countryPopulation").innerText = countryPopulation;       
-        document.getElementById("countryCurrencyName").innerText = countryCurrencyName;
-        document.getElementById("countryExchangeRate").innerText = countryExchangeRate;
-        document.getElementById("currencyText").innerHTML = currencyText;
-        let flag = document.getElementById("countryFlag");
-        flag.src = countryFlag;
+        $("#countryName").html(countryName);
+        $("#countryCapital").html(countryCapital);
+        $("#countryContinent").html(countryContinent);
+        $("#countryPopulation").html(countryPopulation); 
+        $("#countryCurrencyName").html(countryCurrencyName);
+        $("#countryExchangeRate").html(countryExchangeRate);
+        $("#currencyText").html(currencyText);
+        let flag = $("#countryFlag");
+        flag.attr("src", countryFlag);
     };
 
     function updateWikiModal() {
-        document.getElementById("wikiTitle").innerText = wikiTitle;
-        document.getElementById("wikiSummary").innerText = wikiSummary;
-        document.getElementById("wikiThumbnail").src = wikiThumbnail;
-        document.getElementById("wikiLink").href = wikiLink;
+        $("#wikiTitle").html(wikiTitle);
+        $("#wikiSummary").html(wikiSummary);
+        $("#wikiThumbnail").attr("src", wikiThumbnail);
+        $("#wikiLink").attr("href", wikiLink);
     };
 
 
@@ -105,8 +105,6 @@ $(document).ready(function() {
             shape: "star",
             prefix: "fa",
         });
-        youAreHere = L.marker([deviceLat, deviceLon], { icon: customMarker }).addTo(myMap); //Adds the "you are here" marker to the map
-        youAreHere.bindPopup("You are here").openPopup();
         getDeviceCountry(deviceLat, deviceLon);
     };  
 
@@ -137,7 +135,7 @@ $(document).ready(function() {
     
     //The "Select Country" dropdown menu
     //Dropdown menu selection - Event Listener
-    document.getElementById("country_list").addEventListener('change', function(){
+    $("#country_list").on('change', function(){
         countryCode = this.value;  //Sets the countryCode from the user's selection        
         getCountryInfo(countryCode);
         getCountryOutline(countryCode);
@@ -202,11 +200,13 @@ $(document).ready(function() {
                     countryName = result['data'][0]['countryName'];
                     countryCapital = result['data'][0]['capital'];
                     countryContinent = result['data'][0]['continentName'];
-                    countryPopulation = numberWithCommas(result['data'][0]['population']);
+                    countryPopulation = nearestMillion(result['data'][0]['population']) + " M";
                     countryCurrency = result['data'][0]['currencyCode'];
                     countryFlag = 'https://countryflagsapi.com/png/' + iso2;
+                    weatherTitle = "Forecast in " + countryCapital;
+                    document.getElementById('weatherTitle').innerHTML = weatherTitle;
                     getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city                    
-                    getExchangeRates();
+                    // getExchangeRates();
                     getCountryWiki(countryName);                   
                     countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
                     updateInfo();  //Updates the Country Info box with all the new information
@@ -270,7 +270,7 @@ $(document).ready(function() {
                             weatherHigh: toCelsius(result['data']['daily'][i]['temp']['max']),
                             weatherLow: toCelsius(result['data']['daily'][i]['temp']['min']),
                             weatherHumidity: result['data']['daily'][i]['humidity'],
-                            weatherWindspeed: result['data']['daily'][i]['wind_speed']
+                            weatherWindspeed: result['data']['daily'][i]['wind_speed'].toFixed(0)
                         }];       
                         let table = 'weatherTable';
                         populateTable(table, data);
@@ -349,7 +349,7 @@ $(document).ready(function() {
                     for (let i = 0; i < wikiLinks.length; i++) {  //for each wiki entry in the array, create a custom marker...                            
                         const marker = L.marker([wikiLinks[i].lat, wikiLinks[i].lng], {
                             icon: wiki_icon,
-                        }).bindPopup("<b>" + wikiLinks[i].title + "</b><br><a href='https://" + wikiLinks[i].wikipediaUrl + "'>Wikipedia Link</a>");
+                        }).bindPopup("<b>" + wikiLinks[i].title + "</b><br><a href='https://" + wikiLinks[i].wikipediaUrl + "' target='_blank'>Wikipedia Link</a>");
                         wikiLinkMarkers.addLayer(marker);                                                
                     };
                 };
@@ -394,7 +394,7 @@ $(document).ready(function() {
     //Fahrenheit to Celsius temperature convertor function
     function toCelsius(temp) {
         let celsius = (temp - 32) * (5/9);
-        weatherTemp = celsius.toFixed(1);
+        weatherTemp = celsius.toFixed(0);
         return weatherTemp;
     };
 
@@ -436,8 +436,9 @@ $(document).ready(function() {
     };
 
     //Regex function to handle population number
-    function numberWithCommas(number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    function nearestMillion(number) {
+        let rounded = (number / 1000000).toFixed(0);
+        return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
 
 
@@ -455,7 +456,7 @@ $(document).ready(function() {
         $('#weatherModal').modal('show');
     }).addTo(myMap);
     //Wiki Link
-    L.easyButton('fa-wikipedia-w', function(){
+    L.easyButton('fab fa-wikipedia-w', function(){
         $('#wikiModal').modal('show');        
     }).addTo(myMap);
     //About

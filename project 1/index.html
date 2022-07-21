@@ -11,54 +11,50 @@
         <link rel="stylesheet" href="./libraries/leaflet/easyButton.min.css">
         <link rel="stylesheet" href ="./libraries/markerCluster/markerCluster.min.css">
         <link rel="stylesheet" href="./libraries/markerCluster/MarkerCluster.Default.min.css">
-        <link rel="stylesheet" href="./libraries/extraMarkers/css/extraMarkers.min.css"> 
-        <link rel="stylesheet" href="./libraries/css/stylesheet.min.css">
+        <link rel="stylesheet" href="./libraries/extraMarkers/css/extraMarkers.min.css">
+        <link rel="stylesheet" href="./libraries/fontAwesome/css/all.min.css">
+        <link rel="stylesheet" href="./libraries/css/stylesheet.css">
     </head>
     
     <body>
-        <nav id='navbar' class="navbar navbar-expand-lg bg-light">
-            <div class="container-fluid">
-                <h1>Gazetteer</h1>
-                <select id="country_list" name="country_list">
-                    <option value="">Select Country</option>
-                </select>                
-            </div>
-        </nav>
-        
         <main>
-            <div id="map">
+
+            <div id="selectBar">
+                <select class="form-select form-select-lg mb-3" id="country_list">
+                    <option value="">Select Country</option>
+                </select>                            
+            </div>  
+
+            <div id="map">           
+
                 <span type="button" class="fas fa-info-circle"></span>
                 <span class="fa fa-gbp"></span>
-                <span class="fa fa-cloud-sun"></span>  
-                <span class="fa fa-wikipedia-w"></span>
+                <span class="fa fa-cloud-sun"></span>
+                <span class="fa-brand fa-wikipedia-w"></span>
                 <span class="fas fa-question"></span>
 
                 <div class="modal fade" id="infoModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title" id="countryName"></h2>                                
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h3 class="modal-title" id="countryName"></h3>
+                                <img id='countryFlag' alt="country flag"/>                               
+                                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                             </div>
                             <div class="modal-body" id="infoModalBody">                                                                
                                 <table class="modal-table">                                    
                                     <tr>
                                         <th>Capital City</th>
-                                        <td id="countryCapital"></td>
+                                        <td id="countryCapital" class="text-end"></td>
                                     </tr>
                                     <tr>
                                         <th>Population</th>
-                                        <td id="countryPopulation"></td>
+                                        <td id="countryPopulation" class="text-end"></td>
                                     </tr>
                                     <tr>
                                         <th>Continent</th>
-                                        <td id="countryContinent"></td>
-                                    </tr>             
-                                    <tr>                                                                             
-                                        <td>
-                                            <img id='countryFlag' alt="country flag"/>
-                                        </td>                                      
-                                    </tr>                                    
+                                        <td id="countryContinent" class="text-end"></td>
+                                    </tr>                                  
                                 </table> 
                             </div>                        
                         </div>
@@ -68,23 +64,21 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title">Currency</h2>                                
+                                <h3 class="modal-title">Currency</h3>                                
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body" id="currencyModalBody">                                                                
                                 <table class="modal-table">                      
                                     <tr>
                                         <th>Currency</th>
-                                        <td id="countryCurrencyName"></td>
+                                        <td id="countryCurrencyName" class="text-end"></td>
                                     </tr>
                                     <tr>
                                         <th>Exchange Rate (USD)</th>
-                                        <td id="countryExchangeRate"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" id="currencyText"></td>
+                                        <td id="countryExchangeRate" class="text-end"></td>
                                     </tr>                               
-                                </table> 
+                                </table>
+                                <p id="currencyText"></p>
                             </div>                        
                         </div>
                     </div>
@@ -93,8 +87,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title" id="modal-title">5-Day forecast</h2>
-                                <p><i>Based on predicted weather in the country's capital.</i></p>
+                                <h3 class="modal-title" id="weatherTitle"></h3>                                
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -119,13 +112,19 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title" id="wikiTitle"></h2>
+                                <h3 class="modal-title" id="wikiTitle"></h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body" id="wikiModalBody">
-                                <p id="wikiSummary"></p>
-                                <img id="wikiThumbnail">
-                                <a id="wikiLink">Wikipedia</a>
+                                <div class="row">
+                                    <div class="col-4" id="col1">
+                                        <img id="wikiThumbnail">
+                                        <a id="wikiLink" target="_blank">Wikipedia</a>
+                                    </div>
+                                    <div class="col" id="col2">
+                                        <p id="wikiSummary"></p>                                        
+                                    </div>
+                                </div>
                             </div>                        
                         </div>
                     </div>
@@ -142,22 +141,18 @@
                                 <p>This was built using HTML, CSS, Bootstrap, Javascript, JQuery, Leaflet, and PHP.</p>
                                 <p>The third party APIs used are:</p>
                                 <ul>
-                                    <li><a href="http://www.geonames.org/">GeoNames</a></li>
-                                    <li><a href="https://openweathermap.org/">Open Weather</a></li>
-                                    <li><a href="https://openexchangerates.org/">Open Exchange Rates</a></li>
-                                    <li><a href='https://countryflagsapi.com/'>CountryFlagsAPI</a></li>
+                                    <li><a href="http://www.geonames.org/" target="_blank">GeoNames</a></li>
+                                    <li><a href="https://openweathermap.org/" target="_blank">Open Weather</a></li>
+                                    <li><a href="https://openexchangerates.org/" target="_blank">Open Exchange Rates</a></li>
+                                    <li><a href='https://countryflagsapi.com/' target="_blank">CountryFlagsAPI</a></li>
                                 </ul>
-                                <p>Icons are from <a href="https://fontawesome.com/">www.fontawesome.com</a></p>
+                                <p>Icons are from <a href="https://fontawesome.com/" target="_blank">www.fontawesome.com</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
         </main>
-
-        <footer>
-            <p>Created by Ed Hampton, July 2022</p>           
-        </footer>
 
         <div id="preloader"></div>
         
@@ -165,7 +160,7 @@
         <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./libraries/leaflet/leaflet.min.js"></script>
         <script src="./libraries/leaflet/easyButton.min.js"></script>
-        <script src="https://kit.fontawesome.com/907b109d4a.js" crossorigin="anonymous"></script>
+        <script src="./libraries/fontAwesome/js/all.min.js"></script>
         <script src="./libraries/markerCluster/leaflet.markercluster.js"></script>
         <script src="./libraries/extraMarkers/js/extraMarkers.min.js"></script>
         <script src="./libraries/js/script.js"></script>
