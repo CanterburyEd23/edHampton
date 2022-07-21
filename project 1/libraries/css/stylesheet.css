@@ -110,3 +110,65 @@ html, body, main {
 .modal-table tr th, td {
     padding: 0.4rem;
 }
+
+/* Weatherbox Styling */
+
+#weatherBox {
+    background-image: linear-gradient(to bottom right, skyblue, antiquewhite);
+}
+
+#weatherBoxTitle {
+    color: black;
+}
+
+#weatherTitle {    
+    font-size: 28px;
+    padding-bottom: 1rem;
+    padding-top: 00.5rem;
+    font-weight: bold;
+}
+
+#weatherTitle, #weather1, #temps1, #weather1Infobox  {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#weather1, #temps1, #weather1Infobox {
+    font-size: 125%;
+    margin-bottom: 0.5rem;
+}
+
+#weatherTitle, #weather1Infobox {
+    margin-right: 0.25rem;
+}
+
+#weatherTitle, #weather1, #day2, #day2Info {
+    margin-left: 0.25rem;
+}
+
+#day2, #day3, #day4, #day5, #day2Info, #day3Info, #day4Info, #day5Info {
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-right: 00.25rem;
+}
+
+#day2, #day3, #day4, #day5 {
+    padding-top: 0.25rem;
+    padding-bottom: 00.5rem;
+    font-weight: bold;
+}
+
+#day2Info, #day3Info, #day4Info, #day5Info {
+    display: flex;
+    justify-content: space-between;
+}
+
+#temp1L {
+    font-size: 75%;
+}
+
+.high {
+    font-size: 18px;
+}
+
+.low {
+    font-size: 14px;
+}

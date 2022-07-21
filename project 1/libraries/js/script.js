@@ -77,12 +77,19 @@ $(document).ready(function() {
         flag.attr("src", countryFlag);
     };
 
+    //Update Wikibox Function
     function updateWikiModal() {
         $("#wikiTitle").html(wikiTitle);
         $("#wikiSummary").html(wikiSummary);
         $("#wikiThumbnail").attr("src", wikiThumbnail);
         $("#wikiLink").attr("href", wikiLink);
     };
+
+    //Set Dates in Weatherbox
+    $("#day2").html(Date.today().add(1).day().toString("ddd dS"));
+    $("#day3").html(Date.today().add(2).day().toString("ddd dS"));
+    $("#day4").html(Date.today().add(3).day().toString("ddd dS"));
+    $("#day5").html(Date.today().add(4).day().toString("ddd dS"));
 
 
     //Device Location Functions
@@ -203,8 +210,8 @@ $(document).ready(function() {
                     countryPopulation = nearestMillion(result['data'][0]['population']) + " M";
                     countryCurrency = result['data'][0]['currencyCode'];
                     countryFlag = 'https://countryflagsapi.com/png/' + iso2;
-                    weatherTitle = "Forecast in " + countryCapital;
-                    document.getElementById('weatherTitle').innerHTML = weatherTitle;
+                    weatherTitle = countryCapital;
+                    $("#weatherTitle").html(weatherTitle);
                     getLatLon(countryCapital);  //Uses the Capital City name to get co-ordinates, which in turn get the weather for that city                    
                     // getExchangeRates();
                     getCountryWiki(countryName);                   
@@ -260,22 +267,25 @@ $(document).ready(function() {
                 Lon: lon
             },
             success: function(result) {
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 if (result.status.name == "ok") { 
-                    clearTable('weatherTable');                   
-                    for(let i = 0; i < 5; i++) {
-                        let data = [{
-                            weatherDate: timestampToDate(result['data']['daily'][i]['dt']),
-                            weatherOutlook: result['data']['daily'][i]['weather']['0']['main'],
-                            weatherHigh: toCelsius(result['data']['daily'][i]['temp']['max']),
-                            weatherLow: toCelsius(result['data']['daily'][i]['temp']['min']),
-                            weatherHumidity: result['data']['daily'][i]['humidity'],
-                            weatherWindspeed: result['data']['daily'][i]['wind_speed'].toFixed(0)
-                        }];       
-                        let table = 'weatherTable';
-                        populateTable(table, data);
-                    };
-                    // toCelsius(result['data']['current']['temp'])
+                    $("#weather1").html(result['data']['daily'][0]['weather'][0]['main']),
+                    $("#temp1H").html(toCelsius(result['data']['daily'][0]['temp']['max']) + "<sup>o</sup>c."),
+                    $("#temp1L").html(toCelsius(result['data']['daily'][0]['temp']['min']) + "<sup>o</sup>c."),
+                    $("#outlook").html(result['data']['daily'][0]['weather'][0]['description'])
+                    $("#humidity").html(result['data']['daily'][0]['humidity'] + "% humidity")
+                    $("#weather2").html(result['data']['daily'][1]['weather'][0]['main']),
+                    $("#temp2H").html(toCelsius(result['data']['daily'][1]['temp']['max']) + "<sup>o</sup>"),
+                    $("#temp2L").html(toCelsius(result['data']['daily'][1]['temp']['min']) + "<sup>o</sup>"),
+                    $("#weather3").html(result['data']['daily'][2]['weather'][0]['main']),
+                    $("#temp3H").html(toCelsius(result['data']['daily'][2]['temp']['max']) + "<sup>o</sup>"),
+                    $("#temp3L").html(toCelsius(result['data']['daily'][2]['temp']['min']) + "<sup>o</sup>") ,
+                    $("#weather4").html(result['data']['daily'][3]['weather'][0]['main']),
+                    $("#temp4H").html(toCelsius(result['data']['daily'][3]['temp']['max']) + "<sup>o</sup>"),
+                    $("#temp4L").html(toCelsius(result['data']['daily'][3]['temp']['min']) + "<sup>o</sup>"),
+                    $("#weather5").html(result['data']['daily'][4]['weather'][0]['main']),
+                    $("#temp5H").html(toCelsius(result['data']['daily'][4]['temp']['max']) + "<sup>o</sup>"),
+                    $("#temp5L").html(toCelsius(result['data']['daily'][4]['temp']['min']) + "<sup>o</sup>")
                 }
             },
             error: function(jqXHR, exception) {
@@ -396,34 +406,6 @@ $(document).ready(function() {
         let celsius = (temp - 32) * (5/9);
         weatherTemp = celsius.toFixed(0);
         return weatherTemp;
-    };
-
-    //Populate the weather table function
-    function populateTable(table, items) {
-        let HTMLtable = document.getElementById(table);        
-        let row = HTMLtable.insertRow();
-        items.forEach( item => {          
-            let date = row.insertCell(0);
-            date.innerHTML = item.weatherDate;
-            let outlook = row.insertCell(1);
-            outlook.innerHTML = item.weatherOutlook;
-            let high = row.insertCell(2);
-            high.innerHTML = item.weatherHigh;
-            let low = row.insertCell(3);
-            low.innerHTML = item.weatherLow;
-            let humidity = row.insertCell(4);
-            humidity.innerHTML = item.weatherHumidity + "%";
-            let wind = row.insertCell(5);
-            wind.innerHTML = item.weatherWindspeed + "mph";
-        });
-    };
-
-    //Clear weatherTable prior to repopulating it function
-    function clearTable(tableId) {
-        const tableToClear = document.getElementById(tableId);
-        while(tableToClear.rows.length > 0) {
-            tableToClear.deleteRow(0);
-        };
     };
 
     //Timestamp handling function

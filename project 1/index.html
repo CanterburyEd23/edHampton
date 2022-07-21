@@ -6,6 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="./faviconGreen.png">
+        <!-- CSS Stylesheets -->
         <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="./libraries/leaflet/leaflet.min.css">
         <link rel="stylesheet" href="./libraries/leaflet/easyButton.min.css">
@@ -27,19 +28,20 @@
 
             <div id="map">           
 
+                <!-- EasyButtons -->
                 <span type="button" class="fas fa-info-circle"></span>
                 <span class="fa fa-gbp"></span>
                 <span class="fa fa-cloud-sun"></span>
                 <span class="fa-brand fa-wikipedia-w"></span>
                 <span class="fas fa-question"></span>
 
+                <!-- Info Modal -->
                 <div class="modal fade" id="infoModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h3 class="modal-title" id="countryName"></h3>
-                                <img id='countryFlag' alt="country flag"/>                               
-                                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                                <img id='countryFlag' alt="country flag"/>
                             </div>
                             <div class="modal-body" id="infoModalBody">                                                                
                                 <table class="modal-table">                                    
@@ -60,6 +62,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Currency Modal -->
                 <div class="modal fade" id="currencyModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -83,31 +86,70 @@
                         </div>
                     </div>
                 </div>
+                <!-- Weather Modal -->
                 <div class="modal fade" id="weatherModal">
                     <div class="modal-dialog">
-                        <div class="modal-content">
+                        <div class="modal-content" id="weatherBox">
                             <div class="modal-header">
-                                <h3 class="modal-title" id="weatherTitle"></h3>                                
+                                <h2 class="modal-title" id="weatherBoxTitle">Outlook</h2>                                
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <table class="modal-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Outlook</th>
-                                            <th>High (deg. C.)</th>
-                                            <th>Low (deg. C.)</th>
-                                            <th>Humidity</th>
-                                            <th>Wind</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="weatherTable"></tbody>
-                                </table>
+                                <div class="row">
+                                    <div class="col" id="weatherTitle"></div>
+                                </div>
+                                <div class="row" id="day1">
+                                    <div class="col-2" id="weather1"></div>
+                                    <div class="col-1" id="temps1">
+                                        <p class="text-end" id="temp1H"></p>
+                                        <p class="text-end" id="temp1L"></p>
+                                    </div>
+                                    <div class="col text-end" id="weather1Infobox">
+                                        <p class="text-end" id="outlook"></p>
+                                        <p class="text-end" id="humidity"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" id="day2"></div>
+                                    <div class="col" id="day3"></div>
+                                    <div class="col" id="day4"></div>
+                                    <div class="col" id="day5"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" id="day2Info">
+                                        <p id="weather2"></p>
+                                        <div id="temps2">
+                                            <p class="high text-end" id="temp2H"></p>
+                                            <p class="low text-end" id="temp2L"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col" id="day3Info"> 
+                                        <p id="weather3"></p>
+                                        <div id="temps3">
+                                            <p class="high text-end" id="temp3H"></p>
+                                            <p class="low text-end" id="temp3L"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col" id="day4Info">
+                                        <p id="weather4"></p>
+                                        <div id="temps4">
+                                            <p class="high text-end" id="temp4H"></p>
+                                            <p class="low text-end" id="temp4L"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col" id="day5Info">
+                                        <p id="weather5"></p>
+                                        <div id="temps5">
+                                            <p class="high text-end" id="temp5H"></p>
+                                            <p class="low text-end" id="temp5L"></p>
+                                        </div>
+                                    </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Wikipedia Modal -->
                 <div class="modal fade" id="wikiModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -129,6 +171,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- About Modal -->
                 <div class="modal fade" id="aboutModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -156,13 +199,18 @@
 
         <div id="preloader"></div>
         
-        <script src="./libraries/js/jquery.min.js"></script>
+        <!-- Javascript script files -->
+        <script src="./libraries/jQuery/jquery.min.js"></script>
         <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./libraries/leaflet/leaflet.min.js"></script>
         <script src="./libraries/leaflet/easyButton.min.js"></script>
         <script src="./libraries/fontAwesome/js/all.min.js"></script>
         <script src="./libraries/markerCluster/leaflet.markercluster.js"></script>
         <script src="./libraries/extraMarkers/js/extraMarkers.min.js"></script>
+        <script src="./libraries/dateJS/date-en-GB.js"></script>
+        <script src="./libraries/dateJS/core.js"></script>
+        <script src="./libraries/dateJS/parser.js"></script>
+        <script src="./libraries/dateJS/sugarpak.js"></script>
         <script src="./libraries/js/script.js"></script>
 
     </body>
