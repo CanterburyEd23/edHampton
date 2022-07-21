@@ -62,13 +62,16 @@ html, body, main {
 }
 
 #selectBar {    
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.0);
     width: 100%;
     display: flex;
-    justify-content: center;    
+    justify-content: center;
+    z-index: 1000;
+    position: absolute;
 }
 
 #country_list {
+    margin-top: 1rem;
     max-width: 60%;
     width: auto;
 }
