@@ -3,17 +3,16 @@
 	// example use from browser
 	// http://localhost/companydirectory/libs/php/getAll.php
 
-	// remove next two lines for production
-	
-	ini_set('display_errors', 'On');  //error reporting for development
-	error_reporting(E_ALL);
+	// remove next two lines for production	
+	// ini_set('display_errors', 'On');  //error reporting for development
+	// error_reporting(E_ALL);
 
 
 	//creating a connection to the database...
 	$executionStartTime = microtime(true);  //Timer
 	include("config.php");  //connection details (need to be added to gitIgnore)
 	header('Content-Type: application/json; charset=UTF-8');
-	
+		
 	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);  // creates a connection to the mySQL database
 
 	if (mysqli_connect_errno()) {  //If connection results in error, logs details, closes connection.
