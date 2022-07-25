@@ -19,12 +19,19 @@ $(document).ready(function() {
             url: "libraries/php/getAll.php",
             type: "GET",
             success: function(result) {
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</li>';
+                        listItem = '<li class="list-group-item">' 
+                            + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
+                            + '<div class="buttonDiv">'
+                                + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>' 
+                                + '<button type="button" class="fa-solid fa-user-pen fa-xl fa-fw fa-border editButton"></button>' 
+                                + '<button type="button" class="fa-solid fa-user-xmark fa-xl fa-fw fa-border deleteButton"></button>'
+                            + '</div>'
+                            + '</li>';
                         $("#allData").append(listItem);
                     };     
                 };

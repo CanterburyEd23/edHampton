@@ -59,4 +59,37 @@ html, body, main {
     margin: 0px;
     height: 100%;
     height: 100%;
+    background-color: wheat;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+:root {
+    --fa-border-radius: 50%;
+    --fa-border-color: black;
+    --first-color: rgb(53, 161, 53);
+    --second-color: yellow;
+    --third-color: rgb(255, 0, 0);
+    --fa-border-padding: 5px
+}
+
+.readButton {
+    background-color: var(--first-color);   
+    padding: var(--fa-border-padding);
+    margin: 0.5rem;
+}
+
+.editButton {
+    background-color: var(--second-color);   
+    padding: var(--fa-border-padding);
+    margin: 0.5rem;
+}
+
+.deleteButton {
+    background-color: var(--third-color);
+    padding: var(--fa-border-padding);
+    margin: 0.5rem;
 }
