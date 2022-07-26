@@ -14,8 +14,39 @@
 
     <body>
         <main>
-            <h1>Welcome!</h1>
-            <ul class="list-group list-group-flush" id="allData"></ul>
+            <nav>
+                <p id="staffResultsDetails">
+                    Showing results for all staff in 
+                    <a data-bs-toggle="collapse" href="#departmentCollapse" role="button" aria-expanded="false" aria-controls="departmentCollapse">all Departments</a> 
+                    at 
+                    <a data-bs-toggle="collapse" href="#siteCollapse" role="button" aria-expanded="false" aria-controls="siteCollapse">all Sites</a>
+                </p>
+                <p id="departmentResultsDetails">Showing results for all Departments at
+                    <a data-bs-toggle="collapse" href="#siteCollapse" role="button" aria-expanded="false" aria-controls="siteCollapse">all Sites</a>
+                </p>
+                <p id="siteResultsDetails">Showing results for all Sites at all Sites</p>
+                <div>
+                    <button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border" id="allStaffButton"></button>
+                    <button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border" id="allDepartmentsButton"></button>
+                    <button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border" id="allSitesButton"></button>
+                </div>
+            </nav>
+
+            <div class="collapse" id="departmentCollapse">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+            </div>
+            <div class="collapse" id="siteCollapse">
+                <div class="card card-body">
+                    Collapse Two
+                </div>
+            </div>
+
+            <ul class="list-group list-group-flush" id="allStaff"></ul>
+            <ul class="list-group list-group-flush" id="allDepartments"></ul>
+            <ul class="list-group list-group-flush" id="allSites"></ul>
+
         </main>
 
         <div id="preloader"></div>

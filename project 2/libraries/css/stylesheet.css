@@ -62,6 +62,12 @@ html, body, main {
     background-color: wheat;
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
 .list-group-item {
     display: flex;
     justify-content: space-between;
