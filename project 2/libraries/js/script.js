@@ -13,8 +13,44 @@ $(window).on('load', function () {
 //On document ready...
 $(document).ready(function() {
 
-    getAllStaff();
+    //State
+    let departments = [];
+    let sites = [];
+    let departmentId = 0;
+    let siteId = 0;
 
+
+    //Initial API calls
+    getAllStaff();
+    getDepartmentNames();
+    getSiteNames();
+
+
+    //Main select buttons
+    $("#allStaffButton").click(function(){
+        getAllStaff();
+        $(".depSelect").html('all Departments');        
+        $(".siteSelect").html('all Sites');
+        departmentId = 0;
+        siteId = 0;
+    });
+    $("#allDepartmentsButton").click(function(){
+        getAllDepartments();
+        $(".depSelect").html('all Departments');
+        $(".siteSelect").html('all Sites');
+        departmentId = 0;
+        siteId = 0;
+    });
+    $("#allSitesButton").click(function(){
+        getAllSites();
+        $(".depSelect").html('all Departments');
+        $(".siteSelect").html('all Sites');
+        departmentId = 0;
+        siteId = 0;
+    });
+    
+
+    // AJAX functions
     //Get all employees
     function getAllStaff() {
         $.ajax({
@@ -39,8 +75,6 @@ $(document).ready(function() {
                         $("#allStaff").append(listItem);
                     };
                     $("#allStaff").show();
-                    getDepartmentNames();
-                    getSiteNames();
                     $("#staffResultsDetails").show();
                 };
             },
@@ -75,7 +109,6 @@ $(document).ready(function() {
                         $("#allDepartments").append(listItem);
                     };
                     $("#allDepartments").show();
-                    getSiteNames();
                     $("#departmentResultsDetails").show();
                 };
             },
@@ -129,7 +162,14 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
-                    populateDepartmentModal(array);
+                    for (let i = 0; i < array.length; i++) {
+                        let department = {
+                            id: array[i]["id"],
+                            name: array[i]["name"]
+                        }
+                        departments.push(department);
+                    }
+                    populateDepartmentModal();                   
                 };
             },
             error: function(jqXHR, exception) {
@@ -148,7 +188,14 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {                   
                     let array = result['data'];
-                    populateSiteModal(array);
+                    for (let i = 0; i < array.length; i++) {
+                        let site = {
+                            id: array[i]["id"],
+                            name: array[i]["name"]
+                        }
+                        sites.push(site);
+                    }
+                    populateSiteModal();
                 };
             },
             error: function(jqXHR, exception) {
@@ -158,9 +205,10 @@ $(document).ready(function() {
         });
     };
 
+
     //Other Functions
     //Populate department select modal
-    function populateDepartmentModal(data) {
+    function populateDepartmentModal() {
         $("#departmentSelectModalBody").empty();
         const control = '<div class="form-check">'
             + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment0" data-bs-dismiss="modal" checked>'
@@ -168,17 +216,18 @@ $(document).ready(function() {
         + '</div>';
         $("#departmentSelectModalBody").append(control);
         let department;
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < departments.length; i++) {
             department = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment' + data[i]["id"] + '" data-bs-dismiss="modal">'
-            + '<label class="form-check-label" for="selectDepartment' + data[i]["id"] + '">' + data[i]["name"] + '</label>'
+            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment' + departments[i]["id"] + '" data-bs-dismiss="modal">'
+            + '<label class="form-check-label" for="selectDepartment' + departments[i]["id"] + '">' + departments[i]["name"] + '</label>'
         + '</div>';
         $("#departmentSelectModalBody").append(department);
         };
+        addDeptModalClickHandlers();
     };
 
     //Populate site select modal
-    function populateSiteModal(data) {
+    function populateSiteModal() {
         $("#siteSelectModalBody").empty();
         const control = '<div class="form-check">'
             + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite0" data-bs-dismiss="modal" checked>'
@@ -186,24 +235,40 @@ $(document).ready(function() {
         + '</div>';
         $("#siteSelectModalBody").append(control);
         let site;
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < sites.length; i++) {
             site = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite' + data[i]["id"] + '" data-bs-dismiss="modal">'
-            + '<label class="form-check-label" for="selectSite' + data[i]["id"] + '">' + data[i]["name"] + '</label>'
+            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite' + sites[i]["id"] + '" data-bs-dismiss="modal">'
+            + '<label class="form-check-label" for="selectSite' + sites[i]["id"] + '">' + sites[i]["name"] + '</label>'
         + '</div>';
         $("#siteSelectModalBody").append(site);
         };
+        addSiteModalClickHandlers();
     };
 
-    //Full list select buttons
-    $("#allStaffButton").click(function(){
-        getAllStaff();        
-    });
-    $("#allDepartmentsButton").click(function(){
-        getAllDepartments();       
-    });
-    $("#allSitesButton").click(function(){
-        getAllSites();       
-    });
+    //Department modal click handlers
+    function addDeptModalClickHandlers() {
+        $("#departmentSelectModalBody > div").each(function() {
+            $(this).click(function() {
+                let text = $(this).children('label').html();
+                $(".depSelect").html(text);
+                let department = departments.find(department => department.name === text);
+                departmentId = department.id;
+                // console.log(departmentId);
+            });
+        });
+    };
+
+    //Site modal click handlers
+    function addSiteModalClickHandlers() {
+        $("#siteSelectModalBody > div").each(function() {
+            $(this).click(function() {
+                let text = $(this).children('label').html();
+                $(".siteSelect").html(text);
+                let site = sites.find(site => site.name === text);
+                siteId = site.id;
+                console.log(siteId);
+            });
+        });
+    };
 
 });
