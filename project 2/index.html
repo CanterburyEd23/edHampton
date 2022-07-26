@@ -17,12 +17,12 @@
             <nav>
                 <p id="staffResultsDetails">
                     Showing results for all staff in 
-                    <a data-bs-toggle="collapse" href="#departmentCollapse" role="button" aria-expanded="false" aria-controls="departmentCollapse">all Departments</a> 
+                    <a data-bs-toggle="modal" data-bs-target="#departmentSelectModal" href="#departmentSelectModal" role="button">all Departments</a> 
                     at 
-                    <a data-bs-toggle="collapse" href="#siteCollapse" role="button" aria-expanded="false" aria-controls="siteCollapse">all Sites</a>
+                    <a data-bs-toggle="modal" data-bs-target="#siteSelectModal" href="#siteSelectModal" role="button">all Sites</a>
                 </p>
                 <p id="departmentResultsDetails">Showing results for all Departments at
-                    <a data-bs-toggle="collapse" href="#siteCollapse" role="button" aria-expanded="false" aria-controls="siteCollapse">all Sites</a>
+                    <a data-bs-toggle="modal" data-bs-target="#siteSelectModal" href="#siteSelectModal" role="button">all Sites</a>
                 </p>
                 <p id="siteResultsDetails">Showing results for all Sites at all Sites</p>
                 <div>
@@ -32,17 +32,40 @@
                 </div>
             </nav>
 
-            <div class="collapse" id="departmentCollapse">
-                <div class="card card-body">
-                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                </div>
-            </div>
-            <div class="collapse" id="siteCollapse">
-                <div class="card card-body">
-                    Collapse Two
+            <div class="modal fade" id="departmentSelectModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Select Department</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="departmentSelectModalBody">                                                            
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment0" data-bs-dismiss="modal" checked>
+                                <label class="form-check-label" for="selectDepartment0">all Departments</label>
+                            </div>                            
+                        </div>                        
+                    </div>
                 </div>
             </div>
 
+            <div class="modal fade" id="siteSelectModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Select Site</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="siteSelectModalBody">                                                             
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite0" data-bs-dismiss="modal" checked>
+                                <label class="form-check-label" for="selectSite0">all Sites</label>
+                            </div>                           
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+           
             <ul class="list-group list-group-flush" id="allStaff"></ul>
             <ul class="list-group list-group-flush" id="allDepartments"></ul>
             <ul class="list-group list-group-flush" id="allSites"></ul>
