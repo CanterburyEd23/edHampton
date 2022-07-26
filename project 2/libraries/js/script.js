@@ -65,12 +65,13 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item">' 
+                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
-                            + '<div class="buttonDiv">'
-                                + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>' 
-                                + '<button type="button" class="fa-solid fa-user-pen fa-xl fa-fw fa-border editButton"></button>' 
-                                + '<button type="button" class="fa-solid fa-user-xmark fa-xl fa-fw fa-border deleteButton"></button>'
-                            + '</div>'
+                            // + '<div class="buttonDiv">'
+                            //     + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>' 
+                            //     + '<button type="button" class="fa-solid fa-user-pen fa-xl fa-fw fa-border editButton"></button>' 
+                            //     + '<button type="button" class="fa-solid fa-user-xmark fa-xl fa-fw fa-border deleteButton"></button>'
+                            // + '</div>'
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
@@ -99,12 +100,13 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item">' 
+                            + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
-                            + '<div class="buttonDiv">'
-                                + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>' 
-                                + '<button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>' 
-                                + '<button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>'
-                            + '</div>'
+                            // + '<div class="buttonDiv">'
+                            //     + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>' 
+                            //     + '<button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>' 
+                            //     + '<button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>'
+                            // + '</div>'
                             + '</li>';
                         $("#allDepartments").append(listItem);
                     };
@@ -133,12 +135,13 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item">' 
+                            + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
-                            + '<div class="buttonDiv">'
-                                + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
-                                + '<button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>' 
-                                + '<button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>'
-                            + '</div>'
+                            // + '<div class="buttonDiv">'
+                            //     + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
+                            //     + '<button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>' 
+                            //     + '<button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>'
+                            // + '</div>'
                             + '</li>';
                         $("#allSites").append(listItem);
                     };
@@ -205,6 +208,40 @@ $(document).ready(function() {
         });
     };
 
+    //Filtered get staff function
+    function getStaffFiltered(id1, id2) {
+        $.ajax({
+            url: "libraries/php/getStaffFiltered.php",
+            type: "GET",
+            data: {
+                departmentID: id1,
+                locationID: id2
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    $("#allStaff").empty();
+                    $("#allDepartments, #departmentResultsDetails, #allSites, #siteResultsDetails").hide();
+                    let array = result['data'];
+                    let listItem;
+                    for (let i = 0; i < array.length; i++) {
+                        listItem = '<li class="list-group-item">' 
+                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
+                            + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
+                            + '</li>';
+                        $("#allStaff").append(listItem);
+                    };
+                    $("#allStaff").show();
+                    $("#staffResultsDetails").show();
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
 
     //Other Functions
     //Populate department select modal
@@ -252,8 +289,12 @@ $(document).ready(function() {
                 let text = $(this).children('label').html();
                 $(".depSelect").html(text);
                 let department = departments.find(department => department.name === text);
-                departmentId = department.id;
-                // console.log(departmentId);
+                if (!department) {
+                    departmentId = 0;
+                } else {
+                    departmentId = department.id;
+                }                
+                getStaffFiltered(departmentId, siteId);
             });
         });
     };
@@ -265,8 +306,17 @@ $(document).ready(function() {
                 let text = $(this).children('label').html();
                 $(".siteSelect").html(text);
                 let site = sites.find(site => site.name === text);
-                siteId = site.id;
-                console.log(siteId);
+                if (!site) {
+                    siteId = 0;
+                } else {
+                    siteId = site.id;
+                };                
+                if($("#departmentResultsDetails").css("display") === "none") {
+                    getStaffFiltered(departmentId, siteId);
+                } else {
+                    console.log("Best get building");
+                    ////////////getDepartmentsFiltered(siteId) - BUILD THIS
+                };                
             });
         });
     };
