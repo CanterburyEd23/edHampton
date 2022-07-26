@@ -41,8 +41,42 @@ $(document).ready(function() {
                 console.log(msg);
             }
         });
+    };    
+
+    //Get all departments
+    function getAllDepartments() {
+        $.ajax({
+            url: "libraries/php/getAllDepartments.php",
+            type: "GET",
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {};
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Get all sites
+    function getAllSites() {
+        $.ajax({
+            url: "libraries/php/getAllSites.php",
+            type: "GET",
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {};
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
     };
 
     getAllStaff();
+    getAllDepartments();
+    getAllSites();
 
 });
