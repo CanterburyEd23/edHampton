@@ -7,15 +7,15 @@
 	// ini_set('display_errors', 'On');  //error reporting for development
 	// error_reporting(E_ALL);
 
-
-	//creating a connection to the database...
-	$executionStartTime = microtime(true);  //Timer
-	include("config.php");  //connection details (need to be added to gitIgnore)
+	//Open a connection to the database
+	$executionStartTime = microtime(true);
+	include("config.php");
 	header('Content-Type: application/json; charset=UTF-8');
 		
-	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);  // creates a connection to the mySQL database
+	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
-	if (mysqli_connect_errno()) {  //If connection results in error, logs details, closes connection.
+	//Connection error handling
+	if (mysqli_connect_errno()) {
 		$output['status']['code'] = "300";
 		$output['status']['name'] = "failure";
 		$output['status']['description'] = "database unavailable";
@@ -27,15 +27,12 @@
 		exit;
 	}
 
-
-	//On succesful connection...
-	//Attempts this query
-	// SQL does not accept parameters and so is not prepared
-	$query = 'SELECT p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.lastName, p.firstName, d.name, l.name';
+	//On success...	
+	$query = 'SELECT p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.lastName, p.firstName, d.name, l.name'; // SQL does not accept parameters and so is not prepared
 
 	$result = $conn->query($query);
 	
-	//If the query results in failure, logs details and closes connection
+	//Query error handling
 	if (!$result) {
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -47,13 +44,12 @@
 		exit;
 	}
     
-	//If query was a success, makes each row from the database into an array entry in the data array
+	//Query success
    	$data = [];
 	while ($row = mysqli_fetch_assoc($result)) {
 		array_push($data, $row);
 	}
 
-	//Then, returns success, and returns the data array in JSON format, ready for the front-end js to use, then closes the connection
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";

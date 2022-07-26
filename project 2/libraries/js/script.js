@@ -14,12 +14,12 @@ $(window).on('load', function () {
 $(document).ready(function() {
 
     //Get all employees
-    function getAllData() {
+    function getAllStaff() {
         $.ajax({
             url: "libraries/php/getAll.php",
             type: "GET",
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     let listItem;
@@ -43,6 +43,6 @@ $(document).ready(function() {
         });
     };
 
-    getAllData();
+    getAllStaff();
 
 });
