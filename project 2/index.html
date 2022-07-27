@@ -70,6 +70,41 @@
             <ul class="list-group list-group-flush" id="allDepartments"></ul>
             <ul class="list-group list-group-flush" id="allSites"></ul>
 
+            <div class="modal fade" id="readStaffModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="staffName"></h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="readStaffModalBody">                                                             
+                            <table class="modal-table">                                    
+                                <tr>
+                                    <th>Email</th>
+                                    <td id="staffEmail" class="text-end"></td>
+                                </tr>
+                                <tr>
+                                    <th>Staff ID.</th>
+                                    <td id="staffId" class="text-end"></td>
+                                </tr>
+                                <tr>
+                                    <th>Job Role</th>
+                                    <td id="staffJob" class="text-end"></td>
+                                </tr>
+                                <tr>
+                                    <th>Department</th>
+                                    <td id="staffDepartment" class="text-end"></td>
+                                </tr>
+                                <tr>
+                                    <th>Location</th>
+                                    <td id="staffLocation" class="text-end"></td>
+                                </tr>
+                            </table>                         
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+
         </main>
 
         <div id="preloader"></div>

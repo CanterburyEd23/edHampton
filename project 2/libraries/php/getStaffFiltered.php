@@ -31,16 +31,16 @@
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production    
     if ($_REQUEST['departmentID'] > 0 && $_REQUEST['locationID'] > 0) {
-        $query = $conn->prepare('SELECT * FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.departmentID = ? AND d.locationID = ? ORDER BY p.lastName, p.firstName, d.name, l.name');
+        $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.departmentID = ? AND d.locationID = ? ORDER BY p.lastName, p.firstName, d.name');
         $query->bind_param("ii", $_REQUEST['departmentID'], $_REQUEST['locationID']);
     } elseif ($_REQUEST['departmentID'] > 0 && $_REQUEST['locationID'] <= 0) {
-        $query = $conn->prepare('SELECT * FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.departmentID = ? ORDER BY p.lastName, p.firstName, d.name, l.name');
+        $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.departmentID = ? ORDER BY p.lastName, p.firstName, d.name');
         $query->bind_param("i", $_REQUEST['departmentID']);
     } elseif ($_REQUEST['departmentID'] <= 0 && $_REQUEST['locationID'] > 0) {
-        $query = $conn->prepare('SELECT * FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE d.locationID = ? ORDER BY p.lastName, p.firstName, d.name, l.name');
+        $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE d.locationID = ? ORDER BY p.lastName, p.firstName, d.name');
         $query->bind_param("i", $_REQUEST['locationID']);
     } else {
-        $query = $conn->prepare('SELECT * FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.lastName, p.firstName, d.name, l.name');
+        $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.lastName, p.firstName, d.name');
     };    
 	$query->execute();
 		

@@ -64,8 +64,8 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item">' 
-                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
+                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
+                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readStaffButton"></button>'
                             + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
                             // + '<div class="buttonDiv">'
                             //     + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>' 
@@ -75,6 +75,7 @@ $(document).ready(function() {
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
+                    readStaffClickHandler();
                     $("#allStaff").show();
                     $("#staffResultsDetails").show();
                 };
@@ -102,11 +103,6 @@ $(document).ready(function() {
                         listItem = '<li class="list-group-item">' 
                             + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
-                            // + '<div class="buttonDiv">'
-                            //     + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>' 
-                            //     + '<button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>' 
-                            //     + '<button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>'
-                            // + '</div>'
                             + '</li>';
                         $("#allDepartments").append(listItem);
                     };
@@ -137,11 +133,6 @@ $(document).ready(function() {
                         listItem = '<li class="list-group-item">' 
                             + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
-                            // + '<div class="buttonDiv">'
-                            //     + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
-                            //     + '<button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>' 
-                            //     + '<button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>'
-                            // + '</div>'
                             + '</li>';
                         $("#allSites").append(listItem);
                     };
@@ -218,13 +209,13 @@ $(document).ready(function() {
                 locationID: id2
             },
             success: function(result) {
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     $("#allStaff").empty();
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item">' 
+                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
                             + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
                             + '</li>';
@@ -236,6 +227,7 @@ $(document).ready(function() {
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
+                    readStaffClickHandler();
                 };
             },
             error: function(jqXHR, exception) {
@@ -266,6 +258,34 @@ $(document).ready(function() {
                             + '</li>';
                         $("#allDepartments").append(listItem);
                     };
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Get staff by ID function
+    function getStaffById(id1) {
+        $.ajax({
+            url: "libraries/php/getStaffById.php",
+            type: "GET",
+            data: {
+                ID: id1
+            },
+            success: function(result) {
+                console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    let array = result['data'];
+                    $("#staffName").html(array[0]['firstName'] + " " + array[0]['lastName']);
+                    $("#staffId").html(array[0]["id"]);
+                    $("#staffEmail").html(array[0]["email"]);
+                    $("#staffJob").html(array[0]["jobTitle"]);
+                    $("#staffDepartment").html(array[0]["department"]);
+                    $("#staffLocation").html(array[0]["location"]);
+                    $('#readStaffModal').modal('show');
                 };
             },
             error: function(jqXHR, exception) {
@@ -315,7 +335,7 @@ $(document).ready(function() {
         addSiteModalClickHandlers();
     };
 
-    //Department modal click handlers
+    //Department modal click handler
     function addDeptModalClickHandlers() {
         $("#departmentSelectModalBody > div").each(function() {
             $(this).click(function() {
@@ -332,7 +352,7 @@ $(document).ready(function() {
         });
     };
 
-    //Site modal click handlers
+    //Site modal click handler
     function addSiteModalClickHandlers() {
         $("#siteSelectModalBody > div").each(function() {
             $(this).click(function() {
@@ -350,6 +370,17 @@ $(document).ready(function() {
                     getDepartmentsFiltered(siteId);
                 };                
             });
+        });
+    };
+
+    //readStaff button click handler
+    function readStaffClickHandler() {
+        $("#allStaff > li").each(function() {
+            $(this).click(function() {
+                let id = $(this).attr("id");
+                console.log(id);
+                getStaffById(id);
+            });            
         });
     };
 
