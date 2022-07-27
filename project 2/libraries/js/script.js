@@ -221,7 +221,6 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     $("#allStaff").empty();
-                    $("#allDepartments, #departmentResultsDetails, #allSites, #siteResultsDetails").hide();
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
@@ -231,8 +230,42 @@ $(document).ready(function() {
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
-                    $("#allStaff").show();
-                    $("#staffResultsDetails").show();
+                    if (array.length === 0) {
+                        listItem = '<li class="list-group-item">'
+                            + '<p><i>Search returned no results.</i></p>'
+                            + '</li>';
+                        $("#allStaff").append(listItem);
+                    };
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Filtered get departments function
+    function getDepartmentsFiltered(id1) {
+        $.ajax({
+            url: "libraries/php/getDepartmentsFiltered.php",
+            type: "GET",
+            data: {
+                locationID: id1
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    $("#allDepartments").empty();
+                    let array = result['data'];
+                    let listItem;
+                    for (let i = 0; i < array.length; i++) {
+                        listItem = '<li class="list-group-item">' 
+                            + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
+                            + '<p>' + array[i]['name'] + '</p>'
+                            + '</li>';
+                        $("#allDepartments").append(listItem);
+                    };
                 };
             },
             error: function(jqXHR, exception) {
@@ -314,8 +347,7 @@ $(document).ready(function() {
                 if($("#departmentResultsDetails").css("display") === "none") {
                     getStaffFiltered(departmentId, siteId);
                 } else {
-                    console.log("Best get building");
-                    ////////////getDepartmentsFiltered(siteId) - BUILD THIS
+                    getDepartmentsFiltered(siteId);
                 };                
             });
         });
