@@ -82,7 +82,7 @@ nav {
     --fa-border-padding: 5px
 }
 
-.readButton, .readStaffButton {
+.readButton {
     background-color: var(--first-color);   
     padding: var(--fa-border-padding);
     margin: 0.5rem;

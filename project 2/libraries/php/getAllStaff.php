@@ -1,21 +1,21 @@
 <?php
 
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/getAllDepartments.php
+	// http://localhost/companydirectory/libs/php/getAllStaff.php
 
 	// remove next two lines for production	
-	// ini_set('display_errors', 'On');
+	// ini_set('display_errors', 'On');  //error reporting for development
 	// error_reporting(E_ALL);
 
 	//Open a connection to the database
 	$executionStartTime = microtime(true);
 	include("config.php");
 	header('Content-Type: application/json; charset=UTF-8');
-
+		
 	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
 	//Connection error handling
-	if (mysqli_connect_errno()) {		
+	if (mysqli_connect_errno()) {
 		$output['status']['code'] = "300";
 		$output['status']['name'] = "failure";
 		$output['status']['description'] = "database unavailable";
@@ -25,10 +25,10 @@
 		mysqli_close($conn);
 		echo json_encode($output);
 		exit;
-	}	
+	}
 
 	//On success...	
-	$query = 'SELECT id, name FROM department ORDER BY name'; // SQL does not accept parameters and so is not prepared
+	$query = 'SELECT p.id, p.lastName, p.firstName FROM personnel p ORDER BY p.lastName, p.firstName'; // SQL does not accept parameters and so is not prepared
 
 	$result = $conn->query($query);
 	
@@ -43,7 +43,7 @@
 		echo json_encode($output);
 		exit;
 	}
-   
+    
 	//Query success
    	$data = [];
 	while ($row = mysqli_fetch_assoc($result)) {

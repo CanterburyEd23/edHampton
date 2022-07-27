@@ -28,7 +28,7 @@
 	}	
 
 	//On success...	
-	$query = 'SELECT id, name FROM location'; // SQL does not accept parameters and so is not prepared
+	$query = 'SELECT id, name FROM location ORDER BY name'; // SQL does not accept parameters and so is not prepared
 
 	$result = $conn->query($query);
 	

@@ -54,7 +54,7 @@ $(document).ready(function() {
     //Get all employees
     function getAllStaff() {
         $.ajax({
-            url: "libraries/php/getAll.php",
+            url: "libraries/php/getAllStaff.php",
             type: "GET",
             success: function(result) {
                 // console.log(JSON.stringify(result));
@@ -65,7 +65,7 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
-                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readStaffButton"></button>'
+                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
                             // + '<div class="buttonDiv">'
                             //     + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>' 
@@ -100,7 +100,7 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item">' 
+                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
                             + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
                             + '</li>';
@@ -108,6 +108,7 @@ $(document).ready(function() {
                     };
                     $("#allDepartments").show();
                     $("#departmentResultsDetails").show();
+                    readDepartmentClickHandler();
                 };
             },
             error: function(jqXHR, exception) {
@@ -130,7 +131,7 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item">' 
+                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
                             + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
                             + '</li>';
@@ -138,6 +139,7 @@ $(document).ready(function() {
                     };
                     $("#allSites").show();
                     $("#siteResultsDetails").show();
+                    readSiteClickHandler();
                 };
             },
             error: function(jqXHR, exception) {
@@ -209,7 +211,7 @@ $(document).ready(function() {
                 locationID: id2
             },
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     $("#allStaff").empty();
                     let array = result['data'];
@@ -252,12 +254,13 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item">' 
+                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
                             + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
                             + '</li>';
                         $("#allDepartments").append(listItem);
                     };
+                    readDepartmentClickHandler();
                 };
             },
             error: function(jqXHR, exception) {
@@ -276,7 +279,7 @@ $(document).ready(function() {
                 ID: id1
             },
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     $("#staffName").html(array[0]['firstName'] + " " + array[0]['lastName']);
@@ -286,6 +289,55 @@ $(document).ready(function() {
                     $("#staffDepartment").html(array[0]["department"]);
                     $("#staffLocation").html(array[0]["location"]);
                     $('#readStaffModal').modal('show');
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Get department by ID function
+    function getDepartmentById(id1) {
+        $.ajax({
+            url: "libraries/php/getDepartmentById.php",
+            type: "GET",
+            data: {
+                ID: id1
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    let array = result['data'];
+                    $("#departmentName").html(array[0]["name"]);
+                    $("#departmentId").html(array[0]["id"]);
+                    $("#departmentLocation").html(array[0]["location"]);
+                    $('#readDepartmentModal').modal('show');
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Get site by ID function
+    function getSiteById(id1) {
+        $.ajax({
+            url: "libraries/php/getSiteById.php",
+            type: "GET",
+            data: {
+                ID: id1
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    let array = result['data'];
+                    $("#siteId").html(array[0]["id"]);
+                    $("#siteName").html(array[0]["name"]);
+                    $('#readSiteModal').modal('show');
                 };
             },
             error: function(jqXHR, exception) {
@@ -378,9 +430,31 @@ $(document).ready(function() {
         $("#allStaff > li").each(function() {
             $(this).click(function() {
                 let id = $(this).attr("id");
-                console.log(id);
+                // console.log(id);
                 getStaffById(id);
             });            
+        });
+    };
+
+    //readDepartment button click handler
+    function readDepartmentClickHandler() {
+        $("#allDepartments > li").each(function() {
+            $(this).click(function() {
+                let id = $(this).attr("id");
+                // console.log(id);
+                getDepartmentById(id);
+            });
+        });
+    };
+
+    //readSite button click handler
+    function readSiteClickHandler() {
+        $("#allSites > li").each(function() {
+            $(this).click(function() {
+                let id = $(this).attr("id");
+                // console.log(id);
+                getSiteById(id);
+            });
         });
     };
 
