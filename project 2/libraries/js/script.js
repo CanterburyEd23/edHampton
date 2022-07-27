@@ -66,12 +66,7 @@ $(document).ready(function() {
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
                             + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
-                            + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
-                            // + '<div class="buttonDiv">'
-                            //     + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>' 
-                            //     + '<button type="button" class="fa-solid fa-user-pen fa-xl fa-fw fa-border editButton"></button>' 
-                            //     + '<button type="button" class="fa-solid fa-user-xmark fa-xl fa-fw fa-border deleteButton"></button>'
-                            // + '</div>'
+                            + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };

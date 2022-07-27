@@ -24,14 +24,16 @@
                 <p id="departmentResultsDetails">Showing results for all Departments at
                     <a data-bs-toggle="modal" data-bs-target="#siteSelectModal" href="#siteSelectModal" role="button" class="siteSelect">all Sites</a>
                 </p>
-                <p id="siteResultsDetails">Showing results for all Sites at all Sites</p>
-                <div>
+                <p id="siteResultsDetails">Showing results for all Sites at all Sites</p>                
+                <div>                    
                     <button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border" id="allStaffButton"></button>
                     <button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border" id="allDepartmentsButton"></button>
                     <button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border" id="allSitesButton"></button>
+                    <button type="button" class="fa-solid fa-circle-plus fa-xl fa-fw fa-border btn createButton" data-bs-toggle="collapse" data-bs-target="#addNewCollapse"></button>
                 </div>
-            </nav>
+            </nav>  
 
+            <!-- Search Filters -->
             <div class="modal fade" id="departmentSelectModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -64,12 +66,59 @@
                         </div>                        
                     </div>
                 </div>
-            </div>
-           
-            <ul class="list-group list-group-flush" id="allStaff"></ul>
-            <ul class="list-group list-group-flush" id="allDepartments"></ul>
-            <ul class="list-group list-group-flush" id="allSites"></ul>
+            </div>          
 
+            <!-- Create new Employee, Department, or Site Controls -->
+            <div class="collapse" id="addNewCollapse">
+                <div class="card card-body">                    
+                    <div class="row">
+                        <h2 class="col">What do you want to do?</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border"></button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="fa-solid fa-industry fa-2xl fa-fw fa-border"></button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border" data-bs-toggle="collapse" data-bs-target="#addNewCollapse"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Add User</div>
+                        <div class="col">Add Dept.</div>
+                        <div class="col">Add Site</div>
+                        <div class="col">Back</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Employee, Department, and Site forms -->
+            <div class="modal fade" id="createStaffModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Add New Employee</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="createStaffModalBody">
+                            <form>
+                                
+                            </form>
+                            <div class="buttonDiv">
+                                <button type="button" class="fa-solid fa-check fa-xl fa-fw fa-border readButton"></button>
+                                <button type="button" class="fa-solid fa-xmark fa-xl fa-fw fa-border deleteButton"></button>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Read Employee, Department, and Site modals -->
             <div class="modal fade" id="readStaffModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -99,7 +148,11 @@
                                     <th>Location</th>
                                     <td id="staffLocation" class="text-end"></td>
                                 </tr>
-                            </table>                         
+                            </table>
+                            <div class="buttonDiv">
+                                <button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>
+                                <button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>
+                            </div>
                         </div>                        
                     </div>
                 </div>
@@ -122,7 +175,11 @@
                                     <th>Location</th>
                                     <td id="departmentLocation" class="text-end"></td>
                                 </tr>
-                            </table>                         
+                            </table>
+                            <div class="buttonDiv">
+                                <button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>
+                                <button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>
+                            </div>                        
                         </div>                        
                     </div>
                 </div>
@@ -141,11 +198,20 @@
                                     <th>Site ID.</th>
                                     <td id="siteId" class="text-end"></td>
                                 </tr>
-                            </table>                         
+                            </table>
+                            <div class="buttonDiv">
+                                <button type="button" class="fa-solid fa-pen fa-xl fa-fw fa-border editButton"></button>
+                                <button type="button" class="fa-solid fa-trash fa-xl fa-fw fa-border deleteButton"></button>
+                            </div>                        
                         </div>                        
                     </div>
                 </div>
             </div>
+
+            <!-- Search Results Lists -->
+            <ul class="list-group list-group-flush" id="allStaff"></ul>
+            <ul class="list-group list-group-flush" id="allDepartments"></ul>
+            <ul class="list-group list-group-flush" id="allSites"></ul>
 
         </main>
 

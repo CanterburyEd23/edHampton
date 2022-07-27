@@ -79,7 +79,12 @@ nav {
     --first-color: rgb(53, 161, 53);
     --second-color: yellow;
     --third-color: rgb(255, 0, 0);
+    --fourth-color: rgb(120, 180, 250);
     --fa-border-padding: 5px
+}
+
+.createButton {
+    background-color: var(--fourth-color);
 }
 
 .readButton {
@@ -98,4 +103,9 @@ nav {
     background-color: var(--third-color);
     padding: var(--fa-border-padding);
     margin: 0.5rem;
+}
+
+.col {
+    display: flex;
+    justify-content: center;
 }
