@@ -535,7 +535,7 @@ $(document).ready(function() {
     //Delete Staff by ID
     $("#confirm7").click(function() {
         let proceed = confirm("You are about to delete this Employee's records, are you sure?");
-        if (proceed) {
+        if (proceed) {            
             $.ajax({
                 url: "libraries/php/deleteStaffById.php",
                 type: "POST",
@@ -558,57 +558,128 @@ $(document).ready(function() {
         };
     });
 
-    //Delete Department by ID
+    //Delete Department Part 1
+    //Delete Department button click
     $("#confirm8").click(function() {
         let proceed = confirm("You are about to delete this Department, are you sure?");
         if (proceed) {
-            $.ajax({
-                url: "libraries/php/deleteDepartmentById.php",
-                type: "POST",
-                data: {
-                    id: selectedId
-                },    
-                success: function(result) {
-                    console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {                        
-                        getAllDepartments();                        
-                        alert("Department deleted");
-                        $("#readDepartmentModal").modal("hide");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
+            deleteDepartmentStaffCheck();                                  
         };
     });
 
-    //Delete Site by ID
+    //Delete Department Part 2
+    //Check Department for Employees
+    function deleteDepartmentStaffCheck() {
+        $.ajax({
+            url: "libraries/php/deleteDepartmentStaffCheck.php",
+            type: "GET",
+            data: {
+                ID: selectedId
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    let array = result['data'];
+                    if (array.length > 0) {
+                        alert("Cannot delete a Department with Employees assigned to it!");
+                        return;
+                    } else {
+                        deleteDepartment();
+                    }
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Delete Department Part 3
+    //Delete Department
+    function deleteDepartment() {
+        $.ajax({
+            url: "libraries/php/deleteDepartmentById.php",
+            type: "POST",
+            data: {
+                id: selectedId
+            },    
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {                        
+                    getAllDepartments();                        
+                    alert("Department deleted");
+                    $("#readDepartmentModal").modal("hide");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    }
+
+    //Delete Site Part 1
+    //Delete Site button click
     $("#confirm9").click(function() {
         let proceed = confirm("You are about to delete this Site, are you sure?");
         if (proceed) {
-            $.ajax({
-                url: "libraries/php/deleteSiteById.php",
-                type: "POST",
-                data: {
-                    id: selectedId
-                },    
-                success: function(result) {
-                    console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {                        
-                        getAllSites();                        
-                        alert("Site deleted");
-                        $("#readSiteModal").modal("hide");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
+            deleteSiteDepartmentCheck();
         };
     });
+
+    //Delete Site Part 2
+    //Check Site for Departments
+    function deleteSiteDepartmentCheck() {
+        $.ajax({
+            url: "libraries/php/deleteSiteDepartmentCheck.php",
+            type: "GET",
+            data: {
+                ID: selectedId
+            },
+            success: function(result) {
+                console.log(JSON.stringify(result));
+                console.log("This has worked");
+                if (result.status.name == "ok") {
+                    let array = result['data'];
+                    if (array.length > 0) {
+                        alert("Cannot delete a Site with Departments assigned to it!");
+                        return;
+                    } else {
+                        deleteSite();
+                    };
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Delete Site Part 3
+    //Delete Site
+    function deleteSite() {
+        $.ajax({
+            url: "libraries/php/deleteSiteById.php",
+            type: "POST",
+            data: {
+                id: selectedId
+            },    
+            success: function(result) {
+                console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {                        
+                    getAllSites();                        
+                    alert("Site deleted");
+                    $("#readSiteModal").modal("hide");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });            
+    };  
 
 
     //Non-AJAX Functions
