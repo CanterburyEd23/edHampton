@@ -282,11 +282,16 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     $("#staffName").html(array[0]['firstName'] + " " + array[0]['lastName']);
+                    $("#editStaffFirstName").attr("value", array[0]['firstName']);
+                    $("#editStaffLastName").attr("value", array[0]['lastName']);
                     $("#staffId").html(array[0]["id"]);
+                    $("#editStaffId").attr("value", array[0]['id']);
                     $("#staffEmail").html(array[0]["email"]);
+                    $("#editStaffEmail").attr("value", array[0]['email']);
                     $("#staffJob").html(array[0]["jobTitle"]);
-                    $("#staffDepartment").html(array[0]["department"]);
-                    $("#staffLocation").html(array[0]["location"]);
+                    $("#editStaffJob").attr("value", array[0]['jobTitle']);
+                    $("#staffDepartment").html(array[0]["department"]);                    
+                    $("#staffLocation").html(array[0]["location"]);                    
                     $('#readStaffModal').modal('show');
                 };
             },
@@ -310,9 +315,11 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     $("#departmentName").html(array[0]["name"]);
+                    $("#editDepartmentName").attr("value", array[0]["name"]);
                     $("#departmentId").html(array[0]["id"]);
+                    $("#editDepartmentId").attr("value", array[0]["id"]);
                     $("#departmentLocation").html(array[0]["location"]);
-                    $('#readDepartmentModal').modal('show');
+                    $('#readDepartmentModal').modal("show");
                 };
             },
             error: function(jqXHR, exception) {
@@ -335,7 +342,9 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     $("#siteId").html(array[0]["id"]);
+                    $("#editSiteId").attr("value", array[0]["id"]);
                     $("#siteName").html(array[0]["name"]);
+                    $("#editSiteName").attr("value", array[0]["name"]);
                     $('#readSiteModal').modal('show');
                 };
             },
@@ -426,6 +435,89 @@ $(document).ready(function() {
             });            
         } else {    
             document.forms["createSiteForm"].reset();
+        };
+    });
+
+    //EditStaff form submit
+    $("#confirm4").click(function() {
+        let proceed = confirm("Are you sure you wish to update the details of this Employee?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/updateStaff.php",
+                type: "POST",
+                data: $("#editStaffForm").serialize(),                    
+                success: function(result) {
+                    console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {
+                        document.forms["editStaffForm"].reset();
+                        getAllStaff();
+                        $("#editStaffModal").modal("hide");
+                        alert("Employee details updated successfully!");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        } else {    
+            document.forms["editStaffForm"].reset();
+        };
+    });
+
+    //EditDepartment form submit
+    $("#confirm5").click(function() {
+        let proceed = confirm("Are you sure you wish to update the details of this Department?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/updateDepartment.php",
+                type: "POST",
+                data: $("#editDepartmentForm").serialize(),                    
+                success: function(result) {
+                    console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {
+                        document.forms["editDepartmentForm"].reset();
+                        getAllDepartments();
+                        getDepartmentNames();
+                        $("#editDepartmentModal").modal("hide");
+                        alert("Department details updated successfully!");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        } else {    
+            document.forms["editDepartmentForm"].reset();
+        };
+    });
+
+    //EditSite form submit
+    $("#confirm6").click(function() {
+        let proceed = confirm("Are you sure you wish to update the details of this Site?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/updateSite.php",
+                type: "POST",
+                data: $("#editSiteForm").serialize(),                    
+                success: function(result) {
+                    console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {
+                        document.forms["editSiteForm"].reset();
+                        getAllSites();
+                        getSiteNames();
+                        $("#editSiteModal").modal("hide");
+                        alert("Site details updated successfully!");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        } else {    
+            document.forms["editSiteForm"].reset();
         };
     });
 
@@ -545,23 +637,25 @@ $(document).ready(function() {
     //provide department names to dropdown menu
     function populateDepartmentDropdown() {
         $("#createStaffDepartment").empty();
+        $("#editStaffDepartment").empty();
         let option;
         for (let i = 0; i < departments.length; i++) {
             option = '<option value="' + departments[i]["id"] + '">' + departments[i]["name"] + "</option>";
             $("#createStaffDepartment").append(option);
-        };
+            $("#editStaffDepartment").append(option);
+        };        
     };
 
     //Provide site names to dropdown menu
     function populateSiteDropdown() {
-        $("#createDepartmentSite").html("");
+        $("#createDepartmentSite").empty();
+        $("#editDepartmentSite").empty();
         let option;
         for (let i = 0; i < sites.length; i++) {
             option = '<option value="' + sites[i]["id"] + '">' + sites[i]["name"] + "</option>";
             $("#createDepartmentSite").append(option);
+            $("#editDepartmentSite").append(option);
         };
-    };
-
-    
+    };    
 
 });

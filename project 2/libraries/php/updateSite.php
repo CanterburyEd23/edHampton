@@ -1,7 +1,6 @@
 <?php
-
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/getStaffByID.php?id=<id>
+	// http://localhost/companydirectory/libs/php/updateSite.php?id=<id>
 
 	// remove next two lines for production
 	// ini_set('display_errors', 'On');
@@ -31,8 +30,8 @@
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
-	$query = $conn->prepare('SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, d.id as departmentId, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.id = ?');
-	$query->bind_param("i", $_REQUEST['ID']);
+	$query = $conn->prepare('UPDATE location SET name = ? WHERE id = ?');
+    $query->bind_param("si", $_REQUEST['name'], $_REQUEST['id']);
 	$query->execute();
 	
 	//Query error handling
@@ -48,17 +47,11 @@
 	}
     
 	//Query success
-	$result = $query->get_result();
-   	$personnel = [];
-	while ($row = mysqli_fetch_assoc($result)) {
-		array_push($personnel, $row);
-	}
-
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = $personnel;
+	$output['data'] = $query->affected_rows;    
 	
 	mysqli_close($conn);
 	echo json_encode($output);

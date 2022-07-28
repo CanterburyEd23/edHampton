@@ -219,7 +219,7 @@
                                 </tr>
                             </table>
                             <div class="flexDiv">
-                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border editButton"></button>
+                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border editButton" data-bs-toggle="modal" data-bs-target="#editStaffModal"></button>
                                 <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border deleteButton"></button>
                                 <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back" data-bs-toggle="modal" data-bs-target="#readStaffModal"></button>
                             </div>
@@ -247,7 +247,7 @@
                                 </tr>
                             </table>
                             <div class="flexDiv">
-                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border editButton"></button>
+                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border editButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
                                 <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border deleteButton"></button>
                                 <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back" data-bs-toggle="modal" data-bs-target="#readDepartmentModal"></button>
                             </div>                        
@@ -271,10 +271,112 @@
                                 </tr>
                             </table>
                             <div class="flexDiv">
-                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border editButton"></button>
+                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border editButton" data-bs-toggle="modal" data-bs-target="#editSiteModal"></button>
                                 <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border deleteButton"></button>
                                 <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back" data-bs-toggle="modal" data-bs-target="#readSiteModal"></button>
                             </div>                        
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Employee, Department, and Site forms -->
+            <div class="modal fade" id="editStaffModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Update Employee Details...</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="editStaffModalBody">
+                            <form name="editStaffForm" id="editStaffForm">
+                                <div class="flexDiv">
+                                    <div class="mb-3">
+                                        <label for="editStaffFirstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" name="firstName" id="editStaffFirstName" value="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editStaffLastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" name="lastName" id="editStaffLastName">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editStaffId" class="form-label">Staff ID</label>
+                                    <input type="text" class="form-control" name="id" id="editStaffId" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editStaffEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" name="email" id="editStaffEmail">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editStaffJob" class="form-label">Job Title</label>
+                                    <input type="text" class="form-control" name="job" id="editStaffJob">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editStaffDepartment" class="form-label">Department</label>
+                                    <select class="form-select" name="department" id="editStaffDepartment"></select>
+                                </div>
+                                <button type="button"><i type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border" id="confirm4"></i></button>
+                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back" data-bs-toggle="modal" data-bs-target="#editStaffModal"></button>                                                           
+                            </form>                 
+                        </div>   
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="editDepartmentModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Update Department Details...</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="editDepartmentModalBody">
+                            <form name="editDepartmentForm" id="editDepartmentForm">                                
+                                <div class="mb-3">
+                                    <label for="editDepartmentName" class="form-label">Department Name</label>
+                                    <input type="text" class="form-control" name="name" id="editDepartmentName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editDepartmentId" class="form-label">Department ID</label>
+                                    <input type="text" class="form-control" name="id" id="editDepartmentId" readonly>
+                                </div>                              
+                                <div class="mb-3">
+                                    <label for="editDepartmentSite" class="form-label">Site</label>
+                                    <select class="form-select" name="site" id="editDepartmentSite"></select>
+                                </div>
+                                <div class="flexDiv">
+                                    <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border" id="confirm5"></button>
+                                    <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
+                                </div>                               
+                            </form>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="editSiteModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Update Site Details...</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="editSiteModalBody">
+                            <form name="editSiteForm" id="editSiteForm">                                
+                                <div class="mb-3">
+                                    <label for="editSiteName" class="form-label">Site Name</label>
+                                    <input type="text" class="form-control" name="name" id="editSiteName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editSiteId" class="form-label">Site ID</label>
+                                    <input type="text" class="form-control" name="id" id="editSiteId" readonly>
+                                </div>
+                                <div class="flexDiv">
+                                    <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border" id="confirm6"></button>
+                                    <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back" data-bs-toggle="modal" data-bs-target="#editSiteModal"></button>
+                                </div>                                                             
+                            </form>
                         </div>                        
                     </div>
                 </div>
