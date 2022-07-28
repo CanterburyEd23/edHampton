@@ -109,3 +109,8 @@ nav {
     display: flex;
     justify-content: center;
 }
+
+.flexDiv {
+    display: flex;
+    justify-content: space-around;
+}

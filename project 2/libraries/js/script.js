@@ -146,6 +146,7 @@ $(document).ready(function() {
 
     //Get department names for select modal
     function getDepartmentNames() {
+        departments = [];
         $.ajax({
             url: "libraries/php/getAllDepartments.php",
             type: "GET",
@@ -160,7 +161,8 @@ $(document).ready(function() {
                         }
                         departments.push(department);
                     }
-                    populateDepartmentModal();                   
+                    populateDepartmentModal();
+                    populateDepartmentDropdown();                  
                 };
             },
             error: function(jqXHR, exception) {
@@ -172,6 +174,7 @@ $(document).ready(function() {
 
     //Get site names for select modal
     function getSiteNames() {
+        sites = [];
         $.ajax({
             url: "libraries/php/getAllSites.php",
             type: "GET",
@@ -187,6 +190,7 @@ $(document).ready(function() {
                         sites.push(site);
                     }
                     populateSiteModal();
+                    populateSiteDropdown();
                 };
             },
             error: function(jqXHR, exception) {
@@ -342,46 +346,91 @@ $(document).ready(function() {
         });
     };
 
-
-    //Other Functions
-    //Populate department select modal
-    function populateDepartmentModal() {
-        $("#departmentSelectModalBody").empty();
-        const control = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment0" data-bs-dismiss="modal" checked>'
-            + '<label class="form-check-label" for="selectDepartment0">all Departments</label>'
-        + '</div>';
-        $("#departmentSelectModalBody").append(control);
-        let department;
-        for (let i = 0; i < departments.length; i++) {
-            department = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment' + departments[i]["id"] + '" data-bs-dismiss="modal">'
-            + '<label class="form-check-label" for="selectDepartment' + departments[i]["id"] + '">' + departments[i]["name"] + '</label>'
-        + '</div>';
-        $("#departmentSelectModalBody").append(department);
+    //CreateStaff form submit
+    $("#confirm1").click(function() {
+        let proceed = confirm("Are you sure you wish to create this Employee?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/insertStaff.php",
+                type: "POST",
+                data: $("#createStaffForm").serialize(),                    
+                success: function(result) {
+                    // console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {
+                        document.forms["createStaffForm"].reset();
+                        getAllStaff();
+                        $("#createStaffModal").modal("hide");
+                        alert("New Employee added successfully!");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        } else {    
+            document.forms["createStaffForm"].reset();
         };
-        addDeptModalClickHandlers();
-    };
+    });
 
-    //Populate site select modal
-    function populateSiteModal() {
-        $("#siteSelectModalBody").empty();
-        const control = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite0" data-bs-dismiss="modal" checked>'
-            + '<label class="form-check-label" for="selectSite0">all Sites</label>'
-        + '</div>';
-        $("#siteSelectModalBody").append(control);
-        let site;
-        for (let i = 0; i < sites.length; i++) {
-            site = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite' + sites[i]["id"] + '" data-bs-dismiss="modal">'
-            + '<label class="form-check-label" for="selectSite' + sites[i]["id"] + '">' + sites[i]["name"] + '</label>'
-        + '</div>';
-        $("#siteSelectModalBody").append(site);
+    //CreateDepartment form submit
+    $("#confirm2").click(function() {
+        let proceed = confirm("Are you sure you wish to create this Department?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/insertDepartment.php",
+                type: "POST",
+                data: $("#createDepartmentForm").serialize(),                    
+                success: function(result) {
+                    // console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {
+                        document.forms["createDepartmentForm"].reset();
+                        getAllDepartments();
+                        getDepartmentNames();
+                        $("#createDepartmentModal").modal("hide");
+                        alert("New Department added successfully!");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        } else {    
+            document.forms["createDepartmentForm"].reset();
         };
-        addSiteModalClickHandlers();
-    };
+    });
 
+    //CreateSite form submit
+    $("#confirm3").click(function() {
+        let proceed = confirm("Are you sure you wish to create this Site?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/insertSite.php",
+                type: "POST",
+                data: $("#createSiteForm").serialize(),                    
+                success: function(result) {
+                    // console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {
+                        document.forms["createSiteForm"].reset();
+                        getAllSites();
+                        getSiteNames();
+                        $("#createSiteModal").modal("hide");
+                        alert("New Site added successfully!");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        } else {    
+            document.forms["createSiteForm"].reset();
+        };
+    });
+
+
+    //Click Handlers
     //Department modal click handler
     function addDeptModalClickHandlers() {
         $("#departmentSelectModalBody > div").each(function() {
@@ -452,5 +501,67 @@ $(document).ready(function() {
             });
         });
     };
+
+
+    //Other Functions
+    //Populate department select modal
+    function populateDepartmentModal() {
+        $("#departmentSelectModalBody").empty();
+        const control = '<div class="form-check">'
+            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment0" data-bs-dismiss="modal" checked>'
+            + '<label class="form-check-label" for="selectDepartment0">all Departments</label>'
+        + '</div>';
+        $("#departmentSelectModalBody").append(control);
+        let department;
+        for (let i = 0; i < departments.length; i++) {
+            department = '<div class="form-check">'
+            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment' + departments[i]["id"] + '" data-bs-dismiss="modal">'
+            + '<label class="form-check-label" for="selectDepartment' + departments[i]["id"] + '">' + departments[i]["name"] + '</label>'
+        + '</div>';
+        $("#departmentSelectModalBody").append(department);
+        };
+        addDeptModalClickHandlers();
+    };
+
+    //Populate site select modal
+    function populateSiteModal() {
+        $("#siteSelectModalBody").empty();
+        const control = '<div class="form-check">'
+            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite0" data-bs-dismiss="modal" checked>'
+            + '<label class="form-check-label" for="selectSite0">all Sites</label>'
+        + '</div>';
+        $("#siteSelectModalBody").append(control);
+        let site;
+        for (let i = 0; i < sites.length; i++) {
+            site = '<div class="form-check">'
+            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite' + sites[i]["id"] + '" data-bs-dismiss="modal">'
+            + '<label class="form-check-label" for="selectSite' + sites[i]["id"] + '">' + sites[i]["name"] + '</label>'
+        + '</div>';
+        $("#siteSelectModalBody").append(site);
+        };
+        addSiteModalClickHandlers();
+    };
+    
+    //provide department names to dropdown menu
+    function populateDepartmentDropdown() {
+        $("#createStaffDepartment").empty();
+        let option;
+        for (let i = 0; i < departments.length; i++) {
+            option = '<option value="' + departments[i]["id"] + '">' + departments[i]["name"] + "</option>";
+            $("#createStaffDepartment").append(option);
+        };
+    };
+
+    //Provide site names to dropdown menu
+    function populateSiteDropdown() {
+        $("#createDepartmentSite").html("");
+        let option;
+        for (let i = 0; i < sites.length; i++) {
+            option = '<option value="' + sites[i]["id"] + '">' + sites[i]["name"] + "</option>";
+            $("#createDepartmentSite").append(option);
+        };
+    };
+
+    
 
 });
