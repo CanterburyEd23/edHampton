@@ -1,7 +1,7 @@
 <?php
 
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/getStaffByID.php?id=<id>
+	// http://localhost/companydirectory/libs/php/getStaffById.php?id=<id>
 
 	// remove next two lines for production
 	// ini_set('display_errors', 'On');

@@ -18,6 +18,7 @@ $(document).ready(function() {
     let sites = [];
     let departmentId = 0;
     let siteId = 0;
+    let selectedId;
 
 
     //Initial API calls
@@ -51,6 +52,7 @@ $(document).ready(function() {
     
 
     // AJAX functions
+    //Read and other GET functions
     //Get all employees
     function getAllStaff() {
         $.ajax({
@@ -81,7 +83,7 @@ $(document).ready(function() {
             }
         });
     };
-
+    
     //Get all departments
     function getAllDepartments() {
         $.ajax({
@@ -293,6 +295,7 @@ $(document).ready(function() {
                     $("#staffDepartment").html(array[0]["department"]);                    
                     $("#staffLocation").html(array[0]["location"]);                    
                     $('#readStaffModal').modal('show');
+                    selectedId = array[0]["id"];
                 };
             },
             error: function(jqXHR, exception) {
@@ -320,6 +323,7 @@ $(document).ready(function() {
                     $("#editDepartmentId").attr("value", array[0]["id"]);
                     $("#departmentLocation").html(array[0]["location"]);
                     $('#readDepartmentModal').modal("show");
+                    selectedId = array[0]["id"];
                 };
             },
             error: function(jqXHR, exception) {
@@ -346,6 +350,7 @@ $(document).ready(function() {
                     $("#siteName").html(array[0]["name"]);
                     $("#editSiteName").attr("value", array[0]["name"]);
                     $('#readSiteModal').modal('show');
+                    selectedId = array[0]["id"];
                 };
             },
             error: function(jqXHR, exception) {
@@ -355,6 +360,8 @@ $(document).ready(function() {
         });
     };
 
+
+    //Create Functions
     //CreateStaff form submit
     $("#confirm1").click(function() {
         let proceed = confirm("Are you sure you wish to create this Employee?");
@@ -438,6 +445,8 @@ $(document).ready(function() {
         };
     });
 
+
+    //Update Functions
     //EditStaff form submit
     $("#confirm4").click(function() {
         let proceed = confirm("Are you sure you wish to update the details of this Employee?");
@@ -522,6 +531,87 @@ $(document).ready(function() {
     });
 
 
+    //Delete Functions
+    //Delete Staff by ID
+    $("#confirm7").click(function() {
+        let proceed = confirm("You are about to delete this Employee's records, are you sure?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/deleteStaffById.php",
+                type: "POST",
+                data: {
+                    id: selectedId
+                },    
+                success: function(result) {
+                    console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {                        
+                        getAllStaff();                        
+                        alert("Employee details deleted");
+                        $("#readStaffModal").modal("hide");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        };
+    });
+
+    //Delete Department by ID
+    $("#confirm8").click(function() {
+        let proceed = confirm("You are about to delete this Department, are you sure?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/deleteDepartmentById.php",
+                type: "POST",
+                data: {
+                    id: selectedId
+                },    
+                success: function(result) {
+                    console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {                        
+                        getAllDepartments();                        
+                        alert("Department deleted");
+                        $("#readDepartmentModal").modal("hide");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        };
+    });
+
+    //Delete Site by ID
+    $("#confirm9").click(function() {
+        let proceed = confirm("You are about to delete this Site, are you sure?");
+        if (proceed) {
+            $.ajax({
+                url: "libraries/php/deleteSiteById.php",
+                type: "POST",
+                data: {
+                    id: selectedId
+                },    
+                success: function(result) {
+                    console.log(JSON.stringify(result));
+                    if (result.status.name == "ok") {                        
+                        getAllSites();                        
+                        alert("Site deleted");
+                        $("#readSiteModal").modal("hide");
+                    };
+                },
+                error: function(jqXHR, exception) {
+                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                    console.log(msg);
+                }
+            });            
+        };
+    });
+
+
+    //Non-AJAX Functions
     //Click Handlers
     //Department modal click handler
     function addDeptModalClickHandlers() {
@@ -595,7 +685,7 @@ $(document).ready(function() {
     };
 
 
-    //Other Functions
+    //Misc. Functions
     //Populate department select modal
     function populateDepartmentModal() {
         $("#departmentSelectModalBody").empty();
