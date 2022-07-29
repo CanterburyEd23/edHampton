@@ -1,11 +1,7 @@
 <?php
 
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/getStaffById.php?id=<id>
-
-	// remove next two lines for production
-	// ini_set('display_errors', 'On');
-	// error_reporting(E_ALL);
+	// http://localhost/companydirectory/libraries/php/getStaffById.php?id=<ID>
 
 	//Open a connection to the database
 	$executionStartTime = microtime(true);

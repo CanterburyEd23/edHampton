@@ -1,11 +1,7 @@
 <?php
 
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/getDepartmentsFiltered.php
-
-	// remove next two lines for production	
-	// ini_set('display_errors', 'On');  //error reporting for development
-	// error_reporting(E_ALL);
+	// http://localhost/companydirectory/libraries/php/getDepartmentsFiltered.php?locationID=<locationID>
 
 	//Open a connection to the database
 	$executionStartTime = microtime(true);

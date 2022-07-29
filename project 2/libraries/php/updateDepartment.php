@@ -1,10 +1,6 @@
 <?php
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/updateDepartment.php?id=<id>
-
-	// remove next two lines for production
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
+	// http://localhost/companydirectory/libraries/php/updateDepartment.php?name=<name>&site=<site>&locationID=<id>
 
 	//Open a connection to the database
 	$executionStartTime = microtime(true);
