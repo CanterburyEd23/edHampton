@@ -4,6 +4,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-size: 18px;
 }
 
 /* Preloader */
@@ -55,36 +56,76 @@
 }
 
 /* Main App */
-html, body, main {
+html, body {
     margin: 0px;
     height: 100%;
-    height: 100%;
-    background-color: wheat;
+    width: 100%;
+    
 }
 
 nav {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    align-items: center;
+    padding: 1rem;    
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    background-color: rgb(190, 235, 235);
+}
+
+nav p {
+    margin-top: 0.8rem;
+}
+
+a {
+    font-weight: bold;
+}
+
+a:link {
+    text-decoration: none;
+    color: rgb(50, 25, 200);   
+}
+
+a:visited {
+    text-decoration: none;
+    color: rgb(50, 25, 200);
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+a:active {
+    text-decoration: none;
+    color: rgb(175, 30, 30);
+}
+
+.input {
+    width: 150px;
+}
+
+main {
+    margin-top: 5rem;
+    height: 100%;
+    width: 100%;
 }
 
 .list-group-item {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 }
 
 :root {
     --fa-border-radius: 50%;
     --fa-border-color: black;
-    --first-color: rgb(53, 161, 53);
-    --second-color: yellow;
-    --third-color: rgb(255, 0, 0);
-    --fourth-color: rgb(120, 180, 250);
+    --first-color: rgb(190, 235, 235);
+    --second-color: rgb(150, 200, 250);
+    --third-color: rgb(175, 30, 30);    
     --fa-border-padding: 5px
-}
-
-.createButton {
-    background-color: var(--fourth-color);
 }
 
 .readButton {
@@ -93,16 +134,27 @@ nav {
     margin: 0.5rem;
 }
 
-.editButton {
-    background-color: var(--second-color);   
-    padding: var(--fa-border-padding);
-    margin: 0.5rem;
+.readButton:hover {
+    background-color: var(--second-color);
 }
 
-.deleteButton {
+.readButton:active {
     background-color: var(--third-color);
+}
+
+.modalButton {
+    background-color: var(--second-color);   
     padding: var(--fa-border-padding);
-    margin: 0.5rem;
+    margin: 0.2rem;
+    margin-top: 1rem;
+}
+
+.modalButton:hover {
+    background-color: var(--first-color);
+}
+
+.modalButton:active {
+    background-color: var(--third-color);
 }
 
 .col {
@@ -110,7 +162,48 @@ nav {
     justify-content: center;
 }
 
-.flexDiv {
+.flexDiv {    
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.navButton {
+    margin: 0.2rem;
+    background-color: var(--second-color);
+}
+
+.navButton:hover {
+    background-color: var(--first-color);
+}
+
+.navButton:active {
+    background-color: var(--third-color);
+}
+
+.modal-header {
+    background-color: rgb(190, 235, 235);
+}
+
+.modal-table {
+    width: 100%;
+}
+
+@media only screen and (max-width: 890px) {
+    main {
+        margin-top: 7.5rem;
+    }
+}
+
+@media only screen and (max-width: 528px) {
+    main {
+        margin-top: 10rem;
+    }
+}
+
+@media only screen and (max-width: 478px) {
+    main {
+        margin-top: 13rem;
+    }
 }

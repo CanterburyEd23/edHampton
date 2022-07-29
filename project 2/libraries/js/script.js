@@ -67,7 +67,7 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
-                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
+                            + '<button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                             + '</li>';
                         $("#allStaff").append(listItem);
@@ -99,7 +99,7 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
-                            + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
+                            + '<button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
                             + '</li>';
                         $("#allDepartments").append(listItem);
@@ -131,7 +131,7 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
-                            + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
+                            + '<button type="button" class="fa-solid fa-industry fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="siteInstance">' + array[i]['name'] + '</p>'
                             + '</li>';
                         $("#allSites").append(listItem);
@@ -222,7 +222,7 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
-                            + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
+                            + '<button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
                             + '</li>';
                         $("#allStaff").append(listItem);
@@ -260,7 +260,7 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
-                            + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
+                            + '<button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
                             + '</li>';
                         $("#allDepartments").append(listItem);
