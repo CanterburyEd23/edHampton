@@ -25,10 +25,10 @@
 
 	//On success...
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
+	// $_REQUEST used for development / debugging. Remember to change to $_GET for production
 
 	$query = $conn->prepare('SELECT name FROM department WHERE locationID =  ?');
-	$query->bind_param("i", $_POST['ID']);
+	$query->bind_param("i", $_GET['ID']);
 	$query->execute();
 	
 	//Query error handling

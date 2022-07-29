@@ -25,16 +25,16 @@
 
 	//On success...	
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production    
-    if ($_POST['departmentID'] > 0 && $_POST['locationID'] > 0) {
+	// $_REQUEST used for development / debugging. Remember to change to $_GET for production    
+    if ($_GET['departmentID'] > 0 && $_GET['locationID'] > 0) {
         $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.departmentID = ? AND d.locationID = ? ORDER BY p.lastName, p.firstName, d.name');
-        $query->bind_param("ii", $_POST['departmentID'], $_POST['locationID']);
-    } elseif ($_POST['departmentID'] > 0 && $_POST['locationID'] <= 0) {
+        $query->bind_param("ii", $_GET['departmentID'], $_GET['locationID']);
+    } elseif ($_GET['departmentID'] > 0 && $_GET['locationID'] <= 0) {
         $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.departmentID = ? ORDER BY p.lastName, p.firstName, d.name');
-        $query->bind_param("i", $_POST['departmentID']);
-    } elseif ($_POST['departmentID'] <= 0 && $_POST['locationID'] > 0) {
+        $query->bind_param("i", $_GET['departmentID']);
+    } elseif ($_GET['departmentID'] <= 0 && $_GET['locationID'] > 0) {
         $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE d.locationID = ? ORDER BY p.lastName, p.firstName, d.name');
-        $query->bind_param("i", $_POST['locationID']);
+        $query->bind_param("i", $_GET['locationID']);
     } else {
         $query = $conn->prepare('SELECT p.id, p.lastName, p.firstName FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.lastName, p.firstName, d.name');
     };    

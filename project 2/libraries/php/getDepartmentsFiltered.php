@@ -25,10 +25,10 @@
 
 	//On success...	
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production    
-    if ($_REQUEST['locationID'] > 0) {
+	// $_REQUEST used for development / debugging. Remember to change to $_GET for production    
+    if ($_GET['locationID'] > 0) {
         $query = $conn->prepare('SELECT d.name, d.id FROM department d LEFT JOIN location l ON (l.id = d.locationID) WHERE d.locationID = ? ORDER BY d.name');
-        $query->bind_param('i', $_POST['locationID']);
+        $query->bind_param('i', $_GET['locationID']);
     } else {
         $query = $conn->prepare('SELECT d.name, d.id FROM department d LEFT JOIN location l ON (l.id = d.locationID) ORDER BY d.name');
     }  
