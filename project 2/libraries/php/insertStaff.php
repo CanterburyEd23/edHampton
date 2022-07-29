@@ -27,7 +27,7 @@
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('INSERT INTO personnel (firstName, lastName, jobTitle, email, departmentID) VALUES(?,?,?,?,?)');
-	$query->bind_param("ssssi", $_REQUEST['firstName'], $_REQUEST['lastName'], $_REQUEST['job'], $_REQUEST['email'], $_REQUEST['department']);
+	$query->bind_param("ssssi", $_POST['firstName'], $_POST['lastName'], $_POST['job'], $_POST['email'], $_POST['department']);
 	$query->execute();
 	
 	//Query error handling

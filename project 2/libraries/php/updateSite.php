@@ -27,7 +27,7 @@
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('UPDATE location SET name = ? WHERE id = ?');
-    $query->bind_param("si", $_REQUEST['name'], $_REQUEST['id']);
+    $query->bind_param("si", $_POST['name'], $_POST['id']);
 	$query->execute();
 	
 	//Query error handling

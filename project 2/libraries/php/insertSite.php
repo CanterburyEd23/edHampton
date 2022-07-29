@@ -27,7 +27,7 @@
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('INSERT INTO location (name) VALUES(?)');
-	$query->bind_param("s", $_REQUEST['name']);
+	$query->bind_param("s", $_POST['name']);
 	$query->execute();
 	
 	//Query error handling

@@ -28,7 +28,7 @@
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('SELECT d.id, d.name, l.name as location FROM department d LEFT JOIN location l ON (l.id = d.locationID) WHERE d.id =  ?');
-	$query->bind_param("i", $_REQUEST['ID']);
+	$query->bind_param("i", $_POST['ID']);
 	$query->execute();
 	
 	//Query error handling

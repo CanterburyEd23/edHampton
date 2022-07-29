@@ -28,7 +28,7 @@
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('DELETE FROM location WHERE id = ?');	
-	$query->bind_param("i", $_REQUEST['id']);
+	$query->bind_param("i", $_POST['id']);
 	$query->execute();
 	
 	//Query error handling
