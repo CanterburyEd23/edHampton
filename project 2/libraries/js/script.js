@@ -68,13 +68,14 @@ $(document).ready(function() {
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
                             + '<button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border readButton"></button>'
-                            + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
+                            + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
                     readStaffClickHandler();
                     $("#allStaff").show();
                     $("#staffResultsDetails").show();
+                    $('#staffInput').val('');
                 };
             },
             error: function(jqXHR, exception) {
@@ -99,13 +100,14 @@ $(document).ready(function() {
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
                             + '<button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border readButton"></button>'
-                            + '<p>' + array[i]['name'] + '</p>'
+                            + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
                             + '</li>';
                         $("#allDepartments").append(listItem);
                     };
                     $("#allDepartments").show();
                     $("#departmentResultsDetails").show();
                     readDepartmentClickHandler();
+                    $('#departmentInput').val('');
                 };
             },
             error: function(jqXHR, exception) {
@@ -130,13 +132,14 @@ $(document).ready(function() {
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
                             + '<button type="button" class="fa-solid fa-industry fa-xl fa-fw fa-border readButton"></button>'
-                            + '<p>' + array[i]['name'] + '</p>'
+                            + '<p class="siteInstance">' + array[i]['name'] + '</p>'
                             + '</li>';
                         $("#allSites").append(listItem);
                     };
                     $("#allSites").show();
                     $("#siteResultsDetails").show();
                     readSiteClickHandler();
+                    $('#siteInput').val('');
                 };
             },
             error: function(jqXHR, exception) {
@@ -231,6 +234,7 @@ $(document).ready(function() {
                         $("#allStaff").append(listItem);
                     };
                     readStaffClickHandler();
+                    $('#staffInput').val('');
                 };
             },
             error: function(jqXHR, exception) {
@@ -262,6 +266,7 @@ $(document).ready(function() {
                         $("#allDepartments").append(listItem);
                     };
                     readDepartmentClickHandler();
+                    $('#departmentInput').val('');
                 };
             },
             error: function(jqXHR, exception) {
@@ -317,13 +322,36 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
+                    selectedId = array[0]["id"];
                     $("#departmentName").html(array[0]["name"]);
                     $("#editDepartmentName").attr("value", array[0]["name"]);
                     $("#departmentId").html(array[0]["id"]);
                     $("#editDepartmentId").attr("value", array[0]["id"]);
                     $("#departmentLocation").html(array[0]["location"]);
+                    departmentStaffNumberCheck();
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Check Department for number of Employees
+    function departmentStaffNumberCheck() {
+        $.ajax({
+            url: "libraries/php/deleteDepartmentStaffCheck.php",
+            type: "GET",
+            data: {
+                ID: selectedId
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    let array = result['data'];
+                    $("#departmentStaffNumber").html(array.length);
                     $('#readDepartmentModal').modal("show");
-                    selectedId = array[0]["id"];
                 };
             },
             error: function(jqXHR, exception) {
@@ -345,12 +373,35 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
+                    selectedId = array[0]["id"];
                     $("#siteId").html(array[0]["id"]);
                     $("#editSiteId").attr("value", array[0]["id"]);
                     $("#siteName").html(array[0]["name"]);
                     $("#editSiteName").attr("value", array[0]["name"]);
-                    $('#readSiteModal').modal('show');
-                    selectedId = array[0]["id"];
+                    siteDepartmentNumberCheck();
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    };
+
+    //Check Site for number of Departments
+    function siteDepartmentNumberCheck() {
+        $.ajax({
+            url: "libraries/php/deleteSiteDepartmentCheck.php",
+            type: "GET",
+            data: {
+                ID: selectedId
+            },
+            success: function(result) {
+                // console.log(JSON.stringify(result));                
+                if (result.status.name == "ok") {
+                    let array = result['data'];
+                    $("#siteDepartmentNumber").html(array.length);
+                    $('#readSiteModal').modal("show");
                 };
             },
             error: function(jqXHR, exception) {
@@ -364,6 +415,10 @@ $(document).ready(function() {
     //Create Functions
     //CreateStaff form submit
     $("#confirm1").click(function() {
+        let validated = validateCreateStaffForm();
+        if (validated === false) {
+            return;
+        };
         let proceed = confirm("Are you sure you wish to create this Employee?");
         if (proceed) {
             $.ajax({
@@ -391,6 +446,10 @@ $(document).ready(function() {
 
     //CreateDepartment form submit
     $("#confirm2").click(function() {
+        let validated = validateCreateDepartmentForm();
+        if (validated === false) {
+            return;
+        };
         let proceed = confirm("Are you sure you wish to create this Department?");
         if (proceed) {
             $.ajax({
@@ -419,6 +478,10 @@ $(document).ready(function() {
 
     //CreateSite form submit
     $("#confirm3").click(function() {
+        let validated = validateCreateSiteForm();
+        if (validated === false) {
+            return;
+        };
         let proceed = confirm("Are you sure you wish to create this Site?");
         if (proceed) {
             $.ajax({
@@ -449,6 +512,10 @@ $(document).ready(function() {
     //Update Functions
     //EditStaff form submit
     $("#confirm4").click(function() {
+        let validated = validateEditStaffForm();
+        if (validated === false) {
+            return;
+        };
         let proceed = confirm("Are you sure you wish to update the details of this Employee?");
         if (proceed) {
             $.ajax({
@@ -476,6 +543,10 @@ $(document).ready(function() {
 
     //EditDepartment form submit
     $("#confirm5").click(function() {
+        let validated = validateEditDepartmentForm();
+        if (validated === false) {
+            return;
+        };
         let proceed = confirm("Are you sure you wish to update the details of this Department?");
         if (proceed) {
             $.ajax({
@@ -504,6 +575,10 @@ $(document).ready(function() {
 
     //EditSite form submit
     $("#confirm6").click(function() {
+        let validated = validateEditSiteForm();
+        if (validated === false) {
+            return;
+        };
         let proceed = confirm("Are you sure you wish to update the details of this Site?");
         if (proceed) {
             $.ajax({
@@ -638,8 +713,7 @@ $(document).ready(function() {
                 ID: selectedId
             },
             success: function(result) {
-                console.log(JSON.stringify(result));
-                console.log("This has worked");
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     if (array.length > 0) {
@@ -756,6 +830,139 @@ $(document).ready(function() {
     };
 
 
+    //Form Validators
+    //For all create and edit Staff, Department, and Site forms
+    function validateCreateStaffForm() {        
+        let firstName = $("#createStaffFirstName").val();
+        let lastName = $("#createStaffLastName").val();
+        let email = $("#createStaffEmail").val();
+        let job = $("#createStaffJob").val();
+        if(!checkName(firstName)) {
+            return false;
+        } else if (!checkName(lastName)) {
+            return false;
+        } else if (!checkEmail(email)) {
+            return false;
+        } else if (!checkJob(job)) {
+            return false;
+        } else {
+            return true;
+        };
+    };
+
+    function validateCreateDepartmentForm() {        
+        let name = $("#createDepartmentName").val();        
+        if(!checkName(name)) {
+            return false;
+        } else {
+            return true;
+        };
+    };
+
+    function validateCreateSiteForm() {        
+        let name = $("#createSiteName").val();        
+        if(!checkName(name)) {
+            return false;
+        } else {
+            return true;
+        };
+    };
+
+    function validateEditStaffForm() {        
+        let firstName = $("#editStaffFirstName").val();
+        let lastName = $("#editStaffLastName").val();
+        let email = $("#editStaffEmail").val();
+        let job = $("#editStaffJob").val();
+        if(!checkName(firstName)) {
+            return false;
+        } else if (!checkName(lastName)) {
+            return false;
+        } else if (!checkEmail(email)) {
+            return false;
+        } else if (!checkJob(job)) {
+            return false;
+        } else {
+            return true;
+        };
+    };
+
+    function validateEditDepartmentForm() {        
+        let name = $("#editDepartmentName").val();        
+        if(!checkName(name)) {
+            return false;
+        } else {
+            return true;
+        };
+    };
+
+    function validateEditSiteForm() {        
+        let name = $("#editSiteName").val();        
+        if(!checkName(name)) {
+            return false;
+        } else {
+            return true;
+        };
+    };
+
+    
+    //Validation Functions
+    //Component functions of all Form Validation Functions
+    const isRequired = value => value === '' ? false : true;
+
+    const isBetween = (length, min, max) => length < min || length > max ? false : true;
+
+    const isEmailValid = (email) => {
+        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regex.test(email);
+    };
+
+    const charactersCheck = (value) => {
+        const characters = /[^a-zA-Z0-9 ]/g;
+        return !value.match(characters);
+    };
+
+    const checkName = (name) => {
+        let valid = false;
+        const min = 2;
+        const max = 30;
+        const formName = name;
+        if(!isRequired(formName)) {
+            alert(`Name cannot be blank.`);
+        } else if (!isBetween(formName.length, min, max)) {
+            alert(`Names must be between ${min} and ${max} characters.`);
+        } else if (!charactersCheck(formName)) {
+            alert("Names cannot contain special characters.")
+        } else {
+            valid = true;
+        };
+        return valid;
+    };
+
+    const checkEmail = (email) => {
+        let valid = false;
+        let formEmail = email;
+        if(!isRequired(formEmail)) {
+            alert("Email cannot be blank.");
+        } else if(!isEmailValid(formEmail)) {
+            alert("Email address is not valid");
+        } else {
+            valid = true;
+        };
+        return valid;
+    };
+
+    const checkJob = (job) => {
+        let valid = false;
+        let formJob = job;
+        if(!charactersCheck(job)) {
+            alert("Job Titles cannot contain special characters.");
+        } else {
+            valid = true;
+        };
+        return valid;
+    };
+    
+    
     //Misc. Functions
     //Populate department select modal
     function populateDepartmentModal() {
@@ -816,6 +1023,78 @@ $(document).ready(function() {
             option = '<option value="' + sites[i]["id"] + '">' + sites[i]["name"] + "</option>";
             $("#createDepartmentSite").append(option);
             $("#editDepartmentSite").append(option);
+        };
+    };    
+
+    //Listener for the staffInput textbox
+    $("#staffInput").keyup(function() {
+        filterStaffList();
+    });
+
+    //Filter triggered by the staffInput textbox
+    function filterStaffList() {        
+        let txtValue;
+        let input = $('#staffInput');
+        let filter = input.val().toUpperCase();
+        let list = $("#allStaff");
+        let listItem = list.children();
+        let p;      
+        for (let i = 0; i < listItem.length; i++) {
+            p = listItem[i].getElementsByTagName("p")[0];
+            txtValue = p.textContent || p.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                listItem[i].style.display = "";
+            } else {
+                listItem[i].style.display = "none";
+            };
+        };
+    };
+
+    //Listener for the departmentInput textbox
+    $("#departmentInput").keyup(function() {
+        filterDepartmentList();
+    });
+
+    //Filter triggered by the departmentInput textbox
+    function filterDepartmentList() {        
+        let txtValue;
+        let input = $('#departmentInput');
+        let filter = input.val().toUpperCase();
+        let list = $("#allDepartments");
+        let listItem = list.children();
+        let p;      
+        for (let i = 0; i < listItem.length; i++) {
+            p = listItem[i].getElementsByTagName("p")[0];
+            txtValue = p.textContent || p.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                listItem[i].style.display = "";
+            } else {
+                listItem[i].style.display = "none";
+            };
+        };
+    };
+
+    //Listener for the siteInput textbox
+    $("#siteInput").keyup(function() {
+        filterSiteList();
+    });
+
+    //Filter triggered by the siteInput textbox
+    function filterSiteList() {        
+        let txtValue;
+        let input = $('#siteInput');
+        let filter = input.val().toUpperCase();
+        let list = $("#allSites");
+        let listItem = list.children();
+        let p;      
+        for (let i = 0; i < listItem.length; i++) {
+            p = listItem[i].getElementsByTagName("p")[0];
+            txtValue = p.textContent || p.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                listItem[i].style.display = "";
+            } else {
+                listItem[i].style.display = "none";
+            };
         };
     };    
 

@@ -16,15 +16,18 @@
         <main>
             <nav>
                 <p id="staffResultsDetails">
-                    Showing results for all staff in 
+                    Showing results for
+                    <input type="text" id="staffInput" placeholder="all Staff"> in 
                     <a data-bs-toggle="modal" data-bs-target="#departmentSelectModal" href="#departmentSelectModal" role="button" class="depSelect">all Departments</a> 
                     at 
                     <a data-bs-toggle="modal" data-bs-target="#siteSelectModal" href="#siteSelectModal" role="button" class="siteSelect">all Sites</a>
                 </p>
-                <p id="departmentResultsDetails">Showing results for all Departments at
+                <p id="departmentResultsDetails">Showing results for
+                    <input type="text" id="departmentInput" placeholder="all Departments"> at
                     <a data-bs-toggle="modal" data-bs-target="#siteSelectModal" href="#siteSelectModal" role="button" class="siteSelect">all Sites</a>
                 </p>
-                <p id="siteResultsDetails">Showing results for all Sites at all Sites</p>                
+                <p id="siteResultsDetails">Showing results for
+                    <input type="text" id="siteInput" placeholder="all Sites"></p>                
                 <div>                    
                     <button type="button" class="fa-solid fa-user fa-xl fa-fw fa-border" id="allStaffButton"></button>
                     <button type="button" class="fa-solid fa-briefcase fa-xl fa-fw fa-border" id="allDepartmentsButton"></button>
@@ -110,16 +113,16 @@
                                 <div class="flexDiv">
                                     <div class="mb-3">
                                         <label for="createStaffFirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" name="firstName" id="createStaffFirstName">
+                                        <input type="text" class="form-control" name="firstName" id="createStaffFirstName" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="createStaffLastName" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" name="lastName" id="createStaffLastName">
+                                        <input type="text" class="form-control" name="lastName" id="createStaffLastName" required>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="createStaffEmail" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" name="email" id="createStaffEmail">
+                                    <input type="email" class="form-control" name="email" id="createStaffEmail" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="createStaffJob" class="form-label">Job Title</label>
@@ -148,7 +151,7 @@
                             <form name="createDepartmentForm" id="createDepartmentForm">                                
                                 <div class="mb-3">
                                     <label for="createDepartmentName" class="form-label">Department Name</label>
-                                    <input type="text" class="form-control" name="name" id="createDepartmentName">
+                                    <input type="text" class="form-control" name="name" id="createDepartmentName" required>
                                 </div>                                
                                 <div class="mb-3">
                                     <label for="createDepartmentSite" class="form-label">Site</label>
@@ -175,7 +178,7 @@
                             <form name="createSiteForm" id="createSiteForm">                                
                                 <div class="mb-3">
                                     <label for="createSiteName" class="form-label">Site Name</label>
-                                    <input type="text" class="form-control" name="name" id="createSiteName">
+                                    <input type="text" class="form-control" name="name" id="createSiteName" required>
                                 </div>
                                 <div class="flexDiv">
                                     <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border" id="confirm3"></button>
@@ -245,6 +248,10 @@
                                     <th>Location</th>
                                     <td id="departmentLocation" class="text-end"></td>
                                 </tr>
+                                <tr>
+                                    <th>Number of Employees</th>
+                                    <td id="departmentStaffNumber" class="text-end"></td>
+                                </tr>
                             </table>
                             <div class="flexDiv">
                                 <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border editButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
@@ -268,6 +275,10 @@
                                 <tr>
                                     <th>Site ID.</th>
                                     <td id="siteId" class="text-end"></td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Departments</th>
+                                    <td id="siteDepartmentNumber" class="text-end"></td>
                                 </tr>
                             </table>
                             <div class="flexDiv">
@@ -335,7 +346,7 @@
                             <form name="editDepartmentForm" id="editDepartmentForm">                                
                                 <div class="mb-3">
                                     <label for="editDepartmentName" class="form-label">Department Name</label>
-                                    <input type="text" class="form-control" name="name" id="editDepartmentName">
+                                    <input type="text" class="form-control" name="name" id="editDepartmentName" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="editDepartmentId" class="form-label">Department ID</label>
@@ -366,7 +377,7 @@
                             <form name="editSiteForm" id="editSiteForm">                                
                                 <div class="mb-3">
                                     <label for="editSiteName" class="form-label">Site Name</label>
-                                    <input type="text" class="form-control" name="name" id="editSiteName">
+                                    <input type="text" class="form-control" name="name" id="editSiteName" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="editSiteId" class="form-label">Site ID</label>
