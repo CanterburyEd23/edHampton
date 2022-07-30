@@ -969,7 +969,7 @@ $(document).ready(function() {
         $("#departmentSelectModalBody").empty();
         const control = '<div class="form-check">'
             + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment0" data-bs-dismiss="modal" checked>'
-            + '<label class="form-check-label" for="selectDepartment0">all Departments</label>'
+            + '<label class="form-check-label" for="selectDepartment0">All Departments</label>'
         + '</div>';
         $("#departmentSelectModalBody").append(control);
         let department;
@@ -988,7 +988,7 @@ $(document).ready(function() {
         $("#siteSelectModalBody").empty();
         const control = '<div class="form-check">'
             + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite0" data-bs-dismiss="modal" checked>'
-            + '<label class="form-check-label" for="selectSite0">all Sites</label>'
+            + '<label class="form-check-label" for="selectSite0">All Sites</label>'
         + '</div>';
         $("#siteSelectModalBody").append(control);
         let site;
