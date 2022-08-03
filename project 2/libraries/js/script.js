@@ -30,22 +30,22 @@ $(document).ready(function() {
     //Main select buttons
     $("#allStaffButton").click(function(){
         getAllStaff();
-        $(".depSelect").html('all Departments');        
+        getDepartmentNames();
+        getSiteNames();        
         $(".siteSelect").html('all Sites');
         departmentId = 0;
         siteId = 0;
     });
+
     $("#allDepartmentsButton").click(function(){
         getAllDepartments();
-        $(".depSelect").html('all Departments');
-        $(".siteSelect").html('all Sites');
+        getSiteNames(); 
         departmentId = 0;
         siteId = 0;
     });
+    
     $("#allSitesButton").click(function(){
         getAllSites();
-        $(".depSelect").html('all Departments');
-        $(".siteSelect").html('all Sites');
         departmentId = 0;
         siteId = 0;
     });
@@ -66,7 +66,7 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
+                        listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">'
                             + '<button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                             + '</li>';
@@ -98,7 +98,7 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">'
+                        listItem = '<li class="list-group-item" id="DEP' + array[i]['id'] + '">'
                             + '<button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
                             + '</li>';
@@ -130,7 +130,7 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
+                        listItem = '<li class="list-group-item" id="LOC' + array[i]['id'] + '">' 
                             + '<button type="button" class="fa-solid fa-industry fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="siteInstance">' + array[i]['name'] + '</p>'
                             + '</li>';
@@ -166,8 +166,8 @@ $(document).ready(function() {
                         }
                         departments.push(department);
                     }
-                    populateDepartmentModal();
-                    populateDepartmentDropdown();                  
+                    populateDepartmentDropdown();
+                    populateFilterDepDropdown();
                 };
             },
             error: function(jqXHR, exception) {
@@ -193,9 +193,9 @@ $(document).ready(function() {
                             name: array[i]["name"]
                         }
                         sites.push(site);
-                    }
-                    populateSiteModal();
+                    }                    
                     populateSiteDropdown();
+                    populateFilterSiteDropdown();
                 };
             },
             error: function(jqXHR, exception) {
@@ -221,7 +221,7 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
+                        listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">' 
                             + '<button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
                             + '</li>';
@@ -259,7 +259,7 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="' + array[i]['id'] + '">' 
+                        listItem = '<li class="list-group-item" id="DEP' + array[i]['id'] + '">' 
                             + '<button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p>' + array[i]['name'] + '</p>'
                             + '</li>';
@@ -285,13 +285,12 @@ $(document).ready(function() {
                 ID: id1
             },
             success: function(result) {
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     $("#staffName").html(array[0]['firstName'] + " " + array[0]['lastName']);
                     $("#editStaffFirstName").attr("value", array[0]['firstName']);
                     $("#editStaffLastName").attr("value", array[0]['lastName']);
-                    $("#staffId").html(array[0]["id"]);
                     $("#editStaffId").attr("value", array[0]['id']);
                     $("#staffEmail").html(array[0]["email"]);
                     $("#editStaffEmail").attr("value", array[0]['email']);
@@ -325,7 +324,6 @@ $(document).ready(function() {
                     selectedId = array[0]["id"];
                     $("#departmentName").html(array[0]["name"]);
                     $("#editDepartmentName").attr("value", array[0]["name"]);
-                    $("#departmentId").html(array[0]["id"]);
                     $("#editDepartmentId").attr("value", array[0]["id"]);
                     $("#departmentLocation").html(array[0]["location"]);
                     departmentStaffNumberCheck();
@@ -374,7 +372,6 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     selectedId = array[0]["id"];
-                    $("#siteId").html(array[0]["id"]);
                     $("#editSiteId").attr("value", array[0]["id"]);
                     $("#siteName").html(array[0]["name"]);
                     $("#editSiteName").attr("value", array[0]["name"]);
@@ -635,11 +632,8 @@ $(document).ready(function() {
 
     //Delete Department Part 1
     //Delete Department button click
-    $("#confirm8").click(function() {
-        let proceed = confirm("You are about to delete this Department, are you sure?");
-        if (proceed) {
-            deleteDepartmentStaffCheck();                                  
-        };
+    $("#confirm8").click(function() {        
+        deleteDepartmentStaffCheck();
     });
 
     //Delete Department Part 2
@@ -659,8 +653,13 @@ $(document).ready(function() {
                         alert("Cannot delete a Department with Employees assigned to it!");
                         return;
                     } else {
-                        deleteDepartment();
-                    }
+                        let proceed = confirm("You are about to delete this Department, are you sure?");
+                        if (proceed) {
+                            deleteDepartment();
+                        } else {
+                            return;
+                        };
+                    };
                 };
             },
             error: function(jqXHR, exception) {
@@ -697,10 +696,7 @@ $(document).ready(function() {
     //Delete Site Part 1
     //Delete Site button click
     $("#confirm9").click(function() {
-        let proceed = confirm("You are about to delete this Site, are you sure?");
-        if (proceed) {
-            deleteSiteDepartmentCheck();
-        };
+        deleteSiteDepartmentCheck();        
     });
 
     //Delete Site Part 2
@@ -720,7 +716,12 @@ $(document).ready(function() {
                         alert("Cannot delete a Site with Departments assigned to it!");
                         return;
                     } else {
-                        deleteSite();
+                        let proceed = confirm("You are about to delete this Site, are you sure?");
+                        if (proceed) {
+                            deleteSite();
+                        } else {
+                            return;
+                        };
                     };
                 };
             },
@@ -758,41 +759,27 @@ $(document).ready(function() {
 
     //Non-AJAX Functions
     //Click Handlers
-    //Department modal click handler
-    function addDeptModalClickHandlers() {
-        $("#departmentSelectModalBody > div").each(function() {
-            $(this).click(function() {
-                let text = $(this).children('label').html();
-                $(".depSelect").html(text);
-                let department = departments.find(department => department.name === text);
-                if (!department) {
-                    departmentId = 0;
-                } else {
-                    departmentId = department.id;
-                }                
-                getStaffFiltered(departmentId, siteId);
-            });
+    //staffDepSelect Filter Dropdown click handler
+    function addStaffDepSelectClickHandler() {
+        $("#staffDepSelect").click(function() {
+            departmentId = $("#staffDepSelect").val();
+            getStaffFiltered(departmentId, siteId);
         });
     };
 
-    //Site modal click handler
-    function addSiteModalClickHandlers() {
-        $("#siteSelectModalBody > div").each(function() {
-            $(this).click(function() {
-                let text = $(this).children('label').html();
-                $(".siteSelect").html(text);
-                let site = sites.find(site => site.name === text);
-                if (!site) {
-                    siteId = 0;
-                } else {
-                    siteId = site.id;
-                };                
-                if($("#departmentResultsDetails").css("display") === "none") {
-                    getStaffFiltered(departmentId, siteId);
-                } else {
-                    getDepartmentsFiltered(siteId);
-                };                
-            });
+    //staffSiteSelect click handler
+    function addStaffSiteSelectClickHandler() {
+        $("#staffSiteSelect").click(function() {
+            siteId = $("#staffSiteSelect").val();
+            getStaffFiltered(departmentId, siteId);
+        });
+    };
+
+    //depSiteSelect click handler
+    function addDepSiteSelectClickHandler() {
+        $("#depSiteSelect").click(function() {
+            siteId = $("#depSiteSelect").val();
+            getDepartmentsFiltered(siteId);
         });
     };
 
@@ -800,7 +787,7 @@ $(document).ready(function() {
     function readStaffClickHandler() {
         $("#allStaff > li").each(function() {
             $(this).click(function() {
-                let id = $(this).attr("id");
+                let id = $(this).attr("id").slice(3);
                 // console.log(id);
                 getStaffById(id);
             });            
@@ -811,7 +798,7 @@ $(document).ready(function() {
     function readDepartmentClickHandler() {
         $("#allDepartments > li").each(function() {
             $(this).click(function() {
-                let id = $(this).attr("id");
+                let id = $(this).attr("id").slice(3);
                 // console.log(id);
                 getDepartmentById(id);
             });
@@ -822,7 +809,7 @@ $(document).ready(function() {
     function readSiteClickHandler() {
         $("#allSites > li").each(function() {
             $(this).click(function() {
-                let id = $(this).attr("id");
+                let id = $(this).attr("id").slice(3);
                 // console.log(id);
                 getSiteById(id);
             });
@@ -964,44 +951,6 @@ $(document).ready(function() {
     
     
     //Misc. Functions
-    //Populate department select modal
-    function populateDepartmentModal() {
-        $("#departmentSelectModalBody").empty();
-        const control = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment0" data-bs-dismiss="modal" checked>'
-            + '<label class="form-check-label" for="selectDepartment0">All Departments</label>'
-        + '</div>';
-        $("#departmentSelectModalBody").append(control);
-        let department;
-        for (let i = 0; i < departments.length; i++) {
-            department = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment' + departments[i]["id"] + '" data-bs-dismiss="modal">'
-            + '<label class="form-check-label" for="selectDepartment' + departments[i]["id"] + '">' + departments[i]["name"] + '</label>'
-        + '</div>';
-        $("#departmentSelectModalBody").append(department);
-        };
-        addDeptModalClickHandlers();
-    };
-
-    //Populate site select modal
-    function populateSiteModal() {
-        $("#siteSelectModalBody").empty();
-        const control = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite0" data-bs-dismiss="modal" checked>'
-            + '<label class="form-check-label" for="selectSite0">All Sites</label>'
-        + '</div>';
-        $("#siteSelectModalBody").append(control);
-        let site;
-        for (let i = 0; i < sites.length; i++) {
-            site = '<div class="form-check">'
-            + '<input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite' + sites[i]["id"] + '" data-bs-dismiss="modal">'
-            + '<label class="form-check-label" for="selectSite' + sites[i]["id"] + '">' + sites[i]["name"] + '</label>'
-        + '</div>';
-        $("#siteSelectModalBody").append(site);
-        };
-        addSiteModalClickHandlers();
-    };
-    
     //provide department names to dropdown menu
     function populateDepartmentDropdown() {
         $("#createStaffDepartment").empty();
@@ -1014,6 +963,18 @@ $(document).ready(function() {
         };        
     };
 
+    //provide department names to filter dropdown
+    function populateFilterDepDropdown() {        
+        $(".depSelect").empty();
+        let option = '<option value="0">All Departments</option>';
+        $(".depSelect").append(option);
+        for (let i = 0; i < departments.length; i++) {
+            option = '<option value="' + departments[i]["id"] + '">' + departments[i]["name"] + "</option>";            
+            $(".depSelect").append(option);
+        };
+        addStaffDepSelectClickHandler();
+    };
+
     //Provide site names to dropdown menu
     function populateSiteDropdown() {
         $("#createDepartmentSite").empty();
@@ -1023,8 +984,24 @@ $(document).ready(function() {
             option = '<option value="' + sites[i]["id"] + '">' + sites[i]["name"] + "</option>";
             $("#createDepartmentSite").append(option);
             $("#editDepartmentSite").append(option);
+        };        
+    };
+
+    //provide site names to filter dropdown
+    function populateFilterSiteDropdown() {        
+        $("#staffSiteSelect").empty();
+        $("#depSiteSelect").empty();
+        let option = '<option value="0">All Sites</option>';
+        $("#staffSiteSelect").append(option);
+        $("#depSiteSelect").append(option);
+        for (let i = 0; i < sites.length; i++) {
+            option = '<option value="' + sites[i]["id"] + '">' + sites[i]["name"] + "</option>";            
+            $("#staffSiteSelect").append(option);
+            $("#depSiteSelect").append(option);
         };
-    };    
+        addStaffSiteSelectClickHandler();
+        addDepSiteSelectClickHandler();       
+    };
 
     //Listener for the staffInput textbox
     $("#staffInput").keyup(function() {

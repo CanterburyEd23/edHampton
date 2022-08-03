@@ -9,67 +9,61 @@
         <!-- CSS Stylesheets -->
         <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.min.css">        
         <link rel="stylesheet" href="./libraries/fontAwesome/css/all.min.css">
-        <link rel="stylesheet" href="./libraries/css/stylesheet.min.css">
+        <link rel="stylesheet" href="./libraries/css/stylesheet.css">
     </head>
 
     <body>
         <nav>
-            <p id="staffResultsDetails">
-                Showing results for
-                <input type="text" id="staffInput" placeholder="all Staff" class="input"> in 
-                <a data-bs-toggle="modal" data-bs-target="#departmentSelectModal" href="#departmentSelectModal" role="button" class="depSelect">all Departments</a> 
-                at 
-                <a data-bs-toggle="modal" data-bs-target="#siteSelectModal" href="#siteSelectModal" role="button" class="siteSelect">all Sites</a>
-            </p>
-            <p id="departmentResultsDetails">Showing results for
-                <input type="text" id="departmentInput" placeholder="all Departments" class="input"> at
-                <a data-bs-toggle="modal" data-bs-target="#siteSelectModal" href="#siteSelectModal" role="button" class="siteSelect">all Sites</a>
-            </p>
-            <p id="siteResultsDetails">Showing results for
-                <input type="text" id="siteInput" placeholder="all Sites" class="input"></p>                
-            <div class="flexDiv">                    
-                <button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border navButton" id="allStaffButton"></button>
-                <button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border navButton" id="allDepartmentsButton"></button>
-                <button type="button" class="fa-solid fa-industry fa-2xl fa-fw fa-border navButton" id="allSitesButton"></button>
-                <button type="button" class="fa-solid fa-file-circle-plus fa-2xl fa-fw fa-border btn navButton" data-bs-toggle="collapse" data-bs-target="#addNewCollapse"></button>
+            <div id="staffResultsDetails">
+                <div class="row">
+                    <div class="col">
+                        <input type="search" id="staffInput" placeholder="Search Employees" class="form-control input"><br>
+                    </div>                    
+                </div>                
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select-sm depSelect" name="department" id="staffDepSelect"></select>
+                    </div>
+                    <div class="col">
+                        <select class="form-select-sm siteSelect" name="site" id="staffSiteSelect"></select>
+                    </div>
+                </div>
+            </div>
+            <div id="departmentResultsDetails">
+                <input type="search" id="departmentInput" placeholder="Search Departments" class="form-control input"><br>
+                <select class="form-select siteSelect" name="site" id="depSiteSelect"></select>
+            </div>
+            <div id="siteResultsDetails">
+                <input type="search" id="siteInput" placeholder="Search Sites" class="form-control input">
+            </div>
+
+            <div>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark navButton" id="allStaffButton">Employees</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark navButton" id="allDepartmentsButton">Departments</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark navButton" id="allSitesButton">Locations</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark btn-sm navButton" data-bs-toggle="modal" data-bs-target="#createStaffModal">Add Employee</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark btn-sm navButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">Add Department</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark btn-sm navButton" data-bs-toggle="modal" data-bs-target="#createSiteModal">Add Location</button>
+                    </div>
+                </div>
             </div>
         </nav>
 
-        <main>
-            <!-- Search Filters -->
-            <div class="modal fade" id="departmentSelectModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">Select Department</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="departmentSelectModalBody">                                                            
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="selectDepartment0" data-bs-dismiss="modal" checked>
-                                <label class="form-check-label" for="selectDepartment0">all Departments</label>
-                            </div>                            
-                        </div>                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="siteSelectModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">Select Site</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="siteSelectModalBody">                                                             
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="selectSite0" data-bs-dismiss="modal" checked>
-                                <label class="form-check-label" for="selectSite0">all Sites</label>
-                            </div>                           
-                        </div>                        
-                    </div>
-                </div>
-            </div>          
+        <main>     
 
             <!-- Create new Employee, Department, or Site Controls -->
             <div class="collapse" id="addNewCollapse">
@@ -82,10 +76,10 @@
                             <button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
                         </div>
                         <div class="col">
-                            <button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"></button>
+                            
                         </div>
                         <div class="col">
-                            <button type="button" class="fa-solid fa-industry fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#createSiteModal"></button>
+                            
                         </div>
                         <div class="col">
                             <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="collapse" data-bs-target="#addNewCollapse"></button>
@@ -109,17 +103,15 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="createStaffModalBody">
-                            <form name="createStaffForm" id="createStaffForm">
-                                <div class="flexDiv">
-                                    <div class="mb-3">
-                                        <label for="createStaffFirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" name="firstName" id="createStaffFirstName" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="createStaffLastName" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" name="lastName" id="createStaffLastName" required>
-                                    </div>
+                            <form name="createStaffForm" id="createStaffForm">                                
+                                <div class="mb-3">
+                                    <label for="createStaffFirstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" name="firstName" id="createStaffFirstName" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="createStaffLastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" name="lastName" id="createStaffLastName" required>
+                                </div>                                
                                 <div class="mb-3">
                                     <label for="createStaffEmail" class="form-label">Email Address</label>
                                     <input type="email" class="form-control" name="email" id="createStaffEmail" required>
@@ -132,12 +124,12 @@
                                     <label for="createStaffDepartment" class="form-label">Department</label>
                                     <select class="form-select" name="department" id="createStaffDepartment"></select>
                                 </div>
-                                <div class="flexDiv">
-                                    <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm1"></button>
-                                    <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
-                                </div>
                             </form>                 
-                        </div>   
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm1"></button>
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,13 +150,13 @@
                                 <div class="mb-3">
                                     <label for="createDepartmentSite" class="form-label">Site</label>
                                     <select class="form-select" name="site" id="createDepartmentSite"></select>
-                                </div>
-                                <div class="flexDiv">
-                                    <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm2"></button>
-                                    <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"></button>
-                                </div>                               
+                                </div>                              
                             </form>
-                        </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm2"></button>
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"></button>
+                        </div>                
                     </div>
                 </div>
             </div>
@@ -181,13 +173,13 @@
                                 <div class="mb-3">
                                     <label for="createSiteName" class="form-label">Site Name</label>
                                     <input type="text" class="form-control" name="name" id="createSiteName" required>
-                                </div>
-                                <div class="flexDiv">
-                                    <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm3"></button>
-                                    <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createSiteModal"></button>
-                                </div>                                                             
+                                </div>                                                            
                             </form>
-                        </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm3"></button>
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createSiteModal"></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,11 +197,7 @@
                                 <tr>
                                     <th>Email</th>
                                     <td id="staffEmail" class="text-end"></td>
-                                </tr>
-                                <tr>
-                                    <th>Staff ID.</th>
-                                    <td id="staffId" class="text-end"></td>
-                                </tr>
+                                </tr>                                
                                 <tr>
                                     <th>Job Role</th>
                                     <td id="staffJob" class="text-end"></td>
@@ -226,9 +214,11 @@
                             <div class="flexDiv">
                                 <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#editStaffModal"></button>
                                 <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border modalButton" id="confirm7"></button>
-                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readStaffModal"></button>
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readStaffModal"></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -241,11 +231,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="readDepartmentModalBody">                                                             
-                            <table class="modal-table">   
-                                <tr>
-                                    <th>Department ID.</th>
-                                    <td id="departmentId" class="text-end"></td>
-                                </tr>                                
+                            <table class="modal-table">                                                             
                                 <tr>
                                     <th>Location</th>
                                     <td id="departmentLocation" class="text-end"></td>
@@ -258,9 +244,11 @@
                             <div class="flexDiv">
                                 <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
                                 <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border modalButton" id="confirm8"></button>
-                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readDepartmentModal"></button>
                             </div>                        
-                        </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readDepartmentModal"></button>
+                        </div>                       
                     </div>
                 </div>
             </div>
@@ -273,11 +261,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="readSiteModalBody">                                                             
-                            <table class="modal-table">   
-                                <tr>
-                                    <th>Site ID.</th>
-                                    <td id="siteId" class="text-end"></td>
-                                </tr>
+                            <table class="modal-table">                                
                                 <tr>
                                     <th>Number of Departments</th>
                                     <td id="siteDepartmentNumber" class="text-end"></td>
@@ -285,10 +269,12 @@
                             </table>
                             <div class="flexDiv">
                                 <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#editSiteModal"></button>
-                                <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border modalButton" id="confirm9"></button>
-                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readSiteModal"></button>
+                                <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border modalButton" id="confirm9"></button>                                
                             </div>                        
-                        </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readSiteModal"></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -302,21 +288,15 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="editStaffModalBody">
-                            <form name="editStaffForm" id="editStaffForm">
-                                <div class="flexDiv">
-                                    <div class="mb-3">
-                                        <label for="editStaffFirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" name="firstName" id="editStaffFirstName" value="">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="editStaffLastName" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" name="lastName" id="editStaffLastName">
-                                    </div>
+                            <form name="editStaffForm" id="editStaffForm">                                
+                                <div class="mb-3">
+                                    <label for="editStaffFirstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" name="firstName" id="editStaffFirstName" value="">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="editStaffId" class="form-label">Staff ID</label>
-                                    <input type="text" class="form-control" name="id" id="editStaffId" readonly>
-                                </div>
+                                    <label for="editStaffLastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" name="lastName" id="editStaffLastName">
+                                </div>                                                               
                                 <div class="mb-3">
                                     <label for="editStaffEmail" class="form-label">Email Address</label>
                                     <input type="email" class="form-control" name="email" id="editStaffEmail">
@@ -329,10 +309,12 @@
                                     <label for="editStaffDepartment" class="form-label">Department</label>
                                     <select class="form-select" name="department" id="editStaffDepartment"></select>
                                 </div>
-                                <button type="button"><i type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm4"></i></button>
-                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editStaffModal"></button>                                                           
                             </form>                 
-                        </div>   
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm4"></button>
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editStaffModal"></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -349,21 +331,17 @@
                                 <div class="mb-3">
                                     <label for="editDepartmentName" class="form-label">Department Name</label>
                                     <input type="text" class="form-control" name="name" id="editDepartmentName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="editDepartmentId" class="form-label">Department ID</label>
-                                    <input type="text" class="form-control" name="id" id="editDepartmentId" readonly>
-                                </div>                              
+                                </div>                                                           
                                 <div class="mb-3">
                                     <label for="editDepartmentSite" class="form-label">Site</label>
                                     <select class="form-select" name="site" id="editDepartmentSite"></select>
                                 </div>
-                                <div class="flexDiv">
-                                    <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm5"></button>
-                                    <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
-                                </div>                               
                             </form>
-                        </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm5"></button>
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -381,24 +359,20 @@
                                     <label for="editSiteName" class="form-label">Site Name</label>
                                     <input type="text" class="form-control" name="name" id="editSiteName" required>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="editSiteId" class="form-label">Site ID</label>
-                                    <input type="text" class="form-control" name="id" id="editSiteId" readonly>
-                                </div>
-                                <div class="flexDiv">
-                                    <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm6"></button>
-                                    <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editSiteModal"></button>
-                                </div>                                                             
                             </form>
-                        </div>                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm6"></button>
+                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editSiteModal"></button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Search Results Lists -->
-            <ul class="list-group list-group-flush" id="allStaff"></ul>
-            <ul class="list-group list-group-flush" id="allDepartments"></ul>
-            <ul class="list-group list-group-flush" id="allSites"></ul>
+            <ul class="list-group list-group-flush mainList" id="allStaff"></ul>
+            <ul class="list-group list-group-flush mainList" id="allDepartments"></ul>
+            <ul class="list-group list-group-flush mainList" id="allSites"></ul>
 
         </main>
 
