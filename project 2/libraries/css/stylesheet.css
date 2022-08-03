@@ -76,21 +76,26 @@ html, body {
     background-color: rgba(255, 255, 255, 0);
 }
 
+.col {
+    margin-top: 0.5rem;
+}
+
 /* Nav */
 nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;    
+    justify-content: space-between;   
     width: 100%;
     z-index: 1000;
     position: fixed;
     top: 0;
     background-color: rgb(190, 235, 235);
+    padding: 0.5rem;
 }
 
 .navButton {
-    margin: 0.2rem;   
+    background-color: white;
+    border-width: 2px;
+    font-weight: bold;
 }
 
 .navButton:hover {
@@ -101,9 +106,24 @@ nav {
     background-color: var(--second-color);
 }
 
+.createButton {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    background-color: white;
+}
+
+.createButton:hover {
+    background-color: var(--second-color);
+}
+
+.createButton:active {
+    background-color: var(--second-color);
+}
+
 /* Main */
 main {
-    margin-top: 5rem;
+    margin-top: 7rem;
     height: 100%;
     width: 100%;
 }
@@ -147,25 +167,31 @@ main {
 }
 
 /* Media Queries */
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: 962px) {
     nav {
         flex-wrap: wrap-reverse;
         justify-content: center;
     }
 
     main {
-        margin-top: 8.5rem;
-    }
-}
-
-@media only screen and (max-width: 610px) {
-    main {
         margin-top: 10rem;
     }
 }
 
-@media only screen and (max-width: 365px) {
+@media only screen and (max-width: 570px) {
     main {
         margin-top: 12rem;
+    }    
+}
+
+@media only screen and (max-width: 428px) {    
+    .navButton {
+        font-size: 90%;
     }
+}
+
+@media only screen and (max-width: 407px) {    
+    main {
+        margin-top: 16.5rem;
+    } 
 }

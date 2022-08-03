@@ -43,7 +43,7 @@ $(document).ready(function() {
         departmentId = 0;
         siteId = 0;
     });
-    
+
     $("#allSitesButton").click(function(){
         getAllSites();
         departmentId = 0;
@@ -62,7 +62,7 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     $("#allStaff").empty();
-                    $("#allDepartments, #departmentResultsDetails, #allSites, #siteResultsDetails").hide();
+                    $("#allDepartments, #departmentResultsDetails, #allSites, #siteResultsDetails, #addDepartmentButton, #addSiteButton").hide();
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
@@ -73,8 +73,7 @@ $(document).ready(function() {
                         $("#allStaff").append(listItem);
                     };
                     readStaffClickHandler();
-                    $("#allStaff").show();
-                    $("#staffResultsDetails").show();
+                    $("#allStaff, #staffResultsDetails, #addStaffButton").show();
                     $('#staffInput').val('');
                 };
             },
@@ -94,7 +93,7 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     $("#allDepartments").empty();
-                    $("#allStaff, #staffResultsDetails, #allSites, #siteResultsDetails").hide();
+                    $("#allStaff, #staffResultsDetails, #allSites, #siteResultsDetails, #addStaffButton, #addSiteButton").hide();
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
@@ -104,8 +103,7 @@ $(document).ready(function() {
                             + '</li>';
                         $("#allDepartments").append(listItem);
                     };
-                    $("#allDepartments").show();
-                    $("#departmentResultsDetails").show();
+                    $("#allDepartments, #departmentResultsDetails, #addDepartmentButton").show();
                     readDepartmentClickHandler();
                     $('#departmentInput').val('');
                 };
@@ -126,7 +124,7 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     $("#allSites").empty();
-                    $("#allDepartments, #allStaff, #departmentResultsDetails, #staffResultsDetails").hide();                   
+                    $("#allDepartments, #allStaff, #departmentResultsDetails, #staffResultsDetails, #addStaffButton, #addDepartmentButton").hide();                   
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
@@ -136,8 +134,7 @@ $(document).ready(function() {
                             + '</li>';
                         $("#allSites").append(listItem);
                     };
-                    $("#allSites").show();
-                    $("#siteResultsDetails").show();
+                    $("#allSites, #siteResultsDetails, #addSiteButton").show();
                     readSiteClickHandler();
                     $('#siteInput').val('');
                 };
@@ -991,7 +988,7 @@ $(document).ready(function() {
     function populateFilterSiteDropdown() {        
         $("#staffSiteSelect").empty();
         $("#depSiteSelect").empty();
-        let option = '<option value="0">All Sites</option>';
+        let option = '<option value="0">All Locations</option>';
         $("#staffSiteSelect").append(option);
         $("#depSiteSelect").append(option);
         for (let i = 0; i < sites.length; i++) {

@@ -12,12 +12,12 @@
         <link rel="stylesheet" href="./libraries/css/stylesheet.css">
     </head>
 
-    <body>
+    <body>        
         <nav>
             <div id="staffResultsDetails">
                 <div class="row">
                     <div class="col">
-                        <input type="search" id="staffInput" placeholder="Search Employees" class="form-control input"><br>
+                        <input type="search" id="staffInput" placeholder="Search Employees" class="form-control input">
                     </div>                    
                 </div>                
                 <div class="row">
@@ -29,16 +29,36 @@
                     </div>
                 </div>
             </div>
+
+            <button type="button" class="btn btn-outline-dark createButton" data-bs-toggle="modal" data-bs-target="#createStaffModal" id="addStaffButton">Add Employee</button>
+
             <div id="departmentResultsDetails">
-                <input type="search" id="departmentInput" placeholder="Search Departments" class="form-control input"><br>
-                <select class="form-select siteSelect" name="site" id="depSiteSelect"></select>
-            </div>
-            <div id="siteResultsDetails">
-                <input type="search" id="siteInput" placeholder="Search Sites" class="form-control input">
+                <div class="row">
+                    <div class="col">
+                        <input type="search" id="departmentInput" placeholder="Search Departments" class="form-control input">
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select-sm siteSelect" name="site" id="depSiteSelect"></select>
+                    </div>
+                </div>                
             </div>
 
-            <div>
+            <button type="button" class="btn btn-outline-dark createButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal" id="addDepartmentButton">Add Department</button>
+
+            <div id="siteResultsDetails">
                 <div class="row">
+                    <div class="col">
+                        <input type="search" id="siteInput" placeholder="Search Locations" class="form-control input">
+                    </div>
+                </div>                
+            </div>
+
+            <button type="button" class="btn btn-outline-dark createButton" data-bs-toggle="modal" data-bs-target="#createSiteModal" id="addSiteButton">Add Location</button>
+
+            <div>
+                <div class="row g-2">
                     <div class="col">
                         <button type="button" class="btn btn-outline-dark navButton" id="allStaffButton">Employees</button>
                     </div>
@@ -49,51 +69,10 @@
                         <button type="button" class="btn btn-outline-dark navButton" id="allSitesButton">Locations</button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <button type="button" class="btn btn-outline-dark btn-sm navButton" data-bs-toggle="modal" data-bs-target="#createStaffModal">Add Employee</button>
-                    </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-outline-dark btn-sm navButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">Add Department</button>
-                    </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-outline-dark btn-sm navButton" data-bs-toggle="modal" data-bs-target="#createSiteModal">Add Location</button>
-                    </div>
-                </div>
             </div>
         </nav>
 
-        <main>     
-
-            <!-- Create new Employee, Department, or Site Controls -->
-            <div class="collapse" id="addNewCollapse">
-                <div class="card card-body">                    
-                    <div class="row">
-                        <h2 class="col">What do you want to do?</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
-                        </div>
-                        <div class="col">
-                            
-                        </div>
-                        <div class="col">
-                            
-                        </div>
-                        <div class="col">
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="collapse" data-bs-target="#addNewCollapse"></button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">Add Employee</div>
-                        <div class="col">Add Dept.</div>
-                        <div class="col">Add Site</div>
-                        <div class="col">Back</div>
-                    </div>
-                </div>
-            </div>            
-
+        <main>
             <!-- Create Employee, Department, and Site forms -->
             <div class="modal fade" id="createStaffModal">
                 <div class="modal-dialog">
@@ -165,7 +144,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Add New Site</h3>
+                            <h3 class="modal-title">Add New Location</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="createSiteModalBody">
