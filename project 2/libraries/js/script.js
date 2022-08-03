@@ -70,13 +70,14 @@ $(document).ready(function() {
                             + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                             + '<div class="flexDiv">'
                             + '<button type="button" class="btn btn-outline-dark listItemButton readStaff" value="EMP' + array[i]['id'] + '">View</button>'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton confirm7" value="EMP' + array[i]['id'] + '">Delete</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton updateStaff" value="EMP' + array[i]['id'] + '">Update</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton deleteStaff" value="EMP' + array[i]['id'] + '">Delete</button>'
                             + '</div>'
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
                     readStaffClickHandler();
+                    updateStaffClickHandler();
                     deleteStaffClickHandler();
                     $("#allStaff, #staffResultsDetails, #addStaffButton").show();
                     $('#staffInput').val('');
@@ -106,7 +107,7 @@ $(document).ready(function() {
                             + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
                             + '<div class="flexDiv">'
                             + '<button type="button" class="btn btn-outline-dark listItemButton readDepartment" value="DEP' + array[i]['id'] + '">View</button>'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton updateDepartment" value="DEP' + array[i]['id'] + '">Update</button>'
                             + '<button type="button" class="btn btn-outline-dark listItemButton confirm8" value="DEP' + array[i]['id'] + '">Delete</button>'
                             + '</div>'
                             +'</li>';
@@ -114,6 +115,7 @@ $(document).ready(function() {
                     };
                     $("#allDepartments, #departmentResultsDetails, #addDepartmentButton").show();
                     readDepartmentClickHandler();
+                    updateDepartmentClickHandler();
                     deleteDepartmentClickHandler();
                     $('#departmentInput').val('');
                 };
@@ -142,7 +144,7 @@ $(document).ready(function() {
                             + '<p class="siteInstance">' + array[i]['name'] + '</p>'
                             + '<div class="flexDiv">'
                             + '<button type="button" class="btn btn-outline-dark listItemButton readSite" value="LOC' + array[i]['id'] + '">View</button>'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton updateSite" value="LOC' + array[i]['id'] + '">Update</button>'
                             + '<button type="button" class="btn btn-outline-dark listItemButton confirm9" value="LOC' + array[i]['id'] + '">Delete</button>'
                             + '</div>'
                             + '</li>';
@@ -150,6 +152,7 @@ $(document).ready(function() {
                     };
                     $("#allSites, #siteResultsDetails, #addSiteButton").show();
                     readSiteClickHandler();
+                    updateSiteClickHandler();
                     deleteSiteClickHandler();
                     $('#siteInput').val('');
                 };
@@ -237,8 +240,8 @@ $(document).ready(function() {
                         + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                         + '<div class="flexDiv">'
                         + '<button type="button" class="btn btn-outline-dark listItemButton readStaff" value="EMP' + array[i]['id'] + '">View</button>'
-                        + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
-                        + '<button type="button" class="btn btn-outline-dark listItemButton confirm7" value="EMP' + array[i]['id'] + '">Delete</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton updateStaff" value="EMP' + array[i]['id'] + '">Update</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton deleteStaff" value="EMP' + array[i]['id'] + '">Delete</button>'
                         + '</div>'
                         + '</li>';
                         $("#allStaff").append(listItem);
@@ -250,6 +253,7 @@ $(document).ready(function() {
                         $("#allStaff").append(listItem);
                     };
                     readStaffClickHandler();
+                    updateStaffClickHandler();
                     deleteStaffClickHandler();
                     $('#staffInput').val('');
                 };
@@ -280,13 +284,14 @@ $(document).ready(function() {
                         + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
                         + '<div class="flexDiv">'
                         + '<button type="button" class="btn btn-outline-dark listItemButton readDepartment" value="DEP' + array[i]['id'] + '">View</button>'
-                        + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton updateDepartment" value="DEP' + array[i]['id'] + '">Update</button>'
                         + '<button type="button" class="btn btn-outline-dark listItemButton confirm8" value="DEP' + array[i]['id'] + '">Delete</button>'
                         + '</div>'
                         +'</li>';
                         $("#allDepartments").append(listItem);
                     };
                     readDepartmentClickHandler();
+                    updateDepartmentClickHandler();
                     deleteDepartmentClickHandler();
                     $('#departmentInput').val('');
                 };
@@ -319,8 +324,7 @@ $(document).ready(function() {
                     $("#staffJob").html(array[0]["jobTitle"]);
                     $("#editStaffJob").attr("value", array[0]['jobTitle']);
                     $("#staffDepartment").html(array[0]["department"]);                    
-                    $("#staffLocation").html(array[0]["location"]);                    
-                    $('#readStaffModal').modal('show');
+                    $("#staffLocation").html(array[0]["location"]);
                     selectedId = array[0]["id"];
                 };
             },
@@ -371,7 +375,6 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {
                     let number = result['data'][0]['pc'];
                     $("#departmentStaffNumber").html(number);
-                    $('#readDepartmentModal').modal("show");
                 };
             },
             error: function(jqXHR, exception) {
@@ -419,8 +422,7 @@ $(document).ready(function() {
                 // console.log(JSON.stringify(result));                
                 if (result.status.name == "ok") {
                     let number = result['data'][0]["dc"];
-                    $("#siteDepartmentNumber").html(number);
-                    $('#readSiteModal').modal("show");
+                    $("#siteDepartmentNumber").html(number);                    
                 };
             },
             error: function(jqXHR, exception) {
@@ -432,196 +434,202 @@ $(document).ready(function() {
 
 
     //Create Functions
-    //CreateStaff form submit
+    //CreateStaff form submit 1
     $("#confirm1").click(function() {
         let validated = validateCreateStaffForm();
         if (validated === false) {
             return;
         };
-        let proceed = confirm("Are you sure you wish to create this Employee?");
-        if (proceed) {
-            $.ajax({
-                url: "libraries/php/insertStaff.php",
-                type: "POST",
-                data: $("#createStaffForm").serialize(),                    
-                success: function(result) {
-                    // console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {
-                        document.forms["createStaffForm"].reset();
-                        getAllStaff();
-                        $("#createStaffModal").modal("hide");
-                        alert("New Employee added successfully!");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
-        } else {    
-            document.forms["createStaffForm"].reset();
-        };
+        $('#createStaffConfirm').modal("show");
     });
 
-    //CreateDepartment form submit
+    //CreateStaff form submit 2
+    $("#confirm1b").click(function() {
+        $.ajax({
+            url: "libraries/php/insertStaff.php",
+            type: "POST",
+            data: $("#createStaffForm").serialize(),                    
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    document.forms["createStaffForm"].reset();
+                    getAllStaff();
+                    $("#createStaffModal").modal("hide");
+                    $('#createStaffConfirm').modal("hide");
+                    $("#createSuccess").modal("show");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    });
+
+    //CreateDepartment form submit 1
     $("#confirm2").click(function() {
         let validated = validateCreateDepartmentForm();
         if (validated === false) {
             return;
         };
-        let proceed = confirm("Are you sure you wish to create this Department?");
-        if (proceed) {
-            $.ajax({
-                url: "libraries/php/insertDepartment.php",
-                type: "POST",
-                data: $("#createDepartmentForm").serialize(),                    
-                success: function(result) {
-                    // console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {
-                        document.forms["createDepartmentForm"].reset();
-                        getAllDepartments();
-                        getDepartmentNames();
-                        $("#createDepartmentModal").modal("hide");
-                        alert("New Department added successfully!");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
-        } else {    
-            document.forms["createDepartmentForm"].reset();
-        };
+        $('#createDepartmentConfirm').modal("show");
     });
 
-    //CreateSite form submit
+    //CreateDepartment form submit 2
+    $("#confirm2b").click(function() {
+        $.ajax({
+            url: "libraries/php/insertDepartment.php",
+            type: "POST",
+            data: $("#createDepartmentForm").serialize(),                    
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    document.forms["createDepartmentForm"].reset();
+                    getAllDepartments();
+                    getDepartmentNames();
+                    $("#createDepartmentModal").modal("hide");
+                    $('#createDepartmentConfirm').modal("hide");
+                    $("#createSuccess").modal("show");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    });
+
+    //CreateSite form submit 1
     $("#confirm3").click(function() {
         let validated = validateCreateSiteForm();
         if (validated === false) {
             return;
         };
-        let proceed = confirm("Are you sure you wish to create this Site?");
-        if (proceed) {
-            $.ajax({
-                url: "libraries/php/insertSite.php",
-                type: "POST",
-                data: $("#createSiteForm").serialize(),                    
-                success: function(result) {
-                    // console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {
-                        document.forms["createSiteForm"].reset();
-                        getAllSites();
-                        getSiteNames();
-                        $("#createSiteModal").modal("hide");
-                        alert("New Site added successfully!");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
-        } else {    
-            document.forms["createSiteForm"].reset();
-        };
+        $('#createSiteConfirm').modal("show");
+    });
+
+    //CreateSite form submit 2
+    $("#confirm3b").click(function() {
+        $.ajax({
+            url: "libraries/php/insertSite.php",
+            type: "POST",
+            data: $("#createSiteForm").serialize(),                    
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    document.forms["createSiteForm"].reset();
+                    getAllSites();
+                    getSiteNames();
+                    $("#createSiteModal").modal("hide");
+                    $('#createSiteConfirm').modal("hide");
+                    $("#createSuccess").modal("show");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
     });
 
 
     //Update Functions
-    //EditStaff form submit
+    //EditStaff form submit 1
     $("#confirm4").click(function() {
         let validated = validateEditStaffForm();
         if (validated === false) {
             return;
         };
-        let proceed = confirm("Are you sure you wish to update the details of this Employee?");
-        if (proceed) {
-            $.ajax({
-                url: "libraries/php/updateStaff.php",
-                type: "POST",
-                data: $("#editStaffForm").serialize(),                    
-                success: function(result) {
-                    console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {
-                        document.forms["editStaffForm"].reset();
-                        getAllStaff();
-                        $("#editStaffModal").modal("hide");
-                        alert("Employee details updated successfully!");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
-        } else {    
-            document.forms["editStaffForm"].reset();
-        };
+        $('#editStaffConfirm').modal("show");
     });
 
-    //EditDepartment form submit
+    //EditStaff form submit 2
+    $("#confirm4b").click(function() {
+        $.ajax({
+            url: "libraries/php/updateStaff.php",
+            type: "POST",
+            data: $("#editStaffForm").serialize(),            
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    document.forms["editStaffForm"].reset();
+                    getAllStaff();
+                    $("#editStaffModal").modal("hide");
+                    $('#editStaffConfirm').modal("hide");
+                    $("#editSuccess").modal("show");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
+    });
+
+    //EditDepartment form submit 1
     $("#confirm5").click(function() {
         let validated = validateEditDepartmentForm();
         if (validated === false) {
             return;
         };
-        let proceed = confirm("Are you sure you wish to update the details of this Department?");
-        if (proceed) {
-            $.ajax({
-                url: "libraries/php/updateDepartment.php",
-                type: "POST",
-                data: $("#editDepartmentForm").serialize(),                    
-                success: function(result) {
-                    console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {
-                        document.forms["editDepartmentForm"].reset();
-                        getAllDepartments();
-                        getDepartmentNames();
-                        $("#editDepartmentModal").modal("hide");
-                        alert("Department details updated successfully!");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
-        } else {    
-            document.forms["editDepartmentForm"].reset();
-        };
+        $('#editDepartmentConfirm').modal("show");
     });
 
-    //EditSite form submit
+    //EditDepartment form submit 2
+    $("#confirm5b").click(function() {
+        $.ajax({
+            url: "libraries/php/updateDepartment.php",
+            type: "POST",
+            data: $("#editDepartmentForm").serialize(),
+            success: function(result) {
+                console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    document.forms["editDepartmentForm"].reset();
+                    getAllDepartments();
+                    getDepartmentNames();
+                    $("#editDepartmentModal").modal("hide");
+                    $('#editDepartmentConfirm').modal("hide");
+                    $("#editSuccess").modal("show");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });        
+    });
+
+    //EditSite form submit 1
     $("#confirm6").click(function() {
         let validated = validateEditSiteForm();
         if (validated === false) {
             return;
         };
-        let proceed = confirm("Are you sure you wish to update the details of this Site?");
-        if (proceed) {
-            $.ajax({
-                url: "libraries/php/updateSite.php",
-                type: "POST",
-                data: $("#editSiteForm").serialize(),                    
-                success: function(result) {
-                    console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {
-                        document.forms["editSiteForm"].reset();
-                        getAllSites();
-                        getSiteNames();
-                        $("#editSiteModal").modal("hide");
-                        alert("Site details updated successfully!");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
-        } else {    
-            document.forms["editSiteForm"].reset();
-        };
+        $('#editSiteConfirm').modal("show");
+    });
+
+    //EditSite form submit 2
+    $("#confirm6b").click(function() {
+        $.ajax({
+            url: "libraries/php/updateSite.php",
+            type: "POST",
+            data: $("#editSiteForm").serialize(),                    
+            success: function(result) {
+                console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {
+                    document.forms["editSiteForm"].reset();
+                    getAllSites();
+                    getSiteNames();
+                    $("#editSiteModal").modal("hide");
+                    $('#editSiteConfirm').modal("hide");
+                    $("#editSuccess").modal("show");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });
     });
 
 
@@ -800,6 +808,19 @@ $(document).ready(function() {
                 let id = $(this).val().slice(3);
                 // console.log(id);
                 getStaffById(id);
+                $('#readStaffModal').modal('show');
+            });            
+        });
+    };
+
+    // updateStaff button click handler
+    function updateStaffClickHandler() {
+        $(".updateStaff").each(function() {
+            $(this).click(function() {
+                let id = $(this).val().slice(3);
+                // console.log(id);
+                getStaffById(id);
+                $('#editStaffModal').modal('show');               
             });            
         });
     };
@@ -811,6 +832,19 @@ $(document).ready(function() {
                 let id = $(this).val().slice(3);
                 // console.log(id);
                 getDepartmentById(id);
+                $('#readDepartmentModal').modal('show');
+            });
+        });
+    };
+
+    //updateDepartment button click handler
+    function updateDepartmentClickHandler() {
+        $(".updateDepartment").each(function() {
+            $(this).click(function() {
+                let id = $(this).val().slice(3);
+                // console.log(id);
+                getDepartmentById(id);
+                $('#editDepartmentModal').modal('show');
             });
         });
     };
@@ -822,13 +856,26 @@ $(document).ready(function() {
                 let id = $(this).val().slice(3);
                 // console.log(id);
                 getSiteById(id);
+                $('#readSiteModal').modal("show");
+            });
+        });
+    };
+
+    //updateSite button click handler
+    function updateSiteClickHandler() {
+        $(".updateSite").each(function() {
+            $(this).click(function() {
+                let id = $(this).val().slice(3);
+                // console.log(id);
+                getSiteById(id);
+                $('#editSiteModal').modal('show');
             });
         });
     };
 
     //deleteStaff button click handler
     function deleteStaffClickHandler() {
-        $(".confirm7").each(function() {
+        $(".deleteStaff").each(function() {
             $(this).click(function() {
                 let id = $(this).val().slice(3);
                 deleteStaff(id);

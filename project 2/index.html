@@ -257,7 +257,7 @@
                             <form name="editStaffForm" id="editStaffForm">                                
                                 <div class="mb-3">
                                     <label for="editStaffFirstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" name="firstName" id="editStaffFirstName" value="">
+                                    <input type="text" class="form-control" name="firstName" id="editStaffFirstName">
                                 </div>
                                 <div class="mb-3">
                                     <label for="editStaffLastName" class="form-label">Last Name</label>
@@ -275,7 +275,10 @@
                                     <label for="editStaffDepartment" class="form-label">Department</label>
                                     <select class="form-select" name="department" id="editStaffDepartment"></select>
                                 </div>
-                            </form>                 
+                                <div class="mb-3">
+                                    <input class="form-control hiddenId" name="id" id="editStaffId"></input>
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm4">Confirm</button>
@@ -283,7 +286,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
 
             <div class="modal fade" id="editDepartmentModal">
                 <div class="modal-dialog">
@@ -302,6 +305,9 @@
                                     <label for="editDepartmentSite" class="form-label">Site</label>
                                     <select class="form-select" name="site" id="editDepartmentSite"></select>
                                 </div>
+                                <div class="mb-3">
+                                    <input class="form-control hiddenId" name="id" id="editDepartmentId"></input>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -310,13 +316,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
 
             <div class="modal fade" id="editSiteModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Update Site Details...</h3>
+                            <h3 class="modal-title">Update Location Details...</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="editSiteModalBody">
@@ -325,11 +331,126 @@
                                     <label for="editSiteName" class="form-label">Site Name</label>
                                     <input type="text" class="form-control" name="name" id="editSiteName" required>
                                 </div>
+                                <div class="mb-3">
+                                    <input class="form-control hiddenId" name="id" id="editSiteId"></input>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm6">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-target="#editSiteModal">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editSiteModal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- All "Confirm Action" Modals -->
+            <div class="modal fade alert" id="createStaffConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to create this Employee?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm1b">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createStaffConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="createDepartmentConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to create this Department?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm2b">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createDepartmentConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="createSiteConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to create this Location?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm3b">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createSiteConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="createSuccess">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">New entry successful</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createSuccess">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade alert" id="editStaffConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to update the details of this Employee?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm4b">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editStaffConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="editDepartmentConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to update the details of this Department?</h4>            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm5b">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="editSiteConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to update the details of this Location?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm6b">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editSiteConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="editSuccess">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Entry Updated</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editSuccess">Dismiss</button>
                         </div>
                     </div>
                 </div>
