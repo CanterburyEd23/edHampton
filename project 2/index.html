@@ -81,8 +81,8 @@
                             <h3 class="modal-title">Add New Employee</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body" id="createStaffModalBody">
-                            <form name="createStaffForm" id="createStaffForm">                                
+                        <form name="createStaffForm" id="createStaffForm">
+                            <div class="modal-body" id="createStaffModalBody">
                                 <div class="mb-3">
                                     <label for="createStaffFirstName" class="form-label">First Name</label>
                                     <input type="text" class="form-control" name="firstName" id="createStaffFirstName" required>
@@ -102,13 +102,13 @@
                                 <div class="mb-3">
                                     <label for="createStaffDepartment" class="form-label">Department</label>
                                     <select class="form-select" name="department" id="createStaffDepartment"></select>
-                                </div>
-                            </form>                 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm1"></button>
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
-                        </div>
+                                </div>    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm1"></button>
+                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -120,8 +120,8 @@
                             <h3 class="modal-title">Add New Department</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body" id="createDepartmentModalBody">
-                            <form name="createDepartmentForm" id="createDepartmentForm">                                
+                        <form name="createDepartmentForm" id="createDepartmentForm">
+                            <div class="modal-body" id="createDepartmentModalBody">                           
                                 <div class="mb-3">
                                     <label for="createDepartmentName" class="form-label">Department Name</label>
                                     <input type="text" class="form-control" name="name" id="createDepartmentName" required>
@@ -129,13 +129,13 @@
                                 <div class="mb-3">
                                     <label for="createDepartmentSite" class="form-label">Site</label>
                                     <select class="form-select" name="site" id="createDepartmentSite"></select>
-                                </div>                              
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm2"></button>
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"></button>
-                        </div>                
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm2"></button>
+                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -147,18 +147,18 @@
                             <h3 class="modal-title">Add New Location</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body" id="createSiteModalBody">
-                            <form name="createSiteForm" id="createSiteForm">                                
+                        <form name="createSiteForm" id="createSiteForm">
+                            <div class="modal-body" id="createSiteModalBody">                                                            
                                 <div class="mb-3">
                                     <label for="createSiteName" class="form-label">Site Name</label>
                                     <input type="text" class="form-control" name="name" id="createSiteName" required>
-                                </div>                                                            
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm3"></button>
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createSiteModal"></button>
-                        </div>
+                                </div>                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm3"></button>
+                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createSiteModal"></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
