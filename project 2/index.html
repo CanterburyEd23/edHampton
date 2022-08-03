@@ -7,8 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="./employees.png">
         <!-- CSS Stylesheets -->
-        <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.min.css">        
-        <link rel="stylesheet" href="./libraries/fontAwesome/css/all.min.css">
+        <link rel="stylesheet" href="./libraries/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="./libraries/css/stylesheet.css">
     </head>
 
@@ -105,8 +104,8 @@
                                 </div>    
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm1"></button>
-                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createStaffModal"></button>
+                                <button type="button" class="btn btn-outline-dark listItemButton" id="confirm1">Confirm</button>
+                                <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createStaffModal">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -132,8 +131,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm2"></button>
-                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"></button>
+                                <button type="button" class="btn btn-outline-dark listItemButton" id="confirm2">Confirm</button>
+                                <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -155,8 +154,8 @@
                                 </div>                            
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm3"></button>
-                                <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#createSiteModal"></button>
+                                <button type="button" class="btn btn-outline-dark listItemButton" id="confirm3">Confirm</button>
+                                <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createSiteModal">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -189,14 +188,10 @@
                                     <th>Location</th>
                                     <td id="staffLocation" class="text-end"></td>
                                 </tr>
-                            </table>
-                            <div class="flexDiv">
-                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#editStaffModal"></button>
-                                <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border modalButton" id="confirm7"></button>
-                            </div>
+                            </table>                            
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readStaffModal"></button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#readStaffModal">Back</button>
                         </div>
                     </div>
                 </div>
@@ -219,14 +214,10 @@
                                     <th>Number of Employees</th>
                                     <td id="departmentStaffNumber" class="text-end"></td>
                                 </tr>
-                            </table>
-                            <div class="flexDiv">
-                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
-                                <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border modalButton" id="confirm8"></button>
-                            </div>                        
+                            </table>                                                  
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readDepartmentModal"></button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#readDepartmentModal">Back</button>
                         </div>                       
                     </div>
                 </div>
@@ -246,13 +237,9 @@
                                     <td id="siteDepartmentNumber" class="text-end"></td>
                                 </tr>
                             </table>
-                            <div class="flexDiv">
-                                <button type="button" class="fa-solid fa-pen fa-2xl fa-fw fa-border modalButton" data-bs-toggle="modal" data-bs-target="#editSiteModal"></button>
-                                <button type="button" class="fa-solid fa-trash fa-2xl fa-fw fa-border modalButton" id="confirm9"></button>                                
-                            </div>                        
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#readSiteModal"></button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#readSiteModal">Back</button>
                         </div>
                     </div>
                 </div>
@@ -291,8 +278,8 @@
                             </form>                 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm4"></button>
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editStaffModal"></button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm4">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editStaffModal">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -318,8 +305,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm5"></button>
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"></button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm5">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -341,8 +328,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="fa-solid fa-check fa-2xl fa-fw fa-border modalButton" id="confirm6"></button>
-                            <button type="button" class="fa-solid fa-arrow-rotate-left fa-2xl fa-fw fa-border back modalButton" data-bs-toggle="modal" data-bs-target="#editSiteModal"></button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm6">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-target="#editSiteModal">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -359,8 +346,7 @@
         
         <!-- Javascript script files -->
         <script src="./libraries/jQuery/jquery.min.js"></script>
-        <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>        
-        <script src="./libraries/fontAwesome/js/all.min.js"></script>        
+        <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>       
         <script src="./libraries/js/script.js"></script>
 
     </body>

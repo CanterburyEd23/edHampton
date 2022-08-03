@@ -67,7 +67,7 @@ html, body {
     --fa-border-radius: 50%;
     --fa-border-color: black;
     --first-color: rgb(190, 235, 235);
-    --second-color: rgb(150, 200, 250);
+    --second-color: rgb(100, 150, 250);
     --third-color: rgb(175, 30, 30);    
     --fa-border-padding: 5px
 }
@@ -102,10 +102,6 @@ nav {
     background-color: var(--second-color);
 }
 
-.navButton:active {
-    background-color: var(--second-color);
-}
-
 .createButton {
     margin-top: 0.5rem;
     margin-left: 0.5rem;
@@ -117,10 +113,6 @@ nav {
     background-color: var(--second-color);
 }
 
-.createButton:active {
-    background-color: var(--second-color);
-}
-
 /* Main */
 main {
     margin-top: 7rem;
@@ -128,32 +120,32 @@ main {
     width: 100%;
 }
 
-.mainList li {
-    cursor: pointer;
+.flexDiv {    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    margin-left: 0.2rem;
+    margin-right: 2rem;
 }
 
 .list-group-item {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: space-between;
+    align-items: baseline;
+    cursor: pointer;
 }
 
-.readButton {
-    background-color: var(--first-color);   
-    padding: var(--fa-border-padding);
-    margin: 0.5rem;
+.listItemButton {
+    margin-left: 0.5rem;
 }
 
-.readButton:hover {
+.listItemButton:hover {
     background-color: var(--second-color);
 }
 
-.readButton:active {
-    background-color: var(--third-color);
-}
-
 .modal-header {
-    background-color: rgb(190, 235, 235);
+    background-color: var(--second-color);
 }
 
 .modal-table {
@@ -181,13 +173,24 @@ main {
 @media only screen and (max-width: 570px) {
     main {
         margin-top: 12rem;
-    }    
+    }
+    .flexDiv {
+        margin-right: 0;
+    } 
 }
 
 @media only screen and (max-width: 428px) {    
     .navButton {
         font-size: 90%;
     }
+
+    .listItemButton {
+        margin-left: 0.2rem;
+    }
+
+    .list-group-item {
+        flex-wrap: wrap;
+    }    
 }
 
 @media only screen and (max-width: 407px) {    

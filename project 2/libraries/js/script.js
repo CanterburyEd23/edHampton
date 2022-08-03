@@ -67,8 +67,12 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">'
-                            + '<button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
+                            + '<div class="flexDiv">'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm7">Delete</button>'
+                            + '</div>'
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
@@ -98,9 +102,13 @@ $(document).ready(function() {
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
                         listItem = '<li class="list-group-item" id="DEP' + array[i]['id'] + '">'
-                            + '<button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border readButton"></button>'
                             + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
-                            + '</li>';
+                            + '<div class="flexDiv">'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm8">Delete</button>'
+                            + '</div>'
+                            +'</li>';
                         $("#allDepartments").append(listItem);
                     };
                     $("#allDepartments, #departmentResultsDetails, #addDepartmentButton").show();
@@ -128,9 +136,13 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="LOC' + array[i]['id'] + '">' 
-                            + '<button type="button" class="fa-solid fa-industry fa-2xl fa-fw fa-border readButton"></button>'
+                        listItem = '<li class="list-group-item" id="LOC' + array[i]['id'] + '">'                            
                             + '<p class="siteInstance">' + array[i]['name'] + '</p>'
+                            + '<div class="flexDiv">'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm9">Delete</button>'
+                            + '</div>'
                             + '</li>';
                         $("#allSites").append(listItem);
                     };
@@ -218,10 +230,14 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">' 
-                            + '<button type="button" class="fa-solid fa-user fa-2xl fa-fw fa-border readButton"></button>'
-                            + '<p>' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'
-                            + '</li>';
+                        listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">'
+                        + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
+                        + '<div class="flexDiv">'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm7">Delete</button>'
+                        + '</div>'
+                        + '</li>';
                         $("#allStaff").append(listItem);
                     };
                     if (array.length === 0) {
@@ -256,10 +272,14 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="DEP' + array[i]['id'] + '">' 
-                            + '<button type="button" class="fa-solid fa-briefcase fa-2xl fa-fw fa-border readButton"></button>'
-                            + '<p>' + array[i]['name'] + '</p>'
-                            + '</li>';
+                        listItem = '<li class="list-group-item" id="DEP' + array[i]['id'] + '">'
+                        + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
+                        + '<div class="flexDiv">'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm8">Delete</button>'
+                        + '</div>'
+                        +'</li>';
                         $("#allDepartments").append(listItem);
                     };
                     readDepartmentClickHandler();
