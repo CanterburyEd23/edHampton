@@ -63,6 +63,12 @@ html, body {
     width: 100%;    
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--first-color);
+}
+
 :root {
     --fa-border-radius: 50%;
     --fa-border-color: black;
@@ -84,12 +90,14 @@ html, body {
 nav {
     display: flex;
     justify-content: space-between;   
-    width: 100%;
+    width: 90%;
     z-index: 1000;
     position: fixed;
     top: 0;
     background-color: rgb(190, 235, 235);
     padding: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .navButton {
@@ -117,7 +125,7 @@ nav {
 main {
     margin-top: 7rem;
     height: 100%;
-    width: 100%;
+    width: 90%;
 }
 
 .flexDiv {    
@@ -133,7 +141,6 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    cursor: pointer;
 }
 
 .listItemButton {
@@ -159,14 +166,23 @@ main {
 }
 
 /* Media Queries */
-@media only screen and (max-width: 962px) {
+@media only screen and (max-width: 1200px) {
     nav {
         flex-wrap: wrap-reverse;
-        justify-content: center;
+        width: 100%;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 
     main {
         margin-top: 10rem;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 963px) {
+    nav {
+        justify-content: center;
     }
 }
 

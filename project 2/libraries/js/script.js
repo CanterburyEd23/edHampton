@@ -69,14 +69,15 @@ $(document).ready(function() {
                         listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">'
                             + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                             + '<div class="flexDiv">'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton readStaff" value="EMP' + array[i]['id'] + '">View</button>'
                             + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm7">Delete</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton confirm7" value="EMP' + array[i]['id'] + '">Delete</button>'
                             + '</div>'
                             + '</li>';
                         $("#allStaff").append(listItem);
                     };
                     readStaffClickHandler();
+                    deleteStaffClickHandler();
                     $("#allStaff, #staffResultsDetails, #addStaffButton").show();
                     $('#staffInput').val('');
                 };
@@ -104,15 +105,16 @@ $(document).ready(function() {
                         listItem = '<li class="list-group-item" id="DEP' + array[i]['id'] + '">'
                             + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
                             + '<div class="flexDiv">'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton readDepartment" value="DEP' + array[i]['id'] + '">View</button>'
                             + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm8">Delete</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton confirm8" value="DEP' + array[i]['id'] + '">Delete</button>'
                             + '</div>'
                             +'</li>';
                         $("#allDepartments").append(listItem);
                     };
                     $("#allDepartments, #departmentResultsDetails, #addDepartmentButton").show();
                     readDepartmentClickHandler();
+                    deleteDepartmentClickHandler();
                     $('#departmentInput').val('');
                 };
             },
@@ -139,15 +141,16 @@ $(document).ready(function() {
                         listItem = '<li class="list-group-item" id="LOC' + array[i]['id'] + '">'                            
                             + '<p class="siteInstance">' + array[i]['name'] + '</p>'
                             + '<div class="flexDiv">'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton readSite" value="LOC' + array[i]['id'] + '">View</button>'
                             + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
-                            + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm9">Delete</button>'
+                            + '<button type="button" class="btn btn-outline-dark listItemButton confirm9" value="LOC' + array[i]['id'] + '">Delete</button>'
                             + '</div>'
                             + '</li>';
                         $("#allSites").append(listItem);
                     };
                     $("#allSites, #siteResultsDetails, #addSiteButton").show();
                     readSiteClickHandler();
+                    deleteSiteClickHandler();
                     $('#siteInput').val('');
                 };
             },
@@ -233,9 +236,9 @@ $(document).ready(function() {
                         listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">'
                         + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
                         + '<div class="flexDiv">'
-                        + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton readStaff" value="EMP' + array[i]['id'] + '">View</button>'
                         + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
-                        + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm7">Delete</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton confirm7" value="EMP' + array[i]['id'] + '">Delete</button>'
                         + '</div>'
                         + '</li>';
                         $("#allStaff").append(listItem);
@@ -247,6 +250,7 @@ $(document).ready(function() {
                         $("#allStaff").append(listItem);
                     };
                     readStaffClickHandler();
+                    deleteStaffClickHandler();
                     $('#staffInput').val('');
                 };
             },
@@ -275,14 +279,15 @@ $(document).ready(function() {
                         listItem = '<li class="list-group-item" id="DEP' + array[i]['id'] + '">'
                         + '<p class="departmentInstance">' + array[i]['name'] + '</p>'
                         + '<div class="flexDiv">'
-                        + '<button type="button" class="btn btn-outline-dark listItemButton">View</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton readDepartment" value="DEP' + array[i]['id'] + '">View</button>'
                         + '<button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Update</button>'
-                        + '<button type="button" class="btn btn-outline-dark listItemButton" id="confirm8">Delete</button>'
+                        + '<button type="button" class="btn btn-outline-dark listItemButton confirm8" value="DEP' + array[i]['id'] + '">Delete</button>'
                         + '</div>'
                         +'</li>';
                         $("#allDepartments").append(listItem);
                     };
                     readDepartmentClickHandler();
+                    deleteDepartmentClickHandler();
                     $('#departmentInput').val('');
                 };
             },
@@ -364,8 +369,8 @@ $(document).ready(function() {
             success: function(result) {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
-                    let array = result['data'];
-                    $("#departmentStaffNumber").html(array.length);
+                    let number = result['data'][0]['pc'];
+                    $("#departmentStaffNumber").html(number);
                     $('#readDepartmentModal').modal("show");
                 };
             },
@@ -413,8 +418,8 @@ $(document).ready(function() {
             success: function(result) {
                 // console.log(JSON.stringify(result));                
                 if (result.status.name == "ok") {
-                    let array = result['data'];
-                    $("#siteDepartmentNumber").html(array.length);
+                    let number = result['data'][0]["dc"];
+                    $("#siteDepartmentNumber").html(number);
                     $('#readSiteModal').modal("show");
                 };
             },
@@ -622,7 +627,7 @@ $(document).ready(function() {
 
     //Delete Functions
     //Delete Staff by ID
-    $("#confirm7").click(function() {
+    function deleteStaff(selectedId) {
         let proceed = confirm("You are about to delete this Employee's records, are you sure?");
         if (proceed) {            
             $.ajax({
@@ -645,17 +650,11 @@ $(document).ready(function() {
                 }
             });            
         };
-    });
-
+    };
+    
     //Delete Department Part 1
-    //Delete Department button click
-    $("#confirm8").click(function() {        
-        deleteDepartmentStaffCheck();
-    });
-
-    //Delete Department Part 2
     //Check Department for Employees
-    function deleteDepartmentStaffCheck() {
+    function deleteDepartmentStaffCheck(selectedId) {
         $.ajax({
             url: "libraries/php/deleteDepartmentStaffCheck.php",
             type: "GET",
@@ -663,16 +662,16 @@ $(document).ready(function() {
                 ID: selectedId
             },
             success: function(result) {
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
-                    let array = result['data'];
-                    if (array.length > 0) {
+                    let number = result['data'][0]["pc"];
+                    if (number > 0) {
                         alert("Cannot delete a Department with Employees assigned to it!");
                         return;
                     } else {
                         let proceed = confirm("You are about to delete this Department, are you sure?");
                         if (proceed) {
-                            deleteDepartment();
+                            deleteDepartment(selectedId);
                         } else {
                             return;
                         };
@@ -686,9 +685,9 @@ $(document).ready(function() {
         });
     };
 
-    //Delete Department Part 3
+    //Delete Department Part 2
     //Delete Department
-    function deleteDepartment() {
+    function deleteDepartment(selectedId) {
         $.ajax({
             url: "libraries/php/deleteDepartmentById.php",
             type: "POST",
@@ -711,14 +710,8 @@ $(document).ready(function() {
     }
 
     //Delete Site Part 1
-    //Delete Site button click
-    $("#confirm9").click(function() {
-        deleteSiteDepartmentCheck();        
-    });
-
-    //Delete Site Part 2
     //Check Site for Departments
-    function deleteSiteDepartmentCheck() {
+    function deleteSiteDepartmentCheck(selectedId) {
         $.ajax({
             url: "libraries/php/deleteSiteDepartmentCheck.php",
             type: "GET",
@@ -728,14 +721,14 @@ $(document).ready(function() {
             success: function(result) {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
-                    let array = result['data'];
-                    if (array.length > 0) {
+                    let number = result['data'][0]["dc"];
+                    if (number > 0) {
                         alert("Cannot delete a Site with Departments assigned to it!");
                         return;
                     } else {
                         let proceed = confirm("You are about to delete this Site, are you sure?");
                         if (proceed) {
-                            deleteSite();
+                            deleteSite(selectedId);
                         } else {
                             return;
                         };
@@ -749,9 +742,9 @@ $(document).ready(function() {
         });
     };
 
-    //Delete Site Part 3
+    //Delete Site Part 2
     //Delete Site
-    function deleteSite() {
+    function deleteSite(selectedId) {
         $.ajax({
             url: "libraries/php/deleteSiteById.php",
             type: "POST",
@@ -800,11 +793,11 @@ $(document).ready(function() {
         });
     };
 
-    //readStaff button click handler
+    // readStaff button click handler
     function readStaffClickHandler() {
-        $("#allStaff > li").each(function() {
+        $(".readStaff").each(function() {
             $(this).click(function() {
-                let id = $(this).attr("id").slice(3);
+                let id = $(this).val().slice(3);
                 // console.log(id);
                 getStaffById(id);
             });            
@@ -813,9 +806,9 @@ $(document).ready(function() {
 
     //readDepartment button click handler
     function readDepartmentClickHandler() {
-        $("#allDepartments > li").each(function() {
+        $(".readDepartment").each(function() {
             $(this).click(function() {
-                let id = $(this).attr("id").slice(3);
+                let id = $(this).val().slice(3);
                 // console.log(id);
                 getDepartmentById(id);
             });
@@ -824,15 +817,44 @@ $(document).ready(function() {
 
     //readSite button click handler
     function readSiteClickHandler() {
-        $("#allSites > li").each(function() {
+        $(".readSite").each(function() {
             $(this).click(function() {
-                let id = $(this).attr("id").slice(3);
+                let id = $(this).val().slice(3);
                 // console.log(id);
                 getSiteById(id);
             });
         });
     };
 
+    //deleteStaff button click handler
+    function deleteStaffClickHandler() {
+        $(".confirm7").each(function() {
+            $(this).click(function() {
+                let id = $(this).val().slice(3);
+                deleteStaff(id);
+            });
+        });
+    };
+
+    //deleteDepartment button click handler
+    function deleteDepartmentClickHandler() {
+        $(".confirm8").each(function() {
+            $(this).click(function() {
+                let id = $(this).val().slice(3);
+                deleteDepartmentStaffCheck(id);
+            });
+        });
+    };
+
+    //deleteSite button click handler
+    function deleteSiteClickHandler() {
+        $(".confirm9").each(function() {
+            $(this).click(function() {
+                let id = $(this).val().slice(3);
+                deleteSiteDepartmentCheck(id);
+            });
+        });
+    };
 
     //Form Validators
     //For all create and edit Staff, Department, and Site forms

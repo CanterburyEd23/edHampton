@@ -27,7 +27,9 @@
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
 	// $_REQUEST used for development / debugging. Remember to change to $_GET for production
 
-	$query = $conn->prepare('SELECT firstName FROM personnel WHERE departmentID =  ?');
+	// 'SELECT firstName FROM personnel WHERE departmentID =  ?'
+
+	$query = $conn->prepare('SELECT count(id) as pc FROM personnel WHERE departmentID = ?');
 	$query->bind_param("i", $_GET['ID']);
 	$query->execute();
 	
