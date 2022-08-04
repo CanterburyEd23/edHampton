@@ -435,11 +435,7 @@ $(document).ready(function() {
 
     //Create Functions
     //CreateStaff form submit 1
-    $("#confirm1").click(function() {
-        let validated = validateCreateStaffForm();
-        if (validated === false) {
-            return;
-        };
+    $("#confirm1").click(function() {        
         $('#createStaffConfirm').modal("show");
     });
 
@@ -467,11 +463,7 @@ $(document).ready(function() {
     });
 
     //CreateDepartment form submit 1
-    $("#confirm2").click(function() {
-        let validated = validateCreateDepartmentForm();
-        if (validated === false) {
-            return;
-        };
+    $("#confirm2").click(function() {        
         $('#createDepartmentConfirm').modal("show");
     });
 
@@ -500,11 +492,7 @@ $(document).ready(function() {
     });
 
     //CreateSite form submit 1
-    $("#confirm3").click(function() {
-        let validated = validateCreateSiteForm();
-        if (validated === false) {            
-            return;
-        };
+    $("#confirm3").click(function() {        
         $('#createSiteConfirm').modal("show");
     });
 
@@ -535,11 +523,7 @@ $(document).ready(function() {
 
     //Update Functions
     //EditStaff form submit 1
-    $("#confirm4").click(function() {
-        let validated = validateEditStaffForm();
-        if (validated === false) {
-            return;
-        };
+    $("#confirm4").click(function() {        
         $('#editStaffConfirm').modal("show");
     });
 
@@ -567,11 +551,7 @@ $(document).ready(function() {
     });
 
     //EditDepartment form submit 1
-    $("#confirm5").click(function() {
-        let validated = validateEditDepartmentForm();
-        if (validated === false) {
-            return;
-        };
+    $("#confirm5").click(function() {        
         $('#editDepartmentConfirm').modal("show");
     });
 
@@ -600,11 +580,7 @@ $(document).ready(function() {
     });
 
     //EditSite form submit 1
-    $("#confirm6").click(function() {
-        let validated = validateEditSiteForm();
-        if (validated === false) {
-            return;
-        };
+    $("#confirm6").click(function() {        
         $('#editSiteConfirm').modal("show");
     });
 
@@ -907,145 +883,7 @@ $(document).ready(function() {
     $("#confirmSiteDelete").click(function() {
         deleteSiteDepartmentCheck();
     });
-
-    //Form Validators
-    //For all create and edit Staff, Department, and Site forms
-    function validateCreateStaffForm() {        
-        let firstName = $("#createStaffFirstName").val();
-        let lastName = $("#createStaffLastName").val();
-        let email = $("#createStaffEmail").val();
-        let job = $("#createStaffJob").val();
-        if(!checkName(firstName)) {
-            return false;
-        } else if (!checkName(lastName)) {
-            return false;
-        } else if (!checkEmail(email)) {
-            return false;
-        } else if (!checkJob(job)) {
-            return false;
-        } else {
-            return true;
-        };
-    };
-
-    function validateCreateDepartmentForm() {        
-        let name = $("#createDepartmentName").val();        
-        if(!checkName(name)) {
-            return false;
-        } else {
-            return true;
-        };
-    };
-
-    function validateCreateSiteForm() {        
-        let name = $("#createSiteName").val();        
-        if(!checkName(name)) {
-            return false;
-        } else {
-            return true;
-        };
-    };
-
-    function validateEditStaffForm() {        
-        let firstName = $("#editStaffFirstName").val();
-        let lastName = $("#editStaffLastName").val();
-        let email = $("#editStaffEmail").val();
-        let job = $("#editStaffJob").val();
-        if(!checkName(firstName)) {
-            return false;
-        } else if (!checkName(lastName)) {
-            return false;
-        } else if (!checkEmail(email)) {
-            return false;
-        } else if (!checkJob(job)) {
-            return false;
-        } else {
-            return true;
-        };
-    };
-
-    function validateEditDepartmentForm() {        
-        let name = $("#editDepartmentName").val();        
-        if(!checkName(name)) {
-            return false;
-        } else {
-            return true;
-        };
-    };
-
-    function validateEditSiteForm() {        
-        let name = $("#editSiteName").val();        
-        if(!checkName(name)) {
-            return false;
-        } else {
-            return true;
-        };
-    };
-
-    
-    //Validation Functions
-    //Component functions of all Form Validation Functions
-    const isRequired = value => value === '' ? false : true;
-
-    const isBetween = (length, min, max) => length < min || length > max ? false : true;
-
-    const isEmailValid = (email) => {
-        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regex.test(email);
-    };
-
-    const charactersCheck = (value) => {
-        const characters = /[^a-zA-Z0-9 ]/g;
-        return !value.match(characters);
-    };
-
-    const checkName = (name) => {
-        let valid = false;
-        const min = 2;
-        const max = 30;
-        const formName = name;
-        if(!isRequired(formName)) {
-            $("#errorMessage").html(`Name cannot be blank.`);
-            $("#validationError").modal("show");
-        } else if (!isBetween(formName.length, min, max)) {
-            $("#errorMessage").html(`Names must be between ${min} and ${max} characters.`);
-            $("#validationError").modal("show");
-        } else if (!charactersCheck(formName)) {
-            $("#errorMessage").html("Names cannot contain special characters.");
-            $("#validationError").modal("show");
-        } else {
-            valid = true;
-        };
-        return valid;
-    };
-
-    const checkEmail = (email) => {
-        let valid = false;
-        let formEmail = email;
-        if(!isRequired(formEmail)) {
-            $("#errorMessage").html("Email cannot be blank.");
-            $("#validationError").modal("show");
-        } else if(!isEmailValid(formEmail)) {
-            $("#errorMessage").html("Email address is not valid");
-            $("#validationError").modal("show");
-        } else {
-            valid = true;
-        };
-        return valid;
-    };
-
-    const checkJob = (job) => {
-        let valid = false;
-        let formJob = job;
-        if(!charactersCheck(job)) {
-            $("#errorMessage").html("Job Titles cannot contain special characters.");
-            $("#validationError").modal("show");
-        } else {
-            valid = true;
-        };
-        return valid;
-    };
-    
+       
     
     //Misc. Functions
     //provide department names to dropdown menu
