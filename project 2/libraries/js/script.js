@@ -452,6 +452,7 @@ $(document).ready(function() {
                     getAllStaff();
                     $("#createStaffModal").modal("hide");
                     $('#createStaffConfirm').modal("hide");
+                    $("#createSuccessText").html("Employee added successfully");
                     $("#createSuccess").modal("show");
                 };
             },
@@ -481,6 +482,7 @@ $(document).ready(function() {
                     getDepartmentNames();
                     $("#createDepartmentModal").modal("hide");
                     $('#createDepartmentConfirm').modal("hide");
+                    $("#createSuccessText").html("Department added successfully");
                     $("#createSuccess").modal("show");
                 };
             },
@@ -510,6 +512,7 @@ $(document).ready(function() {
                     getSiteNames();
                     $("#createSiteModal").modal("hide");
                     $('#createSiteConfirm').modal("hide");
+                    $("#createSuccessText").html("Location added successfully");
                     $("#createSuccess").modal("show");
                 };
             },
@@ -540,6 +543,7 @@ $(document).ready(function() {
                     getAllStaff();
                     $("#editStaffModal").modal("hide");
                     $('#editStaffConfirm').modal("hide");
+                    $("#editSuccessText").html("Employee details edited successfully");
                     $("#editSuccess").modal("show");
                 };
             },
@@ -569,6 +573,7 @@ $(document).ready(function() {
                     getDepartmentNames();
                     $("#editDepartmentModal").modal("hide");
                     $('#editDepartmentConfirm').modal("hide");
+                    $("#editSuccessText").html("Department details edited successfully");
                     $("#editSuccess").modal("show");
                 };
             },
@@ -598,6 +603,7 @@ $(document).ready(function() {
                     getSiteNames();
                     $("#editSiteModal").modal("hide");
                     $('#editSiteConfirm').modal("hide");
+                    $("#editSuccessText").html("Location details edited successfully");
                     $("#editSuccess").modal("show");
                 };
             },
@@ -744,7 +750,7 @@ $(document).ready(function() {
 
 
     //Non-AJAX Functions
-    //Click Handlers
+    //Click Handlers & Event Listeners
     //staffDepSelect Filter Dropdown click handler
     function addStaffDepSelectClickHandler() {
         $("#staffDepSelect").click(function() {
@@ -883,6 +889,40 @@ $(document).ready(function() {
     $("#confirmSiteDelete").click(function() {
         deleteSiteDepartmentCheck();
     });
+
+    //Listener for the staffInput textbox
+    $("#staffInput").keyup(function() {
+        filterStaffList();
+    });
+
+    //Listener for validationError modal close
+    $("#closeError").click(function() {
+        $("#validationError").modal("hide");
+    });
+
+    //Listener for confirm modal cancel button
+    $(".alertCancel").click(function() {
+        $(".alert").modal("hide");
+    });
+
+    //Listener for the departmentInput textbox
+    $("#departmentInput").keyup(function() {
+        filterDepartmentList();
+    });
+
+    //Listener for the siteInput textbox
+    $("#siteInput").keyup(function() {
+        filterSiteList();
+    });
+
+    //Listener to handle all form submissions
+    $('.form').validator().on('submit', function (e) {
+        if (e.isDefaultPrevented()) {
+            console.log("Shouldn't have been able to make this message appear...")
+        } else {
+            e.preventDefault();
+        }
+    });
        
     
     //Misc. Functions
@@ -936,17 +976,7 @@ $(document).ready(function() {
         };
         addStaffSiteSelectClickHandler();
         addDepSiteSelectClickHandler();       
-    };
-
-    //Listener for the staffInput textbox
-    $("#staffInput").keyup(function() {
-        filterStaffList();
-    });
-
-    //Listener for validationError modal close
-    $("#closeError").click(function() {
-        $("#validationError").modal("hide");
-    });
+    };    
 
     //Filter triggered by the staffInput textbox
     function filterStaffList() {        
@@ -965,12 +995,7 @@ $(document).ready(function() {
                 listItem[i].style.display = "none";
             };
         };
-    };
-
-    //Listener for the departmentInput textbox
-    $("#departmentInput").keyup(function() {
-        filterDepartmentList();
-    });
+    };    
 
     //Filter triggered by the departmentInput textbox
     function filterDepartmentList() {        
@@ -989,12 +1014,7 @@ $(document).ready(function() {
                 listItem[i].style.display = "none";
             };
         };
-    };
-
-    //Listener for the siteInput textbox
-    $("#siteInput").keyup(function() {
-        filterSiteList();
-    });
+    };    
 
     //Filter triggered by the siteInput textbox
     function filterSiteList() {        
@@ -1013,6 +1033,6 @@ $(document).ready(function() {
                 listItem[i].style.display = "none";
             };
         };
-    };    
+    };
 
 });

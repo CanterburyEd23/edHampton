@@ -80,31 +80,31 @@
                             <h3 class="modal-title">Add New Employee</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form name="createStaffForm" id="createStaffForm">
+                        <form name="createStaffForm" class="form" id="createStaffForm" data-toggle="validator">
                             <div class="modal-body" id="createStaffModalBody">
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createStaffFirstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" name="firstName" id="createStaffFirstName" required>
+                                    <input type="text" class="form-control" name="firstName" id="createStaffFirstName" pattern="[A-Za-z]{2,30}" required>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createStaffLastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" name="lastName" id="createStaffLastName" required>
+                                    <input type="text" class="form-control" name="lastName" id="createStaffLastName" pattern="[A-Za-z]{2,30}" required>
                                 </div>                                
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createStaffEmail" class="form-label">Email Address</label>
                                     <input type="email" class="form-control" name="email" id="createStaffEmail" required>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createStaffJob" class="form-label">Job Title</label>
                                     <input type="text" class="form-control" name="job" id="createStaffJob">
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createStaffDepartment" class="form-label">Department</label>
                                     <select class="form-select" name="department" id="createStaffDepartment"></select>
                                 </div>    
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-dark listItemButton" id="confirm1">Confirm</button>
+                                <button type="submit" class="btn btn-outline-dark listItemButton" id="confirm1">Confirm</button>
                                 <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createStaffModal">Cancel</button>
                             </div>
                         </form>
@@ -119,19 +119,19 @@
                             <h3 class="modal-title">Add New Department</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form name="createDepartmentForm" id="createDepartmentForm">
+                        <form name="createDepartmentForm" class="form" id="createDepartmentForm" data-toggle="validator">
                             <div class="modal-body" id="createDepartmentModalBody">                           
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createDepartmentName" class="form-label">Department Name</label>
-                                    <input type="text" class="form-control" name="name" id="createDepartmentName" required>
+                                    <input type="text" class="form-control" name="name" id="createDepartmentName" pattern="[A-Za-z0-9_]{2,50}" required>
                                 </div>                                
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createDepartmentSite" class="form-label">Site</label>
                                     <select class="form-select" name="site" id="createDepartmentSite"></select>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-dark listItemButton" id="confirm2">Confirm</button>
+                                <button type="submit" class="btn btn-outline-dark listItemButton" id="confirm2">Confirm</button>
                                 <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">Cancel</button>
                             </div>
                         </form>
@@ -146,15 +146,15 @@
                             <h3 class="modal-title">Add New Location</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form name="createSiteForm" id="createSiteForm">
+                        <form name="createSiteForm" class="form" id="createSiteForm" data-toggle="validator">
                             <div class="modal-body" id="createSiteModalBody">                                                            
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="createSiteName" class="form-label">Site Name</label>
-                                    <input type="text" class="form-control" name="name" id="createSiteName" required>
+                                    <input type="text" class="form-control" name="name" id="createSiteName" pattern="[A-Za-z0-9_]{2,50}" required>
                                 </div>                            
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-dark listItemButton" id="confirm3">Confirm</button>
+                                <button type="submit" class="btn btn-outline-dark listItemButton" id="confirm3">Confirm</button>
                                 <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createSiteModal">Cancel</button>
                             </div>
                         </form>
@@ -254,34 +254,34 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="editStaffModalBody">
-                            <form name="editStaffForm" id="editStaffForm">                                
-                                <div class="mb-3">
+                            <form name="editStaffForm" class="form" id="editStaffForm" data-toggle="validator">                                
+                                <div class="mb-3 form-group">
                                     <label for="editStaffFirstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" name="firstName" id="editStaffFirstName">
+                                    <input type="text" class="form-control" name="firstName" id="editStaffFirstName" pattern="[A-Za-z]{2,30}" required>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="editStaffLastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" name="lastName" id="editStaffLastName">
+                                    <input type="text" class="form-control" name="lastName" id="editStaffLastName" pattern="[A-Za-z]{2,30}" required>
                                 </div>                                                               
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="editStaffEmail" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" name="email" id="editStaffEmail">
+                                    <input type="email" class="form-control" name="email" id="editStaffEmail" required>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="editStaffJob" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" name="job" id="editStaffJob">
+                                    <input type="text" class="form-control" name="job" id="editStaffJob" pattern="[A-Za-z0-9_]{2,50}">
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="editStaffDepartment" class="form-label">Department</label>
                                     <select class="form-select" name="department" id="editStaffDepartment"></select>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <input class="form-control hiddenId" name="id" id="editStaffId"></input>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm4">Confirm</button>
+                            <button type="submit" class="btn btn-outline-dark listItemButton" id="confirm4">Confirm</button>
                             <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editStaffModal">Cancel</button>
                         </div>
                     </div>
@@ -296,22 +296,22 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="editDepartmentModalBody">
-                            <form name="editDepartmentForm" id="editDepartmentForm">                                
-                                <div class="mb-3">
+                            <form name="editDepartmentForm" class="form" id="editDepartmentForm" data-toggle="validator">                                
+                                <div class="mb-3 form-group">
                                     <label for="editDepartmentName" class="form-label">Department Name</label>
-                                    <input type="text" class="form-control" name="name" id="editDepartmentName" required>
+                                    <input type="text" class="form-control" name="name" id="editDepartmentName" pattern="[A-Za-z0-9_]{2,50}" required>
                                 </div>                                                           
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <label for="editDepartmentSite" class="form-label">Site</label>
                                     <select class="form-select" name="site" id="editDepartmentSite"></select>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <input class="form-control hiddenId" name="id" id="editDepartmentId"></input>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm5">Confirm</button>
+                            <button type="submit" class="btn btn-outline-dark listItemButton" id="confirm5">Confirm</button>
                             <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal">Cancel</button>
                         </div>
                     </div>
@@ -326,18 +326,18 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="editSiteModalBody">
-                            <form name="editSiteForm" id="editSiteForm">                                
-                                <div class="mb-3">
+                            <form name="editSiteForm" class="form" id="editSiteForm" data-toggle="validator">                                
+                                <div class="mb-3 form-group">
                                     <label for="editSiteName" class="form-label">Site Name</label>
-                                    <input type="text" class="form-control" name="name" id="editSiteName" required>
+                                    <input type="text" class="form-control" name="name" id="editSiteName" pattern="[A-Za-z0-9_]{2,50}" required>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-group">
                                     <input class="form-control hiddenId" name="id" id="editSiteId"></input>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirm6">Confirm</button>
+                            <button type="submit" class="btn btn-outline-dark listItemButton" id="confirm6">Confirm</button>
                             <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editSiteModal">Cancel</button>
                         </div>
                     </div>
@@ -354,7 +354,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm1b">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createStaffConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -368,7 +368,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm2b">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createDepartmentConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -382,7 +382,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm3b">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createSiteConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -392,10 +392,10 @@
                 <div class="modal-dialog">
                     <div class="modal-content">                        
                         <div class="modal-body">
-                            <h4 class="modal-title">New entry successful</h4>
+                            <p id="createSuccessText"></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#createSuccess">Dismiss</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Dismiss</button>
                         </div>
                     </div>
                 </div>
@@ -409,7 +409,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm4b">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editStaffConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -423,7 +423,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm5b">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editDepartmentConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -437,7 +437,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirm6b">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editSiteConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -447,10 +447,10 @@
                 <div class="modal-dialog">
                     <div class="modal-content">                        
                         <div class="modal-body">
-                            <h4 class="modal-title">Entry Updated</h4>
+                            <p id="editSuccessText"></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editSuccess">Dismiss</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Dismiss</button>
                         </div>
                     </div>
                 </div>
@@ -464,7 +464,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirmStaffDelete">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteStaffConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -478,7 +478,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirmDepartmentDelete">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteDepartmentConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -492,7 +492,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" id="confirmSiteDelete">Confirm</button>
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteSiteConfirm">Cancel</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -505,7 +505,7 @@
                             <p id="deleteSuccessText"></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteSuccess">Dismiss</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton alertCancel">Dismiss</button>
                         </div>
                     </div>
                 </div>
