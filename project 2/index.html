@@ -345,7 +345,7 @@
             </div>
             
 
-            <!-- All "Confirm Action" Modals -->
+            <!-- All "Confirm Action and Error" Modals -->
             <div class="modal fade alert" id="createStaffConfirm">
                 <div class="modal-dialog">
                     <div class="modal-content">                        
@@ -441,7 +441,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>      
 
             <div class="modal fade alert" id="editSuccess">
                 <div class="modal-dialog">
@@ -451,6 +451,77 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#editSuccess">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="deleteStaffConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to delete this employee's records?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirmStaffDelete">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteStaffConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="deleteDepartmentConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to delete this Department?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirmDepartmentDelete">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteDepartmentConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="deleteSiteConfirm">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <h4 class="modal-title">Are you sure you wish to delete this Location?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="confirmSiteDelete">Confirm</button>
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteSiteConfirm">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="deleteSuccess">
+                <div class="modal-dialog">
+                    <div class="modal-content">                        
+                        <div class="modal-body">
+                            <p id="deleteSuccessText"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" data-bs-toggle="modal" data-bs-target="#deleteSuccess">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade alert" id="validationError">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Error</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="errorMessage"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark listItemButton" id="closeError">Dismiss</button>
                         </div>
                     </div>
                 </div>
@@ -467,7 +538,8 @@
         
         <!-- Javascript script files -->
         <script src="./libraries/jQuery/jquery.min.js"></script>
-        <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>       
+        <script src="./libraries/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="./libraries/bootstrapValidator/validator.min.js"></script>
         <script src="./libraries/js/script.js"></script>
 
     </body>

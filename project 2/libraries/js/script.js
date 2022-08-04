@@ -66,8 +66,8 @@ $(document).ready(function() {
                     let array = result['data'];
                     let listItem;
                     for (let i = 0; i < array.length; i++) {
-                        listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">'
-                            + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                           
+                        listItem = '<li class="list-group-item" id="EMP' + array[i]['id'] + '">'                            
+                            + '<p class="staffInstance">' + array[i]['firstName'] + ' ' + array[i]['lastName'] + '</p>'                            
                             + '<div class="flexDiv">'
                             + '<button type="button" class="btn btn-outline-dark listItemButton readStaff" value="EMP' + array[i]['id'] + '">View</button>'
                             + '<button type="button" class="btn btn-outline-dark listItemButton updateStaff" value="EMP' + array[i]['id'] + '">Update</button>'
@@ -502,7 +502,7 @@ $(document).ready(function() {
     //CreateSite form submit 1
     $("#confirm3").click(function() {
         let validated = validateCreateSiteForm();
-        if (validated === false) {
+        if (validated === false) {            
             return;
         };
         $('#createSiteConfirm').modal("show");
@@ -582,7 +582,7 @@ $(document).ready(function() {
             type: "POST",
             data: $("#editDepartmentForm").serialize(),
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     document.forms["editDepartmentForm"].reset();
                     getAllDepartments();
@@ -615,7 +615,7 @@ $(document).ready(function() {
             type: "POST",
             data: $("#editSiteForm").serialize(),                    
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     document.forms["editSiteForm"].reset();
                     getAllSites();
@@ -635,34 +635,32 @@ $(document).ready(function() {
 
     //Delete Functions
     //Delete Staff by ID
-    function deleteStaff(selectedId) {
-        let proceed = confirm("You are about to delete this Employee's records, are you sure?");
-        if (proceed) {            
-            $.ajax({
-                url: "libraries/php/deleteStaffById.php",
-                type: "POST",
-                data: {
-                    id: selectedId
-                },    
-                success: function(result) {
-                    console.log(JSON.stringify(result));
-                    if (result.status.name == "ok") {                        
-                        getAllStaff();                        
-                        alert("Employee details deleted");
-                        $("#readStaffModal").modal("hide");
-                    };
-                },
-                error: function(jqXHR, exception) {
-                    let msg = "Uncaught Error.\n" + jqXHR.responseText;
-                    console.log(msg);
-                }
-            });            
-        };
+    function deleteStaff() {
+        $.ajax({
+            url: "libraries/php/deleteStaffById.php",
+            type: "POST",
+            data: {
+                id: selectedId
+            },    
+            success: function(result) {
+                // console.log(JSON.stringify(result));
+                if (result.status.name == "ok") {                        
+                    getAllStaff();
+                    $("#deleteSuccessText").html("Employee deleted")
+                    $("#deleteSuccess").modal("show");
+                    $("#readStaffModal").modal("hide");
+                };
+            },
+            error: function(jqXHR, exception) {
+                let msg = "Uncaught Error.\n" + jqXHR.responseText;
+                console.log(msg);
+            }
+        });            
     };
     
     //Delete Department Part 1
     //Check Department for Employees
-    function deleteDepartmentStaffCheck(selectedId) {
+    function deleteDepartmentStaffCheck() {
         $.ajax({
             url: "libraries/php/deleteDepartmentStaffCheck.php",
             type: "GET",
@@ -670,21 +668,17 @@ $(document).ready(function() {
                 ID: selectedId
             },
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let number = result['data'][0]["pc"];
                     if (number > 0) {
-                        alert("Cannot delete a Department with Employees assigned to it!");
+                        $("#errorMessage").html("Cannot delete a Department with Employees assigned to it!");
+                        $("#validationError").modal("show");
                         return;
-                    } else {
-                        let proceed = confirm("You are about to delete this Department, are you sure?");
-                        if (proceed) {
-                            deleteDepartment(selectedId);
-                        } else {
-                            return;
-                        };
+                    } else {                        
+                        deleteDepartment();
                     };
-                };
+                };                
             },
             error: function(jqXHR, exception) {
                 let msg = "Uncaught Error.\n" + jqXHR.responseText;
@@ -695,7 +689,7 @@ $(document).ready(function() {
 
     //Delete Department Part 2
     //Delete Department
-    function deleteDepartment(selectedId) {
+    function deleteDepartment() {
         $.ajax({
             url: "libraries/php/deleteDepartmentById.php",
             type: "POST",
@@ -705,8 +699,9 @@ $(document).ready(function() {
             success: function(result) {
                 // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {                        
-                    getAllDepartments();                        
-                    alert("Department deleted");
+                    getAllDepartments(); 
+                    $("#deleteSuccessText").html("Department deleted")                       
+                    $("#deleteSuccess").modal("show");
                     $("#readDepartmentModal").modal("hide");
                 };
             },
@@ -719,7 +714,7 @@ $(document).ready(function() {
 
     //Delete Site Part 1
     //Check Site for Departments
-    function deleteSiteDepartmentCheck(selectedId) {
+    function deleteSiteDepartmentCheck() {
         $.ajax({
             url: "libraries/php/deleteSiteDepartmentCheck.php",
             type: "GET",
@@ -731,17 +726,13 @@ $(document).ready(function() {
                 if (result.status.name == "ok") {
                     let number = result['data'][0]["dc"];
                     if (number > 0) {
-                        alert("Cannot delete a Site with Departments assigned to it!");
+                        $("#errorMessage").html("Cannot delete a Site with Departments assigned to it!");
+                        $("#validationError").modal("show");
                         return;
                     } else {
-                        let proceed = confirm("You are about to delete this Site, are you sure?");
-                        if (proceed) {
-                            deleteSite(selectedId);
-                        } else {
-                            return;
-                        };
-                    };
-                };
+                        deleteSite();
+                    };                        
+                };                
             },
             error: function(jqXHR, exception) {
                 let msg = "Uncaught Error.\n" + jqXHR.responseText;
@@ -752,7 +743,7 @@ $(document).ready(function() {
 
     //Delete Site Part 2
     //Delete Site
-    function deleteSite(selectedId) {
+    function deleteSite() {
         $.ajax({
             url: "libraries/php/deleteSiteById.php",
             type: "POST",
@@ -762,8 +753,9 @@ $(document).ready(function() {
             success: function(result) {
                 console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {                        
-                    getAllSites();                        
-                    alert("Site deleted");
+                    getAllSites();
+                    $("#deleteSuccessText").html("Location deleted")                      
+                    $("#deleteSuccess").modal("show");
                     $("#readSiteModal").modal("hide");
                 };
             },
@@ -772,7 +764,7 @@ $(document).ready(function() {
                 console.log(msg);
             }
         });            
-    };  
+    };
 
 
     //Non-AJAX Functions
@@ -877,18 +869,18 @@ $(document).ready(function() {
     function deleteStaffClickHandler() {
         $(".deleteStaff").each(function() {
             $(this).click(function() {
-                let id = $(this).val().slice(3);
-                deleteStaff(id);
+                selectedId = $(this).val().slice(3);
+                $("#deleteStaffConfirm").modal("show");
             });
         });
-    };
+    };    
 
     //deleteDepartment button click handler
     function deleteDepartmentClickHandler() {
         $(".confirm8").each(function() {
             $(this).click(function() {
-                let id = $(this).val().slice(3);
-                deleteDepartmentStaffCheck(id);
+                selectedId = $(this).val().slice(3);
+                $("#deleteDepartmentConfirm").modal("show");
             });
         });
     };
@@ -897,11 +889,24 @@ $(document).ready(function() {
     function deleteSiteClickHandler() {
         $(".confirm9").each(function() {
             $(this).click(function() {
-                let id = $(this).val().slice(3);
-                deleteSiteDepartmentCheck(id);
+                selectedId = $(this).val().slice(3);
+                $("#deleteSiteConfirm").modal("show");
             });
         });
     };
+
+    //delete Confirm listeners
+    $("#confirmStaffDelete").click(function() {
+        deleteStaff();
+    });
+
+    $("#confirmDepartmentDelete").click(function() {
+        deleteDepartmentStaffCheck();
+    });
+
+    $("#confirmSiteDelete").click(function() {
+        deleteSiteDepartmentCheck();
+    });
 
     //Form Validators
     //For all create and edit Staff, Department, and Site forms
@@ -1000,11 +1005,14 @@ $(document).ready(function() {
         const max = 30;
         const formName = name;
         if(!isRequired(formName)) {
-            alert(`Name cannot be blank.`);
+            $("#errorMessage").html(`Name cannot be blank.`);
+            $("#validationError").modal("show");
         } else if (!isBetween(formName.length, min, max)) {
-            alert(`Names must be between ${min} and ${max} characters.`);
+            $("#errorMessage").html(`Names must be between ${min} and ${max} characters.`);
+            $("#validationError").modal("show");
         } else if (!charactersCheck(formName)) {
-            alert("Names cannot contain special characters.")
+            $("#errorMessage").html("Names cannot contain special characters.");
+            $("#validationError").modal("show");
         } else {
             valid = true;
         };
@@ -1015,9 +1023,11 @@ $(document).ready(function() {
         let valid = false;
         let formEmail = email;
         if(!isRequired(formEmail)) {
-            alert("Email cannot be blank.");
+            $("#errorMessage").html("Email cannot be blank.");
+            $("#validationError").modal("show");
         } else if(!isEmailValid(formEmail)) {
-            alert("Email address is not valid");
+            $("#errorMessage").html("Email address is not valid");
+            $("#validationError").modal("show");
         } else {
             valid = true;
         };
@@ -1028,7 +1038,8 @@ $(document).ready(function() {
         let valid = false;
         let formJob = job;
         if(!charactersCheck(job)) {
-            alert("Job Titles cannot contain special characters.");
+            $("#errorMessage").html("Job Titles cannot contain special characters.");
+            $("#validationError").modal("show");
         } else {
             valid = true;
         };
@@ -1092,6 +1103,11 @@ $(document).ready(function() {
     //Listener for the staffInput textbox
     $("#staffInput").keyup(function() {
         filterStaffList();
+    });
+
+    //Listener for validationError modal close
+    $("#closeError").click(function() {
+        $("#validationError").modal("hide");
     });
 
     //Filter triggered by the staffInput textbox
