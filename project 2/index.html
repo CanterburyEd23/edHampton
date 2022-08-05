@@ -84,12 +84,12 @@
                             <div class="modal-body" id="createStaffModalBody">
                                 <div class="mb-3 form-group">
                                     <label for="createStaffFirstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" name="firstName" id="createStaffFirstName" pattern="[A-Za-z]{1,30}" placeholder="John" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="firstName" id="createStaffFirstName" pattern="[A-Za-z ]{1,30}" placeholder="John" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="createStaffLastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" name="lastName" id="createStaffLastName" pattern="[A-Za-z]{1,30}" placeholder="Smith" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="lastName" id="createStaffLastName" pattern="[A-Za-z ]{1,30}" placeholder="Smith" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>                                
                                 <div class="mb-3 form-group">
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="createStaffJob" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" name="job" id="createStaffJob" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters">
+                                    <input type="text" class="form-control" name="job" id="createStaffJob" pattern="[A-Za-z0-9_ ]{1,50}" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters">
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="mb-3 form-group">
@@ -127,7 +127,7 @@
                             <div class="modal-body" id="createDepartmentModalBody">                           
                                 <div class="mb-3 form-group">
                                     <label for="createDepartmentName" class="form-label">Department Name</label>
-                                    <input type="text" class="form-control" name="name" id="createDepartmentName" pattern="[A-Za-z0-9_]{1,50}" placeholder="New Department" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="name" id="createDepartmentName" pattern="[A-Za-z0-9_ ]{1,50}" placeholder="New Department" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>                                
                                 <div class="mb-3 form-group">
@@ -155,7 +155,7 @@
                             <div class="modal-body" id="createSiteModalBody">                                                            
                                 <div class="mb-3 form-group">
                                     <label for="createSiteName" class="form-label">Location Name</label>
-                                    <input type="text" class="form-control" name="name" id="createSiteName" pattern="[A-Za-z0-9_]{1,50}" placeholder="New Location" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="name" id="createSiteName" pattern="[A-Za-z0-9_ ]{1,50}" placeholder="New Location" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>                            
                             </div>
@@ -263,12 +263,12 @@
                             <form name="editStaffForm" class="form" id="editStaffForm" data-toggle="validator">                                
                                 <div class="mb-3 form-group">
                                     <label for="editStaffFirstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" name="firstName" id="editStaffFirstName" pattern="[A-Za-z]{1,30}" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="firstName" id="editStaffFirstName" pattern="[A-Za-z ]{1,30}" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="editStaffLastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" name="lastName" id="editStaffLastName" pattern="[A-Za-z]{1,30}" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="lastName" id="editStaffLastName" pattern="[A-Za-z ]{1,30}" data-pattern-error="Names must be no longer than 30 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>                                                               
                                 <div class="mb-3 form-group">
@@ -278,7 +278,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="editStaffJob" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" name="job" id="editStaffJob" pattern="[A-Za-z0-9_]{1,50}" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters">
+                                    <input type="text" class="form-control" name="job" id="editStaffJob" pattern="[A-Za-z0-9_ ]{1,50}" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters">
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="mb-3 form-group">
@@ -309,7 +309,7 @@
                             <form name="editDepartmentForm" class="form" id="editDepartmentForm" data-toggle="validator">                                
                                 <div class="mb-3 form-group">
                                     <label for="editDepartmentName" class="form-label">Department Name</label>
-                                    <input type="text" class="form-control" name="name" id="editDepartmentName" pattern="[A-Za-z0-9_]{1,50}" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="name" id="editDepartmentName" pattern="[A-Za-z0-9_ ]{1,50}" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>                                                           
                                 <div class="mb-3 form-group">
@@ -340,7 +340,7 @@
                             <form name="editSiteForm" class="form" id="editSiteForm" data-toggle="validator">                                
                                 <div class="mb-3 form-group">
                                     <label for="editSiteName" class="form-label">Site Name</label>
-                                    <input type="text" class="form-control" name="name" id="editSiteName" pattern="[A-Za-z0-9_]{1,50}" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
+                                    <input type="text" class="form-control" name="name" id="editSiteName" pattern="[A-Za-z0-9_ ]{1,50}" data-pattern-error="Names must be no longer than 50 letters, and contain no special characters" data-required-error="Required" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="mb-3 form-group">
