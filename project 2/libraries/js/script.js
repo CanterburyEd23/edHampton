@@ -246,12 +246,6 @@ $(document).ready(function() {
                         + '</li>';
                         $("#allStaff").append(listItem);
                     };
-                    if (array.length === 0) {
-                        listItem = '<li class="list-group-item">'
-                            + '<p><i>Search returned no results.</i></p>'
-                            + '</li>';
-                        $("#allStaff").append(listItem);
-                    };
                     readStaffClickHandler();
                     updateStaffClickHandler();
                     deleteStaffClickHandler();
@@ -312,7 +306,7 @@ $(document).ready(function() {
                 ID: id1
             },
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {
                     let array = result['data'];
                     $("#staffName").html(array[0]['firstName'] + " " + array[0]['lastName']);
