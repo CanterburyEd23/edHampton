@@ -216,7 +216,7 @@ main {
     } 
 }
 
-@media only screen and (max-width: 428px) {    
+@media only screen and (max-width: 430px) {    
     .navButton {
         font-size: 90%;
     }
@@ -226,7 +226,7 @@ main {
     }
 
     .list-group-item {
-        flex-wrap: wrap;
+        flex-direction: column;
     }    
 }
 
