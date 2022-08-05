@@ -181,6 +181,11 @@ main {
     display: none;
 }
 
+.help-block {    
+    font-style: italic;
+    color: red;
+}
+
 /* Media Queries */
 @media only screen and (max-width: 1200px) {
     nav {

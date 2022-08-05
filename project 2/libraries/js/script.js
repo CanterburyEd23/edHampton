@@ -889,11 +889,6 @@ $(document).ready(function() {
         filterStaffList();
     });
 
-    //Listener for validationError modal close
-    $("#closeError").click(function() {
-        $("#validationError").modal("hide");
-    });
-
     //Listener for confirm modal cancel button
     $(".alertCancel").click(function() {
         $(".alert").modal("hide");
