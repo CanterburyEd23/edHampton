@@ -727,7 +727,7 @@ $(document).ready(function() {
                 id: selectedId
             },    
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") {                        
                     getAllSites();
                     $("#deleteSuccessText").html("Location deleted")                      
@@ -907,7 +907,7 @@ $(document).ready(function() {
     //Listener to handle all form submissions
     $('.form').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
-            console.log("Shouldn't have been able to make this message appear...")
+            console.log("An error occured")
         } else {
             e.preventDefault();
         }
