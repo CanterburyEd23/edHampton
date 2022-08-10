@@ -266,7 +266,7 @@ $(document).ready(function() {
                 Lon: lon
             },
             success: function(result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 if (result.status.name == "ok") { 
                     $("#weather1").html(result['data']['daily'][0]['weather'][0]['main']),
                     $("#temp1H").html(toCelsius(result['data']['daily'][0]['temp']['max']) + "<sup>o</sup>c."),
